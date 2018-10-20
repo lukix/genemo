@@ -1,0 +1,21 @@
+{
+  "name": "gmo-genetic-algorithm",
+  "version": "0.1.0",
+  "description": "Simple to use genetic algorithm library",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Łukasz Jenczmyk",
+  "license": "MIT",
+  "dependencies": {
+    "joi": "14.0.0",
+    "ramda": "0.25.0"
+  },
+  "devDependencies": {
+    "eslint": "4.19.1",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.14.0"
+  }
+}
