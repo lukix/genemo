@@ -6,6 +6,7 @@ const crossover = require('./crossover');
 
 const { generateInitialPopulation } = require('./generateInitialPopulation');
 const { reproduce } = require('./reproduce');
+const { stopCondition } = require('./stopConditions');
 
 module.exports = {
   runEvolution,
@@ -17,4 +18,5 @@ module.exports = {
 
   generateInitialPopulation,
   reproduce,
+  stopCondition,
 };

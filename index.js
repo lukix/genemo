@@ -28,10 +28,6 @@ const fitnessFunc = (individual) => {
   return similarity;
 };
 
-const stopCondition = ({ evaluatedPopulation, generation }) => (
-  evaluatedPopulation.some(({ fitness }) => fitness >= 50) || generation === 1000
-);
-
 const evolutionOptions = {
   generateInitialPopulation: GMO.generateInitialPopulation({
     generateIndividual,
@@ -44,7 +40,7 @@ const evolutionOptions = {
     mutationProbability: 0.01,
   }),
   fitness: fitnessFunc,
-  stopCondition,
+  stopCondition: GMO.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
 };
 
 console.time('evolution');
