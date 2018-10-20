@@ -1,8 +1,6 @@
 const GMO = require('./src');
 
-const flipGene = geneValue => 1 - geneValue;
-
-const generateIndividual = () => new Array(50).fill().map(() => Math.round(Math.random()));
+const generateIndividual = () => new Array(50).fill().map(() => !!Math.round(Math.random()));
 
 const targetIndividual = generateIndividual();
 
@@ -21,18 +19,17 @@ const evolutionOptions = {
   }),
   selection: GMO.selection.roulette,
   reproduce: GMO.reproduce({
-    mutate: GMO.mutation.transformRandomGene(flipGene),
+    mutate: GMO.mutation.transformRandomGene(GMO.mutation.flipBit),
     crossover: GMO.crossover.singlePoint,
     mutationProbability: 0.01,
   }),
   fitness: fitnessFunc,
-  stopCondition: GMO.stopCondition({ minFitness: 51, maxGenerations: 1000 }),
+  stopCondition: GMO.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
 };
 
 console.time('evolution');
 const lastGeneration = GMO.runEvolution(evolutionOptions);
 console.timeEnd('evolution');
-
 
 const { evaluatedPopulation, generation } = lastGeneration;
 
