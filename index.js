@@ -9,13 +9,6 @@ const mutate = (individual) => {
   ];
 };
 
-const crossover = ([mother, father]) => {
-  const cutPoint = 1 + Math.floor(Math.random() * mother.length - 1);
-  const son = [...mother.slice(0, cutPoint), ...father.slice(cutPoint)];
-  const daughter = [...father.slice(0, cutPoint), ...mother.slice(cutPoint)];
-  return [son, daughter];
-};
-
 const generateIndividual = () => new Array(50).fill().map(() => Math.round(Math.random()));
 
 const targetIndividual = generateIndividual();
@@ -36,7 +29,7 @@ const evolutionOptions = {
   selection: GMO.selection.roulette,
   reproduce: GMO.reproduce({
     mutate,
-    crossover,
+    crossover: GMO.crossover.singlePoint,
     mutationProbability: 0.01,
   }),
   fitness: fitnessFunc,

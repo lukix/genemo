@@ -1,4 +1,4 @@
-const randomFromRange = (from, to) => from + Math.floor(Math.random() * (to - from + 1));
+const randomFromRange = require('./utils/randomFromRange');
 
 const getRandomIndividual = (population) => {
   const index = randomFromRange(0, population.length - 1);
