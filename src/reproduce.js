@@ -16,11 +16,11 @@ const reproduce = ({
     const mother = getRandomIndividual(evaluatedPopulation).individual;
     const father = getRandomIndividual(evaluatedPopulation).individual;
     const [daughter, son] = crossover([mother, father]);
-    newPopulation.push(...(
-      targetPopulationSize - newPopulation.length >= 2
-        ? [daughter, son]
-        : [daughter]
-    ));
+    newPopulation.push(daughter, son);
+  }
+
+  if (newPopulation.length > targetPopulationSize) {
+    newPopulation.pop();
   }
 
   if (Math.random() <= mutationProbability) {
