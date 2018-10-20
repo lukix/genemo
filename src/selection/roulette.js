@@ -1,23 +1,27 @@
-const findRandomIndividualInRulette = (evaluatedPopulation, fitnessSum, value) => {
-  let sum = 0;
-  for (let i = 0; i < evaluatedPopulation.length; i += 1) {
-    const individual = evaluatedPopulation[i];
-    sum += individual.fitness / fitnessSum;
-    if (value <= sum) {
-      return individual;
-    }
-  }
-  return evaluatedPopulation[0];
-};
+const R = require('ramda');
+const binaryRangeSearch = require('../utils/binaryRangeSearch');
 
 const rouletteSelection = (evaluatedPopulation) => {
-  const fitnessSum = evaluatedPopulation.reduce(
-    (sum, currIndividual) => sum + currIndividual.fitness,
-    0,
+  const cumulativeFitness = R.scan(
+    (prev, currIndividual) => ({
+      evaluatedIndividual: currIndividual,
+      cumulativeFitness: prev.cumulativeFitness + currIndividual.fitness,
+    }),
+    { cumulativeFitness: 0 },
+    evaluatedPopulation,
   );
-  return new Array(evaluatedPopulation.length).fill().map(() => (
-    findRandomIndividualInRulette(evaluatedPopulation, fitnessSum, Math.random())
+
+  const fitnessSum = R.last(cumulativeFitness).cumulativeFitness;
+
+  const normalizedCumulativeFitness = cumulativeFitness.map(obj => (
+    { ...obj, cumulativeFitness: obj.cumulativeFitness / fitnessSum }
   ));
+
+  return new Array(evaluatedPopulation.length).fill().map(() => {
+    const randomValue = Math.random();
+    const compare = element => randomValue < element.cumulativeFitness;
+    return binaryRangeSearch(normalizedCumulativeFitness, compare).evaluatedIndividual;
+  });
 };
 
 module.exports = rouletteSelection;
