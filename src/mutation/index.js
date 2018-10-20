@@ -1,1 +1,5 @@
-module.exports = {};
+const transformRandomGene = require('./transformRandomGene');
+
+module.exports = {
+  transformRandomGene,
+};

@@ -1,13 +1,6 @@
 const GMO = require('./src');
 
-const mutate = (individual) => {
-  const mutationPoint = Math.floor(Math.random() * individual.length);
-  return [
-    ...individual.slice(0, mutationPoint),
-    1 - individual[mutationPoint],
-    ...individual.slice(mutationPoint),
-  ];
-};
+const flipGene = geneValue => 1 - geneValue;
 
 const generateIndividual = () => new Array(50).fill().map(() => Math.round(Math.random()));
 
@@ -28,12 +21,12 @@ const evolutionOptions = {
   }),
   selection: GMO.selection.roulette,
   reproduce: GMO.reproduce({
-    mutate,
+    mutate: GMO.mutation.transformRandomGene(flipGene),
     crossover: GMO.crossover.singlePoint,
     mutationProbability: 0.01,
   }),
   fitness: fitnessFunc,
-  stopCondition: GMO.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
+  stopCondition: GMO.stopCondition({ minFitness: 51, maxGenerations: 1000 }),
 };
 
 console.time('evolution');
@@ -44,7 +37,6 @@ console.timeEnd('evolution');
 const { evaluatedPopulation, generation } = lastGeneration;
 
 console.log({
-  evaluatedPopulation,
   generation,
   maxFitness: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
 });
