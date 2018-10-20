@@ -7,6 +7,7 @@ const crossover = require('./crossover');
 const { generateInitialPopulation } = require('./generateInitialPopulation');
 const { reproduce } = require('./reproduce');
 const { stopCondition } = require('./stopConditions');
+const randomSequenceOf = require('./randomSequenceOf');
 
 module.exports = {
   runEvolution,
@@ -19,4 +20,5 @@ module.exports = {
   generateInitialPopulation,
   reproduce,
   stopCondition,
+  randomSequenceOf,
 };

@@ -1,6 +1,6 @@
 const GMO = require('./src');
 
-const generateIndividual = () => new Array(50).fill().map(() => !!Math.round(Math.random()));
+const generateIndividual = GMO.randomSequenceOf([true, false], 50);
 
 const targetIndividual = generateIndividual();
 
