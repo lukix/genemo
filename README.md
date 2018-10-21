@@ -30,6 +30,7 @@ If you need more control over execution of the algorithm, you can use *generator
 
 ### Types
 When reading this documentation, you will encounter three special types:
+
 | Type                  | Translates to                                       | Description                                                    |
 |-----------------------|-----------------------------------------------------|----------------------------------------------------------------|
 | `Individual`          | `Any`                                               | Represents a single individual/chromosome.                     |
