@@ -58,29 +58,39 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
 ## Predefined operators
 ### General
 - **`GMO.generateInitialPopulation({ generateIndividual, size })`**
+
     Returns a function with a signature matching that of `generateInitialPopulation` property of `GMO.runEvolution` options object.
 
 - **`GMO.reproduce({ crossover, mutate, mutationProbability })`**
+
     Returns a function with a signature matching that of `reproduce` property of `GMO.runEvolution` options object.
 
 - **`GMO.stopCondition({ minFitness, maxGenerations })`**
+
     Returns a function with a signature matching that of `stopCondition` property of `GMO.runEvolution` options object.
 
 ### Selection
 - **`GMO.selection.roulette`**
+
     Function that can be used as a `selection` parameter for `GMO.runEvolution`.
 ### Crossover
 - **`GMO.crossover.singlePoint`**
+
     Function that can be used as a `crossover` parameter for `GMO.reproduce`.
 
 - **`GMO.crossover.twoPoint`**
+
     Function that can be used as a `crossover` parameter for `GMO.reproduce`.
 
 - **`GMO.crossover.kPoint(k)`**
+
     **Returns** a function that can be used as a `crossover` parameter for `GMO.reproduce`.
+
 ### Mutation
 - **`GMO.mutation.transformRandomGene(transformFunc)`**
+
     Returns a function that can be used as a `mutation` parameter for `GMO.runEvolution`.
 
 - **`GMO.mutation.flipBit`**
+
     Function that can be used as an argument for `GMO.mutation.transformRandomGene`.
