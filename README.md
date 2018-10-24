@@ -1,5 +1,5 @@
 # GMO - Genetic Algorithm Library
-Simple to use genetic algorithm library.
+Simple to use genetic algorithm library with many predefined operators.
 
 ## Installation
 ```bash
@@ -18,10 +18,10 @@ Meaning of types *Population*, *EvaluatedPopulation*, *Individual* is described 
 
 | Property                    | Signature                                          | Description                                                |
 |-----------------------------|----------------------------------------------------|------------------------------------------------------------|
-| `generateInitialPopulation` | `() => population`                                 | Generates initial population of individuals (chromosomes). |
-| `selection`                 | `(evaluatedPopulation) => evaluatedPopulation`     | Selects individuals for breeding.                          |
-| `reproduce`                 | `(evaluatedPopulation) => population`              | Creates new population from the selected individuals.      |
-| `fitness`                   | `(individual) => number`                           | Evaluates an individual (chromosome).                      |
+| `generateInitialPopulation` | `() => Population`                                 | Generates initial population of individuals (chromosomes). |
+| `selection`                 | `(EvaluatedPopulation) => EvaluatedPopulation`     | Selects individuals for breeding.                          |
+| `reproduce`                 | `(EvaluatedPopulation) => Population`              | Creates new population from the selected individuals.      |
+| `fitness`                   | `(Individual) => number`                           | Evaluates an individual (chromosome).                      |
 | `stopCondition`             | `({ evaluatedPopulation, generation }) => boolean` | Returning `true` terminates an algorithm.                  |
 
 `GMO.runEvolution` returns an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
@@ -55,3 +55,32 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
   stopCondition: GMO.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
 });
 ```
+## Predefined operators
+### General
+- **`GMO.generateInitialPopulation({ generateIndividual, size })`**
+    Returns a function with a signature matching that of `generateInitialPopulation` property of `GMO.runEvolution` options object.
+
+- **`GMO.reproduce({ crossover, mutate, mutationProbability })`**
+    Returns a function with a signature matching that of `reproduce` property of `GMO.runEvolution` options object.
+
+- **`GMO.stopCondition({ minFitness, maxGenerations })`**
+    Returns a function with a signature matching that of `stopCondition` property of `GMO.runEvolution` options object.
+
+### Selection
+- **`GMO.selection.roulette`**
+    Function that can be used as a `selection` parameter for `GMO.runEvolution`.
+### Crossover
+- **`GMO.crossover.singlePoint`**
+    Function that can be used as a `crossover` parameter for `GMO.reproduce`.
+
+- **`GMO.crossover.twoPoint`**
+    Function that can be used as a `crossover` parameter for `GMO.reproduce`.
+
+- **`GMO.crossover.kPoint(k)`**
+    **Returns** a function that can be used as a `crossover` parameter for `GMO.reproduce`.
+### Mutation
+- **`GMO.mutation.transformRandomGene(transformFunc)`**
+    Returns a function that can be used as a `mutation` parameter for `GMO.runEvolution`.
+
+- **`GMO.mutation.flipBit`**
+    Function that can be used as an argument for `GMO.mutation.transformRandomGene`.
