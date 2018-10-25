@@ -1,4 +1,4 @@
-const GMO = require('./src');
+const GMO = require('./lib');
 
 // Function for creating random individual (chromosome).
 // An individual is represented by an array with 50 values (genes),
@@ -44,15 +44,18 @@ const evolutionOptions = {
   fitness: fitnessFunction,
 
   // Let's stop our algorithm when some individual reaches fitness >= 50 or after 1000 generations.
-  stopCondition: GMO.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
+  stopCondition: GMO.stopCondition({ minFitness: 50, maxGenerations: 5000 }),
 };
 
 // Run genetic algorithm
+console.time('Execution time:');
 const lastGeneration = GMO.runEvolution(evolutionOptions);
+console.timeEnd('Execution time:');
+
 const { evaluatedPopulation, generation } = lastGeneration;
 
 console.log({
-  evaluatedPopulation,
+  // evaluatedPopulation,
   generation,
   maxFitness: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
 });
