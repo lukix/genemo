@@ -6,7 +6,14 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "lint": "eslint ./**/*.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint"
+    }
   },
   "author": "Łukasz Jenczmyk",
   "license": "MIT",
@@ -21,6 +28,7 @@
     "@babel/plugin-transform-modules-commonjs": "7.1.0",
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "13.1.0",
-    "eslint-plugin-import": "2.14.0"
+    "eslint-plugin-import": "2.14.0",
+    "husky": "1.1.2"
   }
 }
