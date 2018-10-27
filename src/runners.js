@@ -3,10 +3,10 @@ const { withPropsChecking } = require('./utils/typeChecking');
 const findInIterator = require('./utils/findInIterator');
 
 const runnerPropTypes = {
-  generateInitialPopulation: Joi.func().maxArity(0).required(), // () => population
-  selection: Joi.func().maxArity(1).required(), // evaluatedPopulation => evaluatedPopulation
-  reproduce: Joi.func().maxArity(1).required(), // evaluatedPopulation => population
-  fitness: Joi.func().maxArity(1).required(), // individual => number
+  generateInitialPopulation: Joi.func().maxArity(0).required(),
+  selection: Joi.func().maxArity(1).required(),
+  reproduce: Joi.func().maxArity(1).required(),
+  fitness: Joi.func().maxArity(1).required(),
 };
 
 const evaluatePopulation = (population, fitnessFunc) => population.map(individual => ({
@@ -64,7 +64,7 @@ const runEvolution = withPropsChecking('GMO.runEvolution', ({
   return lastGenerationInfo;
 })({
   ...runnerPropTypes,
-  stopCondition: Joi.func().maxArity(1).required(), // ({ evaluatedPopulation, generation }) => boolean
+  stopCondition: Joi.func().maxArity(1).required(),
 });
 
 module.exports = {
