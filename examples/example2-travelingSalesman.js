@@ -3,6 +3,7 @@ const shuffle = require('shuffle-array');
 const GMO = require('../lib');
 const distances = require('./data/distances.json');
 const randomFromRange = require('../lib/utils/randomFromRange');
+const findBestIndividual = require('../lib/utils/findBestIndividual');
 
 const cities = [...Array(distances.length).keys()];
 const generateIndividual = () => shuffle(cities, { copy: true });
@@ -15,38 +16,6 @@ const fitnessFunction = (individual) => {
   }, 0);
   return totalDistance;
 };
-
-const getIndividualWithLowerFitness = (individual1, individual2) => (
-  individual1.fitness < individual2.fitness
-    ? individual1
-    : individual2
-);
-
-const getIndividualWithHigherFitness = (individual1, individual2) => (
-  individual1.fitness > individual2.fitness
-    ? individual1
-    : individual2
-);
-
-const findBestIndividual = (evaluatedIndividuals, minimalizeFitness) => {
-  const reducer = minimalizeFitness
-    ? getIndividualWithLowerFitness
-    : getIndividualWithHigherFitness;
-  return evaluatedIndividuals.slice(1).reduce(reducer, evaluatedIndividuals[0]);
-};
-
-const tournamentSelection = ({
-  tournamentSize,
-  minimalizeFitness = false,
-}) => evaluatedPopulation => (
-  new Array(evaluatedPopulation.length).fill().map(() => {
-    const individuals = new Array(tournamentSize).fill().map(() => {
-      const index = randomFromRange(0, evaluatedPopulation.length - 1);
-      return evaluatedPopulation[index];
-    });
-    return findBestIndividual(individuals, minimalizeFitness);
-  })
-);
 
 const elitistSelection = ({
   minimalizeFitness = false,
@@ -90,7 +59,7 @@ const orderOneCrossover = ([mother, father]) => {
 
 const selection = elitistSelection({
   minimalizeFitness: true,
-  nextSelection: tournamentSelection({ tournamentSize: 3, minimalizeFitness: true }),
+  nextSelection: GMO.selection.tournament({ tournamentSize: 3, minimalizeFitness: true }),
 });
 
 const evolutionOptions = {
