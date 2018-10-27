@@ -1,4 +1,4 @@
-const GMO = require('./lib');
+const GMO = require('../lib');
 
 // Function for creating random individual (chromosome).
 // An individual is represented by an array with 50 values (genes),

@@ -2,9 +2,10 @@
   "name": "gmo-genetic-algorithm",
   "version": "0.1.0",
   "description": "Simple to use genetic algorithm library",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "node index.js",
+    "example1": "node ./examples/example1-findSequence.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib",
     "lint": "eslint ./**/*.js"

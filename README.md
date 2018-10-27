@@ -38,7 +38,7 @@ When reading this documentation, you will encounter three special types:
 | `EvaluatedPopulation` | `Array<{ fitness: number, indvidual: Individual }>` | Array of objects containing an `individual` and its `fitness`. |
 
 ### Example usage
-Full example with comments can be found in the `index.js` file in the root folder of the repository. Here is a shorter version:
+Full examples with comments can be found in the `./examples` directory. Here is a shorter version:
 ```javascript
 const { evaluatedPopulation, generation } = GMO.runEvolution({
   generateInitialPopulation: GMO.generateInitialPopulation({
