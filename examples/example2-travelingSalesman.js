@@ -1,17 +1,18 @@
 const shuffle = require('shuffle-array');
 const GMO = require('../lib');
-const distances = require('./data/distances.json');
+const distances = require('./data/distances26.json');
 const findBestIndividual = require('../lib/utils/findBestIndividual');
 
 const cities = [...Array(distances.length).keys()];
 const generateIndividual = () => shuffle(cities, { copy: true });
 
 const fitnessFunction = (individual) => {
+  const lastToFirstDistance = distances[individual[individual.length - 1]][individual[0]];
   const totalDistance = individual.slice(0, -1).reduce((distance, city, index) => {
     const nextCity = individual[index + 1];
     const currentDistance = distances[city][nextCity];
     return distance + currentDistance;
-  }, 0);
+  }, 0) + lastToFirstDistance;
   return totalDistance;
 };
 
@@ -20,8 +21,8 @@ const elitistSelection = ({
   nextSelection,
 }) => (evaluatedPopulation) => {
   const selectedIndividuals = nextSelection(evaluatedPopulation);
-  const bestIndividuals = [findBestIndividual(evaluatedPopulation, minimalizeFitness)];
-  [selectedIndividuals[0]] = bestIndividuals;
+  const bestIndividual = findBestIndividual(evaluatedPopulation, minimalizeFitness);
+  selectedIndividuals[0] = bestIndividual;
   return selectedIndividuals;
 };
 
