@@ -28,7 +28,7 @@ const evolutionOptions = {
     mutationProbability: 0.02,
   }),
   fitness: fitnessFunction,
-  stopCondition: GMO.stopCondition({ maxGenerations: 1000 }),
+  stopCondition: GMO.stopCondition({ maxFitness: 2085, maxGenerations: 1000 }),
 };
 
 // Run genetic algorithm
@@ -40,5 +40,5 @@ const { evaluatedPopulation, generation } = lastGeneration;
 
 console.log({
   generation,
-  shortestPath: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
+  shortestPath: Math.min(...evaluatedPopulation.map(({ fitness }) => fitness)),
 });
