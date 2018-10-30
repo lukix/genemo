@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "example1": "node ./examples/example1-findSequence.js",
+    "example2": "node ./examples/example2-travelingSalesman.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib",
     "lint": "eslint ./**/*.js"
@@ -20,7 +21,8 @@
   "license": "MIT",
   "dependencies": {
     "joi": "14.0.0",
-    "ramda": "0.25.0"
+    "ramda": "0.25.0",
+    "shuffle-array": "1.0.1"
   },
   "devDependencies": {
     "@babel/cli": "7.1.2",
