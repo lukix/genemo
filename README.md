@@ -65,14 +65,21 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
 
     Returns a function with a signature matching that of `reproduce` property of `GMO.runEvolution` options object.
 
-- **`GMO.stopCondition({ minFitness, maxGenerations })`**
+- **`GMO.stopCondition({ minFitness, maxFitness, maxGenerations })`**
 
-    Returns a function with a signature matching that of `stopCondition` property of `GMO.runEvolution` options object.
+    Returns a function with a signature matching that of `stopCondition` property of `GMO.runEvolution` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
 
 ### Selection
 - **`GMO.selection.roulette`**
 
     Function that can be used as a `selection` parameter for `GMO.runEvolution`.
+    **Currently, it works only for maximization problems and positive fitness values!**
+
+- **`GMO.selection.tournament({ tournamentSize, minimalizeFitness })`**
+
+    **Returns** a function that can be used as a `selection` parameter for `GMO.runEvolution`.
+    `tournamentSize` is a number describing how many individuals take part in a tournament.
+    `minimalizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
 ### Crossover
 - **`GMO.crossover.singlePoint`**
 
@@ -86,6 +93,15 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
 
     **Returns** a function that can be used as a `crossover` parameter for `GMO.reproduce`.
 
+- **`GMO.crossover.orderOne`**
+
+    **Returns** a function that can be used as a `crossover` parameter for `GMO.reproduce`.
+
+- **`GMO.crossover.PMX`**
+
+    Partially-mapped crossover.
+    **Returns** a function that can be used as a `crossover` parameter for `GMO.reproduce`.
+
 ### Mutation
 - **`GMO.mutation.transformRandomGene(transformFunc)`**
 
@@ -94,3 +110,8 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
 - **`GMO.mutation.flipBit`**
 
     Function that can be used as an argument for `GMO.mutation.transformRandomGene`.
+
+- **`GMO.mutation.swapTwoGenes`**
+
+    Swaps places of two randomly chosen genes (array elements).
+    This function can be used as an argument for `GMO.mutation.transformRandomGene`.

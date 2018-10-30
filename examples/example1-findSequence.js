@@ -55,7 +55,6 @@ console.timeEnd('Execution time:');
 const { evaluatedPopulation, generation } = lastGeneration;
 
 console.log({
-  // evaluatedPopulation,
   generation,
   maxFitness: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
 });
