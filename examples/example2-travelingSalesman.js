@@ -1,11 +1,11 @@
 const shuffle = require('shuffle-array');
 const GMO = require('../lib');
-const distances = require('./data/distances26.json');
-const findBestIndividual = require('../lib/utils/findBestIndividual');
+const distances = require('./data/distances17.json');
 
 const cities = [...Array(distances.length).keys()];
 const generateIndividual = () => shuffle(cities, { copy: true });
 
+// Fitness is measured as a path total length
 const fitnessFunction = (individual) => {
   const lastToFirstDistance = distances[individual[individual.length - 1]][individual[0]];
   const totalDistance = individual.slice(0, -1).reduce((distance, city, index) => {
@@ -16,34 +16,19 @@ const fitnessFunction = (individual) => {
   return totalDistance;
 };
 
-const elitistSelection = ({
-  minimalizeFitness = false,
-  nextSelection,
-}) => (evaluatedPopulation) => {
-  const selectedIndividuals = nextSelection(evaluatedPopulation);
-  const bestIndividual = findBestIndividual(evaluatedPopulation, minimalizeFitness);
-  selectedIndividuals[0] = bestIndividual;
-  return selectedIndividuals;
-};
-
-const selection = elitistSelection({
-  minimalizeFitness: true,
-  nextSelection: GMO.selection.tournament({ tournamentSize: 3, minimalizeFitness: true }),
-});
-
 const evolutionOptions = {
   generateInitialPopulation: GMO.generateInitialPopulation({
     generateIndividual,
-    size: 500,
+    size: 250,
   }),
-  selection,
+  selection: GMO.selection.tournament({ tournamentSize: 3, minimalizeFitness: true }),
   reproduce: GMO.reproduce({
     crossover: GMO.crossover.orderOne,
     mutate: GMO.mutation.swapTwoGenes,
     mutationProbability: 0.02,
   }),
   fitness: fitnessFunction,
-  stopCondition: GMO.stopCondition({ maxGenerations: 2000 }),
+  stopCondition: GMO.stopCondition({ maxGenerations: 1000 }),
 };
 
 // Run genetic algorithm
@@ -51,8 +36,9 @@ console.time('Execution time:');
 const lastGeneration = GMO.runEvolution(evolutionOptions);
 console.timeEnd('Execution time:');
 
-const { evaluatedPopulation } = lastGeneration;
+const { evaluatedPopulation, generation } = lastGeneration;
 
-const bestIndividual = findBestIndividual(evaluatedPopulation, true);
-
-console.log({ shortestPath: bestIndividual.fitness });
+console.log({
+  generation,
+  shortestPath: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
+});
