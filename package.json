@@ -4,7 +4,7 @@
   "description": "Simple to use genetic algorithm library",
   "main": "lib/index.js",
   "scripts": {
-    "start": "node index.js",
+    "dev": "babel --watch src -d lib",
     "example1": "node ./examples/example1-findSequence.js",
     "example2": "node ./examples/example2-travelingSalesman.js",
     "test": "echo \"Error: no test specified\" && exit 1",
