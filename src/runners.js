@@ -6,7 +6,7 @@ const runnerPropTypes = {
   generateInitialPopulation: Joi.func().maxArity(0).required(),
   selection: Joi.func().maxArity(1).required(),
   reproduce: Joi.func().maxArity(1).required(),
-  combineWithPrev: Joi.func().maxArity(1),
+  succession: Joi.func().maxArity(1),
   fitness: Joi.func().maxArity(1).required(),
 };
 
@@ -19,7 +19,7 @@ const getGenerationsIterator = withPropsChecking('GMO.getGenerationsIterator', f
   generateInitialPopulation,
   selection,
   reproduce,
-  combineWithPrev = ({ childrenPopulation }) => childrenPopulation,
+  succession = ({ childrenPopulation }) => childrenPopulation,
   fitness,
 }) {
   let generation = 0;
@@ -30,7 +30,7 @@ const getGenerationsIterator = withPropsChecking('GMO.getGenerationsIterator', f
     const parentsPopulation = selection(evaluatedPopulation);
     const childrenPopulation = reproduce(parentsPopulation);
     const evaluatedChildrenPopulation = evaluatePopulation(childrenPopulation, fitness);
-    evaluatedPopulation = combineWithPrev({
+    evaluatedPopulation = succession({
       prevPopulation: evaluatedPopulation,
       childrenPopulation: evaluatedChildrenPopulation,
     });
@@ -47,6 +47,7 @@ const getGenerationsIterator = withPropsChecking('GMO.getGenerationsIterator', f
  * @param {() => Array<any>} options.generateInitialPopulation
  * @param {(evaluatedPopulation: Array<any>) => Array<any>} options.selection
  * @param {(evaluatedPopulation: Array<any>) => Array<any>} options.reproduce
+ * @param {({ prevPopulation: Array<Object>, childrenPopulation: Array<Object> }) => Array<Object>}
  * @param {(individual: any) => number} options.fitness
  * @param {({ evaluatedPopulation: Array<Object>, generation: number }) => boolean} options.stopCondition
  *
@@ -56,7 +57,7 @@ const runEvolution = withPropsChecking('GMO.runEvolution', ({
   generateInitialPopulation,
   selection,
   reproduce,
-  combineWithPrev,
+  succession,
   fitness,
   stopCondition,
 }) => {
@@ -64,7 +65,7 @@ const runEvolution = withPropsChecking('GMO.runEvolution', ({
     generateInitialPopulation,
     selection,
     reproduce,
-    combineWithPrev,
+    succession,
     fitness,
   });
 
