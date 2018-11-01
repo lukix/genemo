@@ -6,6 +6,7 @@ const runnerPropTypes = {
   generateInitialPopulation: Joi.func().maxArity(0).required(),
   selection: Joi.func().maxArity(1).required(),
   reproduce: Joi.func().maxArity(1).required(),
+  combineWithPrev: Joi.func().maxArity(1),
   fitness: Joi.func().maxArity(1).required(),
 };
 
@@ -18,6 +19,7 @@ const getGenerationsIterator = withPropsChecking('GMO.getGenerationsIterator', f
   generateInitialPopulation,
   selection,
   reproduce,
+  combineWithPrev = ({ childrenPopulation }) => childrenPopulation,
   fitness,
 }) {
   let generation = 0;
@@ -26,8 +28,12 @@ const getGenerationsIterator = withPropsChecking('GMO.getGenerationsIterator', f
   while (true) {
     generation += 1;
     const parentsPopulation = selection(evaluatedPopulation);
-    const newPopulation = reproduce(parentsPopulation);
-    evaluatedPopulation = evaluatePopulation(newPopulation, fitness);
+    const childrenPopulation = reproduce(parentsPopulation);
+    const evaluatedChildrenPopulation = evaluatePopulation(childrenPopulation, fitness);
+    evaluatedPopulation = combineWithPrev({
+      prevPopulation: evaluatedPopulation,
+      childrenPopulation: evaluatedChildrenPopulation,
+    });
     yield { evaluatedPopulation, generation };
   }
 })({
@@ -50,6 +56,7 @@ const runEvolution = withPropsChecking('GMO.runEvolution', ({
   generateInitialPopulation,
   selection,
   reproduce,
+  combineWithPrev,
   fitness,
   stopCondition,
 }) => {
@@ -57,6 +64,7 @@ const runEvolution = withPropsChecking('GMO.runEvolution', ({
     generateInitialPopulation,
     selection,
     reproduce,
+    combineWithPrev,
     fitness,
   });
 

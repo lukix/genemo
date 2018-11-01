@@ -8,6 +8,7 @@ const { generateInitialPopulation } = require('./generateInitialPopulation');
 const { reproduce } = require('./reproduce');
 const { stopCondition } = require('./stopConditions');
 const randomSequenceOf = require('./randomSequenceOf');
+const elitism = require('./elitism');
 
 module.exports = {
   runEvolution,
@@ -21,4 +22,5 @@ module.exports = {
   reproduce,
   stopCondition,
   randomSequenceOf,
+  elitism,
 };

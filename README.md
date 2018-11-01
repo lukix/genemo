@@ -23,6 +23,7 @@ Meaning of types *Population*, *EvaluatedPopulation*, *Individual* is described 
 | `reproduce`                 | `(EvaluatedPopulation) => Population`              | Creates new population from the selected individuals.      |
 | `fitness`                   | `(Individual) => number`                           | Evaluates an individual (chromosome).                      |
 | `stopCondition`             | `({ evaluatedPopulation, generation }) => boolean` | Returning `true` terminates an algorithm.                  |
+| `combineWithPrev`           | `({ prevPopulation, childrenPopulation }) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
 
 `GMO.runEvolution` returns an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
 
@@ -115,3 +116,10 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
 
     Swaps places of two randomly chosen genes (array elements).
     This function can be used as an argument for `GMO.mutation.transformRandomGene`.
+
+### Elitism
+- **`GMO.elitism({ keepFactor, minimalizeFitness })`**
+
+    Returns a function that can be used as a `combineWithPrev` parameter for `GMO.runEvolution`.
+    `keepFactor` is a number from 0 to 1 describing what part of best individuals should be kept unchanged.
+    `minimalizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
