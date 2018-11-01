@@ -1,21 +1,21 @@
 const randomFromRange = require('./utils/randomFromRange');
 
-const getRandomIndividual = (population) => {
-  const index = randomFromRange(0, population.length - 1);
+const getRandomIndividual = (population, random) => {
+  const index = randomFromRange(random)(0, population.length - 1);
   return population[index];
 };
 
 const reproduce = ({
-  mutate, // individual => individual
-  crossover, // ([individual, individual]) => [individual, individual]
+  mutate, // (individual, random) => individual
+  crossover, // ([individual, individual], random) => [individual, individual]
   mutationProbability = 0.01,
-}) => (evaluatedPopulation) => {
+}) => (evaluatedPopulation, random) => {
   const targetPopulationSize = evaluatedPopulation.length;
   const newPopulation = [];
   while (newPopulation.length < targetPopulationSize) {
-    const mother = getRandomIndividual(evaluatedPopulation).individual;
-    const father = getRandomIndividual(evaluatedPopulation).individual;
-    const [daughter, son] = crossover([mother, father]);
+    const mother = getRandomIndividual(evaluatedPopulation, random).individual;
+    const father = getRandomIndividual(evaluatedPopulation, random).individual;
+    const [daughter, son] = crossover([mother, father], random);
     newPopulation.push(daughter, son);
   }
 
@@ -23,14 +23,14 @@ const reproduce = ({
     newPopulation.pop();
   }
 
-  if (Math.random() <= mutationProbability) {
-    const randomIndex = randomFromRange(0, newPopulation.length - 1);
-    newPopulation[randomIndex] = mutate(newPopulation[randomIndex]);
+  if (random() <= mutationProbability) {
+    const randomIndex = randomFromRange(random)(0, newPopulation.length - 1);
+    newPopulation[randomIndex] = mutate(newPopulation[randomIndex], random);
   }
 
   const mutatedPopulation = newPopulation.map(individual => (
-    Math.random() <= mutationProbability
-      ? mutate(individual)
+    random() <= mutationProbability
+      ? mutate(individual, random)
       : individual
   ));
 
