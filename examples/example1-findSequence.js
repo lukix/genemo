@@ -7,7 +7,7 @@ const generateIndividual = GMO.randomSequenceOf([true, false], 50);
 
 // This is an ideal individual. We want our genetic algorithm to came up with
 // an individual (solution) which is as similar to targetIndividual as possible.
-const targetIndividual = generateIndividual();
+const targetIndividual = generateIndividual(Math.random);
 
 // Fitness function evaluates how good an individual (solution) is.
 // In our case it will be a number of identical genes between targetIndividual
