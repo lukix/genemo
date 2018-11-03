@@ -7,7 +7,7 @@ const pushAndReturnArray = (array, elements) => {
 };
 
 const singlePoint = ([mother, father], random) => {
-  const cutPoint = randomFromRange(random)(1, mother.length - 2);
+  const cutPoint = randomFromRange(random)(0, mother.length - 1);
   const son = pushAndReturnArray(mother.slice(0, cutPoint), father.slice(cutPoint));
   const daughter = pushAndReturnArray(father.slice(0, cutPoint), mother.slice(cutPoint));
   return [son, daughter];
