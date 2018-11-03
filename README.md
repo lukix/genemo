@@ -14,29 +14,31 @@ const result = GMO.runEvolution(options);
 `options` is an object which specifies genetic operators (functions) used in a genetic algorithm.
 The table below describes all properties you need to pass with `options` object.
 All options are required, but for most of them you can use an existing function from the library.
-Meaning of types *Population*, *EvaluatedPopulation*, *Individual* is described later in this document.
+Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is described later in this document.
 
 | Property                    | Signature                                          | Description                                                |
 |-----------------------------|----------------------------------------------------|------------------------------------------------------------|
-| `generateInitialPopulation` | `() => Population`                                 | Generates initial population of individuals (chromosomes). |
-| `selection`                 | `(EvaluatedPopulation) => EvaluatedPopulation`     | Selects individuals for breeding.                          |
-| `reproduce`                 | `(EvaluatedPopulation) => Population`              | Creates new population from the selected individuals.      |
+| `generateInitialPopulation` | `(Rng) => Population`                                 | Generates initial population of individuals (chromosomes). |
+| `selection`                 | `(EvaluatedPopulation, Rng) => EvaluatedPopulation`     | Selects individuals for breeding.                          |
+| `reproduce`                 | `(EvaluatedPopulation, Rng) => Population`              | Creates new population from the selected individuals.      |
 | `fitness`                   | `(Individual) => number`                           | Evaluates an individual (chromosome).                      |
-| `stopCondition`             | `({ evaluatedPopulation, generation }) => boolean` | Returning `true` terminates an algorithm.                  |
-| `succession`                | `({ prevPopulation, childrenPopulation }) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
+| `stopCondition`             | `({ evaluatedPopulation, generation }, Rng) => boolean` | Returning `true` terminates an algorithm.                  |
+| `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
+| `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1. If not provided, `Math.random` will be used.                 |
 
 `GMO.runEvolution` returns an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
 
 If you need more control over execution of the algorithm, you can use *generator* `GMO.getGenerationsIterator`.
 
 ### Types
-When reading this documentation, you will encounter three special types:
+When reading this documentation, you will encounter the following types:
 
 | Type                  | Translates to                                       | Description                                                    |
 |-----------------------|-----------------------------------------------------|----------------------------------------------------------------|
 | `Individual`          | `Any`                                               | Represents a single individual/chromosome.                     |
 | `Population`          | `Array<Individual>`                                 | Array of individuals makes a population.                       |
 | `EvaluatedPopulation` | `Array<{ fitness: number, indvidual: Individual }>` | Array of objects containing an `individual` and its `fitness`. |
+| `Rng` | `() => number` | Function, which returns random values between 0 and 1. |
 
 ### Example usage
 Full examples with comments can be found in the `./examples` directory. Here is a shorter version:
@@ -107,6 +109,7 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
 - **`GMO.mutation.transformRandomGene(transformFunc)`**
 
     Returns a function that can be used as a `mutation` parameter for `GMO.runEvolution`.
+    `transformFunc(gene, random)` is a function, which takes a single gene and a random number generator and returns a new gene.
 
 - **`GMO.mutation.flipBit`**
 

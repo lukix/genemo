@@ -1,7 +1,7 @@
 const generateInitialPopulation = ({
   generateIndividual,
   size,
-}) => () => Array(size).fill().map(generateIndividual);
+}) => random => Array(size).fill().map(() => generateIndividual(random));
 
 module.exports = {
   generateInitialPopulation,

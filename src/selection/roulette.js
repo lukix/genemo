@@ -1,7 +1,7 @@
 const R = require('ramda');
 const binaryRangeSearch = require('../utils/binaryRangeSearch');
 
-const rouletteSelection = (evaluatedPopulation) => {
+const rouletteSelection = (evaluatedPopulation, random) => {
   const cumulativeFitness = R.scan(
     (prev, currIndividual) => ({
       evaluatedIndividual: currIndividual,
@@ -18,7 +18,7 @@ const rouletteSelection = (evaluatedPopulation) => {
   ));
 
   return new Array(evaluatedPopulation.length).fill().map(() => {
-    const randomValue = Math.random();
+    const randomValue = random();
     const compare = element => randomValue < element.cumulativeFitness;
     return binaryRangeSearch(normalizedCumulativeFitness, compare).evaluatedIndividual;
   });
