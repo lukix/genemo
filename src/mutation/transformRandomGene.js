@@ -4,7 +4,7 @@ const transformRandomGene = transformFunc => (individual, random) => {
 
   // Modifying an array in order to increase performance
   // eslint-disable-next-line no-param-reassign
-  individual[mutationPoint] = transformFunc(individual[mutationPoint]);
+  individual[mutationPoint] = transformFunc(individual[mutationPoint], random);
   return individual;
 };
 
