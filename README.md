@@ -83,6 +83,7 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
     **Returns** a function that can be used as a `selection` parameter for `GMO.runEvolution`.
     `tournamentSize` is a number describing how many individuals take part in a tournament.
     `minimalizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
+
 ### Crossover
 - **`GMO.crossover.singlePoint`**
 

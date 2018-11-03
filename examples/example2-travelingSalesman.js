@@ -1,9 +1,8 @@
-const shuffle = require('shuffle-array');
 const GMO = require('../lib');
 const distances = require('./data/distances17.json');
 
 const cities = [...Array(distances.length).keys()];
-const generateIndividual = () => shuffle(cities, { copy: true });
+const generateIndividual = GMO.randomPermutationOf(cities);
 
 // Fitness is measured as a path total length
 const fitnessFunction = (individual) => {
