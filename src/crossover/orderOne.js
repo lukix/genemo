@@ -32,3 +32,4 @@ const orderOne = ([mother, father], random) => {
 };
 
 module.exports = orderOne;
+module.exports.createChildUsingOrderOneCrossover = createChildUsingOrderOneCrossover;
