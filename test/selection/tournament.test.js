@@ -1,0 +1,68 @@
+const GMO = require('../../lib');
+const cyclicProvider = require('../utils/cyclicProvider');
+
+// Common inputs
+const evaluatedPopulation = [
+  { fitness: 0 },
+  { fitness: -100 },
+  { fitness: 2 },
+  { fitness: 2 },
+  { fitness: -3.1 },
+];
+
+
+describe('tournament', () => {
+  test('Returns correct parents population (maximization)', () => {
+    // Input
+    const tournamentSelection = GMO.selection.tournament({
+      size: 3,
+      minimalizeFitness: false,
+    });
+    const random = cyclicProvider([
+      0.0, 0.2, 0.4,
+      0.39, 0.39, 0.6,
+      0.99, 0.0, 0.2,
+      0.0, 0.0, 0.0,
+      0.99, 0.99, 1.0 - Number.EPSILON,
+    ]);
+
+    // Expected result
+    const offspring = [
+      { fitness: 2 },
+      { fitness: 2 },
+      { fitness: 0 },
+      { fitness: 0 },
+      { fitness: -3.1 },
+    ];
+
+    const result = tournamentSelection(evaluatedPopulation, random);
+    expect(result).toStrictEqual(offspring);
+  });
+
+  test('Returns correct parents population (minimization)', () => {
+    // Input
+    const tournamentSelection = GMO.selection.tournament({
+      size: 3,
+      minimalizeFitness: true,
+    });
+    const random = cyclicProvider([
+      0.0, 0.2, 0.4,
+      0.39, 0.39, 0.6,
+      0.99, 0.0, 0.2,
+      0.0, 0.0, 0.0,
+      0.99, 0.99, 1.0 - Number.EPSILON,
+    ]);
+
+    // Expected result
+    const offspring = [
+      { fitness: -100 },
+      { fitness: -100 },
+      { fitness: -100 },
+      { fitness: 0 },
+      { fitness: -3.1 },
+    ];
+
+    const result = tournamentSelection(evaluatedPopulation, random);
+    expect(result).toStrictEqual(offspring);
+  });
+});

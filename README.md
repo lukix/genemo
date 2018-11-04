@@ -24,7 +24,7 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | `fitness`                   | `(Individual) => number`                           | Evaluates an individual (chromosome).                      |
 | `stopCondition`             | `({ evaluatedPopulation, generation }, Rng) => boolean` | Returning `true` terminates an algorithm.                  |
 | `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
-| `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1. If not provided, `Math.random` will be used.                 |
+| `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
 
 `GMO.runEvolution` returns an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
 
@@ -38,7 +38,7 @@ When reading this documentation, you will encounter the following types:
 | `Individual`          | `Any`                                               | Represents a single individual/chromosome.                     |
 | `Population`          | `Array<Individual>`                                 | Array of individuals makes a population.                       |
 | `EvaluatedPopulation` | `Array<{ fitness: number, indvidual: Individual }>` | Array of objects containing an `individual` and its `fitness`. |
-| `Rng` | `() => number` | Function, which returns random values between 0 and 1. |
+| `Rng` | `() => number` | Function, which returns random values between 0 and 1 (inclusive of 0, but not 1). |
 
 ### Example usage
 Full examples with comments can be found in the `./examples` directory. Here is a shorter version:
@@ -78,10 +78,10 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
     Function that can be used as a `selection` parameter for `GMO.runEvolution`.
     **Currently, it works only for maximization problems and positive fitness values!**
 
-- **`GMO.selection.tournament({ tournamentSize, minimalizeFitness })`**
+- **`GMO.selection.tournament({ size, minimalizeFitness })`**
 
     **Returns** a function that can be used as a `selection` parameter for `GMO.runEvolution`.
-    `tournamentSize` is a number describing how many individuals take part in a tournament.
+    `size` is a number describing how many individuals take part in a tournament.
     `minimalizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
 
 ### Crossover
