@@ -62,7 +62,7 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
 ### General
 - **`GMO.generateInitialPopulation({ generateIndividual, size })`**
 
-    Returns a function with a signature matching that of `generateInitialPopulation` property of `GMO.runEvolution` options object.
+    Returns a function with a signature matching that of `generateInitialPopulation` property of `GMO.runEvolution` options object. Parameter `generateIndividual` should be a function which takes one parameter (random number generator) and returns a random individual.
 
 - **`GMO.reproduce({ crossover, mutate, mutationProbability })`**
 
@@ -127,3 +127,12 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
     Returns a function that can be used as a `succession` parameter for `GMO.runEvolution`.
     `keepFactor` is a number from 0 to 1 describing what part of best individuals should be kept unchanged.
     `minimalizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
+
+### Other useful functions
+- **`GMO.randomSequenceOf(valuesSet, length)`**
+
+    Returns a function which takes a random number generator and returns an array of random elements from `valuesSet` of length equal to `length`. Returned function can be used as a `generateIndividual` parameter for `GMO.generateInitialPopulation`.
+
+- **`GMO.randomPermutationOf(valuesSet)`**
+
+    Returns a function which takes a random number generator and returns a random permutation of elements from `valuesSet`. Returned function can be used as a `generateIndividual` parameter for `GMO.generateInitialPopulation`.
