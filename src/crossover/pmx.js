@@ -59,3 +59,4 @@ const PMX = ([mother, father], random) => {
 };
 
 module.exports = PMX;
+module.exports.createChildUsingPMXCrossover = createChildUsingPMXCrossover;
