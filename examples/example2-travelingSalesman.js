@@ -20,7 +20,7 @@ const evolutionOptions = {
     generateIndividual,
     size: 250,
   }),
-  selection: GMO.selection.tournament({ tournamentSize: 3, minimalizeFitness: true }),
+  selection: GMO.selection.tournament({ size: 3, minimizeFitness: true }),
   reproduce: GMO.reproduce({
     crossover: GMO.crossover.orderOne,
     mutate: GMO.mutation.swapTwoGenes,

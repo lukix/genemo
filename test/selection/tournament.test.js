@@ -16,7 +16,7 @@ describe('tournament', () => {
     // Input
     const tournamentSelection = GMO.selection.tournament({
       size: 3,
-      minimalizeFitness: false,
+      minimizeFitness: false,
     });
     const random = cyclicProvider([
       0.0, 0.2, 0.4,
@@ -43,7 +43,7 @@ describe('tournament', () => {
     // Input
     const tournamentSelection = GMO.selection.tournament({
       size: 3,
-      minimalizeFitness: true,
+      minimizeFitness: true,
     });
     const random = cyclicProvider([
       0.0, 0.2, 0.4,

@@ -78,11 +78,11 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
     Function that can be used as a `selection` parameter for `GMO.runEvolution`.
     **Currently, it works only for maximization problems and positive fitness values!**
 
-- **`GMO.selection.tournament({ size, minimalizeFitness })`**
+- **`GMO.selection.tournament({ size, minimizeFitness })`**
 
     **Returns** a function that can be used as a `selection` parameter for `GMO.runEvolution`.
     `size` is a number describing how many individuals take part in a tournament.
-    `minimalizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
+    `minimizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
 
 ### Crossover
 - **`GMO.crossover.singlePoint`**
@@ -122,11 +122,11 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
     This function can be used as an argument for `GMO.mutation.transformRandomGene`.
 
 ### Elitism
-- **`GMO.elitism({ keepFactor, minimalizeFitness })`**
+- **`GMO.elitism({ keepFactor, minimizeFitness })`**
 
     Returns a function that can be used as a `succession` parameter for `GMO.runEvolution`.
     `keepFactor` is a number from 0 to 1 describing what part of best individuals should be kept unchanged.
-    `minimalizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
+    `minimizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
 
 ### Other useful functions
 - **`GMO.randomSequenceOf(valuesSet, length)`**
