@@ -1,6 +1,6 @@
 const GMO = require('../../lib');
 const { createChildUsingOrderOneCrossover } = require('../../lib/crossover/orderOne');
-const cyclicProvider = require('../utils/cyclicProvider');
+const cyclicProvider = require('../test-utils/cyclicProvider');
 
 // Common inputs
 const mother = [8, 4, 7, 3, 6, 2, 5, 1, 9, 0];
