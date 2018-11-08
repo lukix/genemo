@@ -30,7 +30,7 @@ const evolutionOptions = {
 
   // Selection function chooses individuals from population for breeding
   // Let's use a very common selection method - roulette selection.
-  selection: GMO.selection.roulette,
+  selection: GMO.selection.roulette(),
 
   // A function, which creates a new population from the selected individuals from the previous one.
   // Usually consists of crossover and mutation.

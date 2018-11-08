@@ -45,10 +45,10 @@ Full examples with comments can be found in the `./examples` directory. Here is 
 ```javascript
 const { evaluatedPopulation, generation } = GMO.runEvolution({
   generateInitialPopulation: GMO.generateInitialPopulation({
-    generateIndividual,
+    generateIndividual, // Here, provide a function which generates an individual
     size: 500,
   }),
-  selection: GMO.selection.roulette,
+  selection: GMO.selection.roulette(),
   reproduce: GMO.reproduce({
     crossover: GMO.crossover.singlePoint,
     mutate: GMO.mutation.transformRandomGene(GMO.mutation.flipBit),
@@ -73,16 +73,16 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
     Returns a function with a signature matching that of `stopCondition` property of `GMO.runEvolution` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
 
 ### Selection
-- **`GMO.selection.roulette`**
+- **`GMO.selection.roulette({ minimizeFitness })`**
 
-    Function that can be used as a `selection` parameter for `GMO.runEvolution`.
-    **Currently, it works only for maximization problems and positive fitness values!**
+    Returns a function that can be used as a `selection` parameter for `GMO.runEvolution`.
+    `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness. Defaults to `false`.
 
 - **`GMO.selection.tournament({ size, minimizeFitness })`**
 
-    **Returns** a function that can be used as a `selection` parameter for `GMO.runEvolution`.
+    Returns a function that can be used as a `selection` parameter for `GMO.runEvolution`.
     `size` is a number describing how many individuals take part in a tournament.
-    `minimizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
+    `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness.
 
 ### Crossover
 - **`GMO.crossover.singlePoint`**
@@ -126,7 +126,7 @@ const { evaluatedPopulation, generation } = GMO.runEvolution({
 
     Returns a function that can be used as a `succession` parameter for `GMO.runEvolution`.
     `keepFactor` is a number from 0 to 1 describing what part of best individuals should be kept unchanged.
-    `minimizeFitness` is a boolean value indicating if we are aiming at minimalizing or maximalizing fitness.
+    `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness.
 
 ### Other useful functions
 - **`GMO.randomSequenceOf(valuesSet, length)`**

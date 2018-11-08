@@ -3,10 +3,10 @@ const cyclicProvider = require('../utils/cyclicProvider');
 
 // Common inputs
 const evaluatedPopulation = [
-  { fitness: 1 },
-  { fitness: 3.5 },
-  { fitness: 1.5 },
-  { fitness: 3.9 },
+  { fitness: 1.2 },
+  { fitness: 3.6 },
+  { fitness: 1.6 },
+  { fitness: 4 },
   { fitness: 0.1 },
 ];
 
@@ -24,14 +24,37 @@ describe('roulette', () => {
 
     // Expected result
     const offspring = [
-      { fitness: 1 },
-      { fitness: 0.1 },
-      { fitness: 1.5 },
-      { fitness: 3.9 },
-      { fitness: 3.9 },
+      { fitness: 1.2 },
+      { fitness: 4 },
+      { fitness: 1.6 },
+      { fitness: 4 },
+      { fitness: 4 },
     ];
 
-    const result = GMO.selection.roulette(evaluatedPopulation, random);
+    const result = GMO.selection.roulette({ minimizeFitness: false })(evaluatedPopulation, random);
+    expect(result).toStrictEqual(offspring);
+  });
+
+  test('Returns correct parents population (minimization)', () => {
+    // Input
+    const random = cyclicProvider([
+      0.0,
+      0.99,
+      0.5,
+      0.7,
+      0.98,
+    ]);
+
+    // Expected result
+    const offspring = [
+      { fitness: 1.2 },
+      { fitness: 0.1 },
+      { fitness: 1.6 },
+      { fitness: 0.1 },
+      { fitness: 0.1 },
+    ];
+
+    const result = GMO.selection.roulette({ minimizeFitness: true })(evaluatedPopulation, random);
     expect(result).toStrictEqual(offspring);
   });
 });
