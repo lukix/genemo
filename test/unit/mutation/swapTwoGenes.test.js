@@ -1,5 +1,5 @@
-const GMO = require('../../lib');
-const cyclicProvider = require('../test-utils/cyclicProvider');
+const GMO = require('../../../lib');
+const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 
 describe('swapTwoGenes', () => {

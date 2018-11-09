@@ -1,5 +1,5 @@
-const GMO = require('../../lib');
-const cyclicProvider = require('../test-utils/cyclicProvider');
+const GMO = require('../../../lib');
+const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs
 const mother = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
