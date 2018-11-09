@@ -13,12 +13,10 @@ const targetIndividual = generateIndividual(Math.random);
 // In our case it will be a number of identical genes between targetIndividual
 // and the individual we are evaluating.
 const fitnessFunction = (individual) => {
-  const similarity = individual.reduce((sum, element, index) => (
-    element === targetIndividual[index]
-      ? sum + 1
-      : sum
-  ), 0);
-  return similarity;
+  const matchingElements = individual.filter(
+    (element, index) => element === targetIndividual[index],
+  );
+  return matchingElements.length;
 };
 
 const evolutionOptions = {
