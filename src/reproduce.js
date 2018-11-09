@@ -1,11 +1,13 @@
+const Joi = require('joi');
 const randomFromRange = require('./utils/randomFromRange');
+const { withPropsChecking } = require('./utils/typeChecking');
 
 const getRandomIndividual = (population, random) => {
   const index = randomFromRange(random)(0, population.length - 1);
   return population[index];
 };
 
-const reproduce = ({
+const reproduce = withPropsChecking('GMO.reproduce', ({
   mutate, // (individual, random) => individual
   crossover, // ([individual, individual], random) => [individual, individual]
   mutationProbability = 0.01,
@@ -35,7 +37,11 @@ const reproduce = ({
   ));
 
   return mutatedPopulation;
-};
+})({
+  mutate: Joi.func().maxArity(2).required(),
+  crossover: Joi.func().maxArity(2).required(),
+  mutationProbability: Joi.number().min(0).max(1),
+});
 
 module.exports = {
   reproduce,
