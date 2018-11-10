@@ -1,9 +1,9 @@
-const GMO = require('../lib');
+const Genemo = require('../lib');
 
 // Function for creating random individual (chromosome).
 // An individual is represented by an array with 50 values (genes),
 // each being true or false.
-const generateIndividual = GMO.randomSequenceOf([true, false], 50);
+const generateIndividual = Genemo.randomSequenceOf([true, false], 50);
 
 // This is an ideal individual. We want our genetic algorithm to came up with
 // an individual (solution) which is as similar to targetIndividual as possible.
@@ -21,20 +21,20 @@ const fitnessFunction = (individual) => {
 
 const evolutionOptions = {
   // Initial population consists of 500 random individuals (chromosomes).
-  generateInitialPopulation: GMO.generateInitialPopulation({
+  generateInitialPopulation: Genemo.generateInitialPopulation({
     generateIndividual,
     size: 500,
   }),
 
   // Selection function chooses individuals from population for breeding
   // Let's use a very common selection method - roulette selection.
-  selection: GMO.selection.roulette(),
+  selection: Genemo.selection.roulette(),
 
   // A function, which creates a new population from the selected individuals from the previous one.
   // Usually consists of crossover and mutation.
-  reproduce: GMO.reproduce({
-    crossover: GMO.crossover.singlePoint,
-    mutate: GMO.mutation.transformRandomGene(GMO.mutation.flipBit),
+  reproduce: Genemo.reproduce({
+    crossover: Genemo.crossover.singlePoint,
+    mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
     mutationProbability: 0.01,
   }),
 
@@ -42,12 +42,12 @@ const evolutionOptions = {
   fitness: fitnessFunction,
 
   // Let's stop our algorithm when some individual reaches fitness >= 50 or after 1000 generations.
-  stopCondition: GMO.stopCondition({ minFitness: 50, maxGenerations: 5000 }),
+  stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 5000 }),
 };
 
 // Run genetic algorithm
 console.time('Execution time:');
-const lastGeneration = GMO.runEvolution(evolutionOptions);
+const lastGeneration = Genemo.runEvolution(evolutionOptions);
 console.timeEnd('Execution time:');
 
 const { evaluatedPopulation, generation } = lastGeneration;

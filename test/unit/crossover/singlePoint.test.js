@@ -1,4 +1,4 @@
-const GMO = require('../../../lib');
+const Genemo = require('../../../lib');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs
@@ -16,7 +16,7 @@ describe('Single-point crossover', () => {
       [11, 21, 31, 41, 50, 60, 70, 80, 90, 100],
     ];
 
-    const result = GMO.crossover.singlePoint([mother, father], random);
+    const result = Genemo.crossover.singlePoint([mother, father], random);
     expect(result).toStrictEqual(offsprings);
   });
 
@@ -30,7 +30,7 @@ describe('Single-point crossover', () => {
       [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     ];
 
-    const result = GMO.crossover.singlePoint([mother, father], random);
+    const result = Genemo.crossover.singlePoint([mother, father], random);
     expect(result).toStrictEqual(offsprings);
   });
 
@@ -44,7 +44,7 @@ describe('Single-point crossover', () => {
       [11, 21, 31, 41, 51, 61, 71, 81, 91, 101],
     ];
 
-    const result = GMO.crossover.singlePoint([mother, father], random);
+    const result = Genemo.crossover.singlePoint([mother, father], random);
     expect(result).toStrictEqual(offsprings);
   });
 });

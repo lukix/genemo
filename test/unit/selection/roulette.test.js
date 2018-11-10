@@ -1,4 +1,4 @@
-const GMO = require('../../../lib');
+const Genemo = require('../../../lib');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs
@@ -31,7 +31,8 @@ describe('roulette', () => {
       { fitness: 4 },
     ];
 
-    const result = GMO.selection.roulette({ minimizeFitness: false })(evaluatedPopulation, random);
+    const roulette = Genemo.selection.roulette({ minimizeFitness: false });
+    const result = roulette(evaluatedPopulation, random);
     expect(result).toStrictEqual(offspring);
   });
 
@@ -54,7 +55,8 @@ describe('roulette', () => {
       { fitness: 0.1 },
     ];
 
-    const result = GMO.selection.roulette({ minimizeFitness: true })(evaluatedPopulation, random);
+    const roulette = Genemo.selection.roulette({ minimizeFitness: true });
+    const result = roulette(evaluatedPopulation, random);
     expect(result).toStrictEqual(offspring);
   });
 
@@ -84,7 +86,7 @@ describe('roulette', () => {
       { fitness: 2, individual: 'E' },
     ];
 
-    const roulette = GMO.selection.roulette({ minimizeFitness: true });
+    const roulette = Genemo.selection.roulette({ minimizeFitness: true });
     const result = roulette(evaluatedPopulationWithUniformFitnesses, random);
     expect(result).toStrictEqual(offspring);
   });
@@ -118,7 +120,7 @@ describe('roulette', () => {
       { fitness: 2, individual: 'D' },
     ];
 
-    const roulette = GMO.selection.roulette({ minimizeFitness: false });
+    const roulette = Genemo.selection.roulette({ minimizeFitness: false });
     const result = roulette(evaluatedPopulationWithUniformFitnesses, random);
     expect(result).toStrictEqual(offspring);
   });

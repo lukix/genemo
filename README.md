@@ -1,15 +1,15 @@
-# GMO - Genetic Algorithm Library
+# GeneMO - Genetic Algorithm Library
 Simple to use genetic algorithm library with many predefined operators.
 
 ## Installation
 ```bash
-npm install --save gmo-genetic-algorithm
+npm i genemo
 ```
 
 ## Getting Started
 To start a genetic algorithm use this function:
 ```javascript
-const result = GMO.runEvolution(options);
+const result = Genemo.runEvolution(options);
 ```
 `options` is an object which specifies genetic operators (functions) used in a genetic algorithm.
 The table below describes all properties you need to pass with `options` object.
@@ -26,9 +26,9 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
 | `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
 
-`GMO.runEvolution` returns an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
+`Genemo.runEvolution` returns an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
 
-If you need more control over execution of the algorithm, you can use *generator* `GMO.getGenerationsIterator`.
+If you need more control over execution of the algorithm, you can use *generator* `Genemo.getGenerationsIterator`.
 
 ### Types
 When reading this documentation, you will encounter the following types:
@@ -43,96 +43,96 @@ When reading this documentation, you will encounter the following types:
 ### Example usage
 Full examples with comments can be found in the `./examples` directory. Here is a shorter version:
 ```javascript
-const { evaluatedPopulation, generation } = GMO.runEvolution({
-  generateInitialPopulation: GMO.generateInitialPopulation({
+const { evaluatedPopulation, generation } = Genemo.runEvolution({
+  generateInitialPopulation: Genemo.generateInitialPopulation({
     generateIndividual, // Here, provide a function which generates an individual
     size: 500,
   }),
-  selection: GMO.selection.roulette(),
-  reproduce: GMO.reproduce({
-    crossover: GMO.crossover.singlePoint,
-    mutate: GMO.mutation.transformRandomGene(GMO.mutation.flipBit),
+  selection: Genemo.selection.roulette(),
+  reproduce: Genemo.reproduce({
+    crossover: Genemo.crossover.singlePoint,
+    mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
     mutationProbability: 0.01,
   }),
   fitness: fitnessFunction, // You need to provide your own fitness function
-  stopCondition: GMO.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
+  stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
 });
 ```
 ## Predefined operators
 ### General
-- **`GMO.generateInitialPopulation({ generateIndividual, size })`**
+- **`Genemo.generateInitialPopulation({ generateIndividual, size })`**
 
-    Returns a function with a signature matching that of `generateInitialPopulation` property of `GMO.runEvolution` options object. Parameter `generateIndividual` should be a function which takes one parameter (random number generator) and returns a random individual.
+    Returns a function with a signature matching that of `generateInitialPopulation` property of `Genemo.runEvolution` options object. Parameter `generateIndividual` should be a function which takes one parameter (random number generator) and returns a random individual.
 
-- **`GMO.reproduce({ crossover, mutate, mutationProbability })`**
+- **`Genemo.reproduce({ crossover, mutate, mutationProbability })`**
 
-    Returns a function with a signature matching that of `reproduce` property of `GMO.runEvolution` options object.
+    Returns a function with a signature matching that of `reproduce` property of `Genemo.runEvolution` options object.
 
-- **`GMO.stopCondition({ minFitness, maxFitness, maxGenerations })`**
+- **`Genemo.stopCondition({ minFitness, maxFitness, maxGenerations })`**
 
-    Returns a function with a signature matching that of `stopCondition` property of `GMO.runEvolution` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
+    Returns a function with a signature matching that of `stopCondition` property of `Genemo.runEvolution` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
 
 ### Selection
-- **`GMO.selection.roulette({ minimizeFitness })`**
+- **`Genemo.selection.roulette({ minimizeFitness })`**
 
-    Returns a function that can be used as a `selection` parameter for `GMO.runEvolution`.
+    Returns a function that can be used as a `selection` parameter for `Genemo.runEvolution`.
     `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness. Defaults to `false`.
 
-- **`GMO.selection.tournament({ size, minimizeFitness })`**
+- **`Genemo.selection.tournament({ size, minimizeFitness })`**
 
-    Returns a function that can be used as a `selection` parameter for `GMO.runEvolution`.
+    Returns a function that can be used as a `selection` parameter for `Genemo.runEvolution`.
     `size` is a number describing how many individuals take part in a tournament.
     `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness.
 
 ### Crossover
-- **`GMO.crossover.singlePoint`**
+- **`Genemo.crossover.singlePoint`**
 
-    Function that can be used as a `crossover` parameter for `GMO.reproduce`.
+    Function that can be used as a `crossover` parameter for `Genemo.reproduce`.
 
-- **`GMO.crossover.twoPoint`**
+- **`Genemo.crossover.twoPoint`**
 
-    Function that can be used as a `crossover` parameter for `GMO.reproduce`.
+    Function that can be used as a `crossover` parameter for `Genemo.reproduce`.
 
-- **`GMO.crossover.kPoint(k)`**
+- **`Genemo.crossover.kPoint(k)`**
 
-    **Returns** a function that can be used as a `crossover` parameter for `GMO.reproduce`.
+    **Returns** a function that can be used as a `crossover` parameter for `Genemo.reproduce`.
 
-- **`GMO.crossover.orderOne`**
+- **`Genemo.crossover.orderOne`**
 
-    **Returns** a function that can be used as a `crossover` parameter for `GMO.reproduce`.
+    **Returns** a function that can be used as a `crossover` parameter for `Genemo.reproduce`.
 
-- **`GMO.crossover.PMX`**
+- **`Genemo.crossover.PMX`**
 
     Partially-mapped crossover.
-    **Returns** a function that can be used as a `crossover` parameter for `GMO.reproduce`.
+    **Returns** a function that can be used as a `crossover` parameter for `Genemo.reproduce`.
 
 ### Mutation
-- **`GMO.mutation.transformRandomGene(transformFunc)`**
+- **`Genemo.mutation.transformRandomGene(transformFunc)`**
 
-    Returns a function that can be used as a `mutation` parameter for `GMO.runEvolution`.
+    Returns a function that can be used as a `mutation` parameter for `Genemo.runEvolution`.
     `transformFunc(gene, random)` is a function, which takes a single gene and a random number generator and returns a new gene.
 
-- **`GMO.mutation.flipBit`**
+- **`Genemo.mutation.flipBit`**
 
-    Function that can be used as an argument for `GMO.mutation.transformRandomGene`.
+    Function that can be used as an argument for `Genemo.mutation.transformRandomGene`.
 
-- **`GMO.mutation.swapTwoGenes`**
+- **`Genemo.mutation.swapTwoGenes`**
 
     Swaps places of two randomly chosen genes (array elements).
-    This function can be used as an argument for `GMO.mutation.transformRandomGene`.
+    This function can be used as an argument for `Genemo.mutation.transformRandomGene`.
 
 ### Elitism
-- **`GMO.elitism({ keepFactor, minimizeFitness })`**
+- **`Genemo.elitism({ keepFactor, minimizeFitness })`**
 
-    Returns a function that can be used as a `succession` parameter for `GMO.runEvolution`.
+    Returns a function that can be used as a `succession` parameter for `Genemo.runEvolution`.
     `keepFactor` is a number from 0 to 1 describing what part of best individuals should be kept unchanged.
     `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness.
 
 ### Other useful functions
-- **`GMO.randomSequenceOf(valuesSet, length)`**
+- **`Genemo.randomSequenceOf(valuesSet, length)`**
 
-    Returns a function which takes a random number generator and returns an array of random elements from `valuesSet` of length equal to `length`. Returned function can be used as a `generateIndividual` parameter for `GMO.generateInitialPopulation`.
+    Returns a function which takes a random number generator and returns an array of random elements from `valuesSet` of length equal to `length`. Returned function can be used as a `generateIndividual` parameter for `Genemo.generateInitialPopulation`.
 
-- **`GMO.randomPermutationOf(valuesSet)`**
+- **`Genemo.randomPermutationOf(valuesSet)`**
 
-    Returns a function which takes a random number generator and returns a random permutation of elements from `valuesSet`. Returned function can be used as a `generateIndividual` parameter for `GMO.generateInitialPopulation`.
+    Returns a function which takes a random number generator and returns a random permutation of elements from `valuesSet`. Returned function can be used as a `generateIndividual` parameter for `Genemo.generateInitialPopulation`.

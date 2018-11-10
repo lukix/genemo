@@ -16,7 +16,7 @@ const evaluatePopulation = (population, fitnessFunc) => population.map(individua
   fitness: fitnessFunc(individual),
 }));
 
-const getGenerationsIterator = withPropsChecking('GMO.getGenerationsIterator', function* ({
+const getGenerationsIterator = withPropsChecking('Genemo.getGenerationsIterator', function* ({
   generateInitialPopulation,
   selection,
   reproduce,
@@ -55,7 +55,7 @@ const getGenerationsIterator = withPropsChecking('GMO.getGenerationsIterator', f
  *
  * @returns {{ evaluatedPopulation: Array<Object>, generation: number }} Last generation information
  */
-const runEvolution = withPropsChecking('GMO.runEvolution', ({
+const runEvolution = withPropsChecking('Genemo.runEvolution', ({
   generateInitialPopulation,
   selection,
   reproduce,
