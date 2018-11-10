@@ -1,4 +1,4 @@
-const GMO = require('../../../lib');
+const Genemo = require('../../../lib');
 const { createChildUsingPMXCrossover } = require('../../../lib/crossover/pmx');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
@@ -32,7 +32,7 @@ describe('PMX crossover', () => {
       [8, 2, 1, 3, 4, 5, 6, 7, 9, 0],
     ];
 
-    const result = GMO.crossover.PMX([mother, father], random);
+    const result = Genemo.crossover.PMX([mother, father], random);
     expect(result).toStrictEqual(offsprings);
   });
 });

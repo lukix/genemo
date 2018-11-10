@@ -1,8 +1,8 @@
-const GMO = require('../lib');
+const Genemo = require('../lib');
 const distances = require('./data/distances17.json');
 
 const cities = [...Array(distances.length).keys()];
-const generateIndividual = GMO.randomPermutationOf(cities);
+const generateIndividual = Genemo.randomPermutationOf(cities);
 
 // Fitness is measured as a path total length
 const fitnessFunction = (individual) => {
@@ -16,23 +16,23 @@ const fitnessFunction = (individual) => {
 };
 
 const evolutionOptions = {
-  generateInitialPopulation: GMO.generateInitialPopulation({
+  generateInitialPopulation: Genemo.generateInitialPopulation({
     generateIndividual,
     size: 250,
   }),
-  selection: GMO.selection.tournament({ size: 3, minimizeFitness: true }),
-  reproduce: GMO.reproduce({
-    crossover: GMO.crossover.orderOne,
-    mutate: GMO.mutation.swapTwoGenes,
+  selection: Genemo.selection.tournament({ size: 3, minimizeFitness: true }),
+  reproduce: Genemo.reproduce({
+    crossover: Genemo.crossover.orderOne,
+    mutate: Genemo.mutation.swapTwoGenes,
     mutationProbability: 0.02,
   }),
   fitness: fitnessFunction,
-  stopCondition: GMO.stopCondition({ maxFitness: 2085, maxGenerations: 1000 }),
+  stopCondition: Genemo.stopCondition({ maxFitness: 2085, maxGenerations: 1000 }),
 };
 
 // Run genetic algorithm
 console.time('Execution time:');
-const lastGeneration = GMO.runEvolution(evolutionOptions);
+const lastGeneration = Genemo.runEvolution(evolutionOptions);
 console.timeEnd('Execution time:');
 
 const { evaluatedPopulation, generation } = lastGeneration;

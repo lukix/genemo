@@ -1,4 +1,4 @@
-const GMO = require('../../../lib');
+const Genemo = require('../../../lib');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs
@@ -14,7 +14,7 @@ const evaluatedPopulation = [
 describe('tournament', () => {
   test('Returns correct parents population (maximization)', () => {
     // Input
-    const tournamentSelection = GMO.selection.tournament({
+    const tournamentSelection = Genemo.selection.tournament({
       size: 3,
       minimizeFitness: false,
     });
@@ -41,7 +41,7 @@ describe('tournament', () => {
 
   test('Returns correct parents population (minimization)', () => {
     // Input
-    const tournamentSelection = GMO.selection.tournament({
+    const tournamentSelection = Genemo.selection.tournament({
       size: 3,
       minimizeFitness: true,
     });

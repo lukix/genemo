@@ -1,11 +1,11 @@
 const rand = require('random-seed');
-const GMO = require('../../lib');
+const Genemo = require('../../lib');
 
 describe('Find Sequence', () => {
   test('Last generation matches snapshot', () => {
     const { random } = rand.create('seed');
 
-    const generateIndividual = GMO.randomSequenceOf([true, false], 50);
+    const generateIndividual = Genemo.randomSequenceOf([true, false], 50);
     const targetIndividual = generateIndividual(random);
     const fitnessFunction = (individual) => {
       const matchingElements = individual.filter(
@@ -15,22 +15,22 @@ describe('Find Sequence', () => {
     };
 
     const evolutionOptions = {
-      generateInitialPopulation: GMO.generateInitialPopulation({
+      generateInitialPopulation: Genemo.generateInitialPopulation({
         generateIndividual,
         size: 50,
       }),
-      selection: GMO.selection.roulette(),
-      reproduce: GMO.reproduce({
-        crossover: GMO.crossover.singlePoint,
-        mutate: GMO.mutation.transformRandomGene(GMO.mutation.flipBit),
+      selection: Genemo.selection.roulette(),
+      reproduce: Genemo.reproduce({
+        crossover: Genemo.crossover.singlePoint,
+        mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
         mutationProbability: 0.03,
       }),
       fitness: fitnessFunction,
-      stopCondition: GMO.stopCondition({ minFitness: 50, maxGenerations: 100 }),
+      stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 100 }),
       random,
     };
 
-    const lastGeneration = GMO.runEvolution(evolutionOptions);
+    const lastGeneration = Genemo.runEvolution(evolutionOptions);
     expect(lastGeneration).toMatchSnapshot('findSequence1');
   });
 });

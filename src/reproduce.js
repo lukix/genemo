@@ -7,7 +7,7 @@ const getRandomIndividual = (population, random) => {
   return population[index];
 };
 
-const reproduce = withPropsChecking('GMO.reproduce', ({
+const reproduce = withPropsChecking('Genemo.reproduce', ({
   mutate, // (individual, random) => individual
   crossover, // ([individual, individual], random) => [individual, individual]
   mutationProbability = 0.01,

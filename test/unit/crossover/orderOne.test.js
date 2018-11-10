@@ -1,4 +1,4 @@
-const GMO = require('../../../lib');
+const Genemo = require('../../../lib');
 const { createChildUsingOrderOneCrossover } = require('../../../lib/crossover/orderOne');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
@@ -32,7 +32,7 @@ describe('Order One crossover', () => {
       [8, 2, 1, 3, 4, 5, 6, 7, 9, 0],
     ];
 
-    const result = GMO.crossover.orderOne([mother, father], random);
+    const result = Genemo.crossover.orderOne([mother, father], random);
     expect(result).toStrictEqual(offsprings);
   });
 });
