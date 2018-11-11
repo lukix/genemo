@@ -20,7 +20,7 @@ const evolutionOptions = {
     generateIndividual,
     size: 250,
   }),
-  selection: Genemo.selection.tournament({ size: 3, minimizeFitness: true }),
+  selection: Genemo.selection.rank({ minimizeFitness: true }),
   reproduce: Genemo.reproduce({
     crossover: Genemo.crossover.orderOne,
     mutate: Genemo.mutation.swapTwoGenes,
