@@ -1,45 +1,53 @@
 const R = require('ramda');
-const binaryRangeSearch = require('../utils/binaryRangeSearch');
+const { selectRouletteElement } = require('./utils/rouletteUtils');
 
-const rouletteSelection = ({ minimizeFitness = false } = {}) => (evaluatedPopulation, random) => {
+const normalizePopulationFitness = (evaluatedPopulation, minimizeFitness) => {
   const minFitness = Math.min(...evaluatedPopulation.map(({ fitness }) => fitness));
   const maxFitness = Math.max(...evaluatedPopulation.map(({ fitness }) => fitness));
 
-  const populationWithNormalizedFitness = evaluatedPopulation.map(evaluatedIndividual => ({
+  return evaluatedPopulation.map(evaluatedIndividual => ({
     ...evaluatedIndividual,
     normalizedFitness: minimizeFitness
       ? maxFitness - evaluatedIndividual.fitness
       : evaluatedIndividual.fitness - minFitness,
   }));
+};
 
-  const cumulativeFitness = R.scan(
+const calculateCumulativeFitness = populationWithNormalizedFitness => (
+  R.scan(
     (prev, currIndividual) => ({
       evaluatedIndividual: currIndividual,
       cumulativeFitness: prev.cumulativeFitness + currIndividual.normalizedFitness,
     }),
     { cumulativeFitness: 0 },
     populationWithNormalizedFitness,
-  ).slice(1);
+  ).slice(1)
+);
 
+const normalizeCumulativeFitness = (cumulativeFitness) => {
   const fitnessSum = R.last(cumulativeFitness).cumulativeFitness;
 
-  const normalizedCumulativeFitness = fitnessSum === 0
+  return fitnessSum === 0
     ? cumulativeFitness.map((obj, index) => (
       { ...obj, cumulativeFitness: (index + 1) / cumulativeFitness.length }
     ))
     : cumulativeFitness.map(obj => (
       { ...obj, cumulativeFitness: obj.cumulativeFitness / fitnessSum }
     ));
+};
 
-  return new Array(evaluatedPopulation.length).fill().map(() => {
-    const randomValue = random();
-    const compare = element => randomValue < element.cumulativeFitness;
-    const a = binaryRangeSearch(normalizedCumulativeFitness, compare);
-    return R.pick(
-      ['individual', 'fitness'],
-      a.evaluatedIndividual,
-    );
-  });
+const rouletteSelection = ({ minimizeFitness = false } = {}) => (evaluatedPopulation, random) => {
+  const populationWithNormalizedFitness = normalizePopulationFitness(
+    evaluatedPopulation,
+    minimizeFitness,
+  );
+
+  const cumulativeFitness = calculateCumulativeFitness(populationWithNormalizedFitness);
+  const normalizedCumulativeFitness = normalizeCumulativeFitness(cumulativeFitness);
+
+  return new Array(evaluatedPopulation.length).fill().map(() => (
+    selectRouletteElement(normalizedCumulativeFitness, random())
+  ));
 };
 
 module.exports = rouletteSelection;
