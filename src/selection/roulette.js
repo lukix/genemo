@@ -1,5 +1,8 @@
 const R = require('ramda');
-const { selectRouletteElement } = require('./utils/rouletteUtils');
+const {
+  normalizeCumulativeFitness,
+  selectRouletteElement,
+} = require('./utils/rouletteUtils');
 
 const normalizePopulationFitness = (evaluatedPopulation, minimizeFitness) => {
   const minFitness = Math.min(...evaluatedPopulation.map(({ fitness }) => fitness));
@@ -23,18 +26,6 @@ const calculateCumulativeFitness = populationWithNormalizedFitness => (
     populationWithNormalizedFitness,
   ).slice(1)
 );
-
-const normalizeCumulativeFitness = (cumulativeFitness) => {
-  const fitnessSum = R.last(cumulativeFitness).cumulativeFitness;
-
-  return fitnessSum === 0
-    ? cumulativeFitness.map((obj, index) => (
-      { ...obj, cumulativeFitness: (index + 1) / cumulativeFitness.length }
-    ))
-    : cumulativeFitness.map(obj => (
-      { ...obj, cumulativeFitness: obj.cumulativeFitness / fitnessSum }
-    ));
-};
 
 const rouletteSelection = ({ minimizeFitness = false } = {}) => (evaluatedPopulation, random) => {
   const populationWithNormalizedFitness = normalizePopulationFitness(
