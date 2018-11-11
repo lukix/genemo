@@ -1,7 +1,14 @@
 {
   "name": "genemo",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple to use genetic algorithm library",
+  "keywords": [
+    "genetic algorithm",
+    "evolutionary algorithm",
+    "metaheuristics",
+    "traveling salesman",
+    "traveling salesperson"
+  ],
   "main": "lib/index.js",
   "scripts": {
     "dev": "babel --watch src -d lib",
