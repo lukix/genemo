@@ -78,6 +78,11 @@ const { evaluatedPopulation, generation } = Genemo.runEvolution({
     Returns a function that can be used as a `selection` parameter for `Genemo.runEvolution`.
     `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness. Defaults to `false`.
 
+- **`Genemo.selection.rank({ minimizeFitness })`**
+
+    Returns a function that can be used as a `selection` parameter for `Genemo.runEvolution`.
+    `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness.
+
 - **`Genemo.selection.tournament({ size, minimizeFitness })`**
 
     Returns a function that can be used as a `selection` parameter for `Genemo.runEvolution`.
