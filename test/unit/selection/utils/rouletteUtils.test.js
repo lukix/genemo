@@ -1,6 +1,6 @@
 const {
   normalizeCumulativeFitness,
-} = require('../../../../lib/selection/utils/rouletteUtils');
+} = require('../../../../src/selection/utils/rouletteUtils');
 
 describe('normalizeCumulativeFitness', () => {
   test('Returns correct result', () => {

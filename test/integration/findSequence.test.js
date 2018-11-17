@@ -1,5 +1,5 @@
 const rand = require('random-seed');
-const Genemo = require('../../lib');
+const Genemo = require('../../src');
 
 describe('Find Sequence', () => {
   test('Last generation matches snapshot', () => {

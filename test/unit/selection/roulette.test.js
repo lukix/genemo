@@ -1,4 +1,4 @@
-const Genemo = require('../../../lib');
+const Genemo = require('../../../src');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs

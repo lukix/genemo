@@ -1,4 +1,4 @@
-const Genemo = require('../../lib');
+const Genemo = require('../../src');
 
 // Common input
 const prevPopulation = [
