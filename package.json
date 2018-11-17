@@ -1,6 +1,6 @@
 {
   "name": "genemo",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Simple to use genetic algorithm library",
   "keywords": [
     "genetic algorithm",
@@ -14,7 +14,7 @@
     "dev": "babel --watch src -d lib",
     "example1": "node ./examples/example1-findSequence.js",
     "example2": "node ./examples/example2-travelingSalesman.js",
-    "test": "jest",
+    "test": "jest --coverage",
     "build": "babel src -d lib",
     "lint": "eslint ./**/*.js"
   },
