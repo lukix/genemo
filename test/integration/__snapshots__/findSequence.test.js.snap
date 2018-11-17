@@ -4,7 +4,7 @@ exports[`Find Sequence Last generation matches snapshot: findSequence1 1`] = `
 Object {
   "evaluatedPopulation": Array [
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -49,7 +49,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -59,7 +59,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -104,7 +104,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -114,7 +114,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -159,7 +159,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -169,7 +169,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -214,7 +214,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -224,7 +224,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -269,7 +269,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -279,7 +279,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -324,7 +324,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -334,7 +334,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -379,7 +379,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -389,7 +389,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -434,7 +434,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -444,7 +444,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -489,7 +489,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -499,7 +499,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -544,7 +544,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -554,7 +554,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -599,7 +599,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -609,7 +609,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -654,7 +654,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -664,7 +664,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -709,7 +709,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -719,7 +719,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -764,7 +764,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -774,7 +774,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -819,7 +819,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -829,7 +829,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -874,7 +874,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -884,7 +884,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -929,7 +929,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -939,7 +939,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -984,7 +984,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -994,7 +994,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1039,7 +1039,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1049,7 +1049,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1094,7 +1094,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1104,7 +1104,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1149,7 +1149,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1159,7 +1159,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1204,7 +1204,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1214,7 +1214,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1259,7 +1259,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1269,7 +1269,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 47,
       "individual": Array [
         false,
         false,
@@ -1314,7 +1314,62 @@ Object {
         true,
         false,
         true,
+        true,
         false,
+        true,
+        false,
+        true,
+        true,
+        true,
+      ],
+    },
+    Object {
+      "fitness": 48,
+      "individual": Array [
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        true,
+        false,
+        true,
+        true,
         true,
         true,
         false,
@@ -1324,7 +1379,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1369,7 +1424,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1379,7 +1434,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1424,7 +1479,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1434,7 +1489,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1479,7 +1534,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1489,7 +1544,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 50,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1498,12 +1553,6 @@ Object {
         true,
         true,
         true,
-        false,
-        true,
-        true,
-        false,
-        false,
-        true,
         true,
         true,
         true,
@@ -1512,9 +1561,7 @@ Object {
         true,
         true,
         true,
-        false,
-        false,
-        false,
+        true,
         false,
         false,
         true,
@@ -1525,6 +1572,14 @@ Object {
         false,
         false,
         false,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
         false,
         false,
         false,
@@ -1534,7 +1589,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1544,7 +1599,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1589,7 +1644,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1599,7 +1654,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1644,7 +1699,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1654,7 +1709,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1699,7 +1754,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1709,7 +1764,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1754,7 +1809,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1764,7 +1819,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1809,7 +1864,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1819,7 +1874,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1864,7 +1919,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1874,7 +1929,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1919,7 +1974,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1929,7 +1984,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -1974,7 +2029,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -1984,7 +2039,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2029,7 +2084,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2039,7 +2094,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2084,7 +2139,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2094,7 +2149,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2139,7 +2194,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2149,7 +2204,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2194,7 +2249,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2204,7 +2259,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2249,7 +2304,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2259,7 +2314,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2304,7 +2359,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2314,7 +2369,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2359,7 +2414,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2369,7 +2424,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2414,7 +2469,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2424,7 +2479,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2469,7 +2524,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2479,7 +2534,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2524,7 +2579,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2534,7 +2589,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2579,7 +2634,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2589,7 +2644,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2634,7 +2689,7 @@ Object {
         true,
         false,
         true,
-        false,
+        true,
         true,
         true,
         false,
@@ -2644,7 +2699,7 @@ Object {
       ],
     },
     Object {
-      "fitness": 49,
+      "fitness": 48,
       "individual": Array [
         false,
         false,
@@ -2689,62 +2744,7 @@ Object {
         true,
         false,
         true,
-        false,
         true,
-        true,
-        false,
-        true,
-        true,
-        true,
-      ],
-    },
-    Object {
-      "fitness": 49,
-      "individual": Array [
-        false,
-        false,
-        false,
-        false,
-        true,
-        true,
-        true,
-        true,
-        true,
-        true,
-        false,
-        false,
-        true,
-        true,
-        true,
-        true,
-        false,
-        false,
-        true,
-        true,
-        true,
-        false,
-        false,
-        false,
-        false,
-        false,
-        true,
-        true,
-        true,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        true,
-        true,
-        false,
-        true,
-        false,
-        true,
-        false,
         true,
         true,
         false,
@@ -2754,6 +2754,6 @@ Object {
       ],
     },
   ],
-  "generation": 69,
+  "generation": 100,
 }
 `;
