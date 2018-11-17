@@ -6,7 +6,7 @@ const normalizeCumulativeFitness = (cumulativeFitness) => {
 
   return fitnessSum === 0
     ? cumulativeFitness.map((obj, index) => (
-      { ...obj, cumulativeFitness: (index + 1) / cumulativeFitness.length }
+      { ...obj, cumulativeFitness: (index + 1) / cumulativeFitness.length } // Equal value for each individual
     ))
     : cumulativeFitness.map(obj => (
       { ...obj, cumulativeFitness: obj.cumulativeFitness / fitnessSum }
