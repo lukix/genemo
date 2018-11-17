@@ -1,11 +1,13 @@
 module.exports = {
-  coveragePathIgnorePatterns: ['./test/test-utils/'],
+  coveragePathIgnorePatterns: [
+    './test/test-utils/',
+  ],
   coverageThreshold: {
     global: {
-      statements: 94,
-      branches: 75,
-      functions: 94,
-      lines: 94,
+      statements: 99,
+      branches: 90,
+      functions: 100,
+      lines: 99,
     },
   },
 };
