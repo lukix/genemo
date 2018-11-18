@@ -1,4 +1,5 @@
 # GeneMO - Genetic Algorithm Library
+[![Build Status](https://travis-ci.org/lukix/genemo.svg?branch=master)](https://travis-ci.org/lukix/genemo) [![Coverage Status](https://coveralls.io/repos/github/lukix/genemo/badge.svg?branch=master)](https://coveralls.io/github/lukix/genemo?branch=master)
 Simple to use genetic algorithm library with many predefined operators.
 
 ## Installation
