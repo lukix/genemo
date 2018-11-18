@@ -8,3 +8,10 @@ jobs:
       script: npm run build && npm run prepush
     - stage: coverage
       script: jest --coverage --coverageReporters=text-lcov | coveralls
+deploy:
+  skip_cleanup: true
+  provider: npm
+  email: $NPM_EMAIL
+  api_key: $NPM_TOKEN
+  on:
+    branch: master
