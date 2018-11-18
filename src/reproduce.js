@@ -8,8 +8,8 @@ const getRandomIndividual = (population, random) => {
 };
 
 const reproduce = withPropsChecking('Genemo.reproduce', ({
-  mutate, // (individual, random) => individual
-  crossover, // ([individual, individual], random) => [individual, individual]
+  mutate,
+  crossover,
   mutationProbability = 0.01,
 }) => (evaluatedPopulation, random) => {
   const targetPopulationSize = evaluatedPopulation.length;
@@ -23,11 +23,6 @@ const reproduce = withPropsChecking('Genemo.reproduce', ({
 
   if (newPopulation.length > targetPopulationSize) {
     newPopulation.pop();
-  }
-
-  if (random() <= mutationProbability) {
-    const randomIndex = randomFromRange(random)(0, newPopulation.length - 1);
-    newPopulation[randomIndex] = mutate(newPopulation[randomIndex], random);
   }
 
   const mutatedPopulation = newPopulation.map(individual => (

@@ -1,4 +1,4 @@
-const Genemo = require('../../../lib');
+const Genemo = require('../../../src');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs
@@ -16,7 +16,6 @@ describe('tournament', () => {
     // Input
     const tournamentSelection = Genemo.selection.tournament({
       size: 3,
-      minimizeFitness: false,
     });
     const random = cyclicProvider([
       0.0, 0.2, 0.4,

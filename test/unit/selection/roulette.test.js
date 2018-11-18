@@ -1,4 +1,4 @@
-const Genemo = require('../../../lib');
+const Genemo = require('../../../src');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs
@@ -31,7 +31,7 @@ describe('roulette', () => {
       { fitness: 4 },
     ];
 
-    const roulette = Genemo.selection.roulette({ minimizeFitness: false });
+    const roulette = Genemo.selection.roulette();
     const result = roulette(evaluatedPopulation, random);
     expect(result).toStrictEqual(offspring);
   });
@@ -86,7 +86,7 @@ describe('roulette', () => {
       { fitness: 2, individual: 'E' },
     ];
 
-    const roulette = Genemo.selection.roulette({ minimizeFitness: true });
+    const roulette = Genemo.selection.roulette({ minimizeFitness: false });
     const result = roulette(evaluatedPopulationWithUniformFitnesses, random);
     expect(result).toStrictEqual(offspring);
   });

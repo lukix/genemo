@@ -1,5 +1,5 @@
-const Genemo = require('../../../lib');
-const { createChildUsingOrderOneCrossover } = require('../../../lib/crossover/orderOne');
+const Genemo = require('../../../src');
+const { createChildUsingOrderOneCrossover } = require('../../../src/crossover/orderOne');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs
