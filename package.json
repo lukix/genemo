@@ -27,6 +27,10 @@
   },
   "author": "Łukasz Jenczmyk",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lukix/genemo.git"
+  },
   "dependencies": {
     "joi": "14.0.0",
     "ramda": "0.25.0"
