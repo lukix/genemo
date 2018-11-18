@@ -1,5 +1,5 @@
-const Genemo = require('../../../lib');
-const { createChildUsingPMXCrossover } = require('../../../lib/crossover/pmx');
+const Genemo = require('../../../src');
+const { createChildUsingPMXCrossover } = require('../../../src/crossover/pmx');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs

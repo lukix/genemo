@@ -1,4 +1,4 @@
-const findBestIndividual = require('../../../lib/utils/findBestIndividual');
+const findBestIndividual = require('../../../src/utils/findBestIndividual');
 
 describe('findBestIndividual', () => {
   test('Returns correct individual (maximization)', () => {
