@@ -1,4 +1,4 @@
-const Genemo = require('../../../lib');
+const Genemo = require('../../../src');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs
@@ -31,7 +31,7 @@ describe('rank', () => {
       { fitness: 4 },
     ];
 
-    const rank = Genemo.selection.rank({ minimizeFitness: false });
+    const rank = Genemo.selection.rank();
     const result = rank(evaluatedPopulation, random);
     expect(result).toStrictEqual(offspring);
   });

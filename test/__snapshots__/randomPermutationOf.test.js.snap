@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Find Sequence Sequence matches snapshot: randomPermutationOf 1`] = `
+Array [
+  2,
+  0,
+  8,
+  6,
+  3,
+  1,
+  -1,
+  2,
+  9,
+  5,
+  7,
+  4,
+]
+`;

@@ -1,6 +1,5 @@
-const Genemo = require('../../../lib');
+const Genemo = require('../../../src');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
-
 
 describe('swapTwoGenes', () => {
   test('Returns correct mutated individual', () => {
