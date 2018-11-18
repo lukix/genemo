@@ -16,11 +16,13 @@
     "example2": "node ./examples/example2-travelingSalesman.js",
     "test": "jest --coverage",
     "build": "babel src -d lib",
-    "lint": "eslint ./**/*.js"
+    "lint": "eslint ./**/*.js",
+    "prepush": "npm run lint && npm run test",
+    "prepublishOnly": "npm run build && npm run prepush"
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm run test"
+      "pre-push": "npm run prepush"
     }
   },
   "author": "Łukasz Jenczmyk",
@@ -36,6 +38,7 @@
     "@babel/plugin-transform-modules-commonjs": "7.1.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "23.6.0",
+    "coveralls": "3.0.2",
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.14.0",

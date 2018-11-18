@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
  - More tests.
  - Checking test coverage before pushing commits - required 100% coverage.
+ - Running tests with Travis CI.
 
 ## 0.3.1 - 2018-11-17
 ### Fixed
