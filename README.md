@@ -69,6 +69,9 @@ const { evaluatedPopulation, generation } = Genemo.runEvolution({
 - **`Genemo.reproduce({ crossover, mutate, mutationProbability })`**
 
     Returns a function with a signature matching that of `reproduce` property of `Genemo.runEvolution` options object.
+    `crossover` - `([Individual, Individual], Rng) => [Individual, Individual]` - takes a pair of parents and a random number generator and returns a pair of children.
+    `mutate` - `(Individual) => Individual` - maps an individual to a new individual modified by mutation.
+    `mutationProbability` - `number` - mutation probability for a single individual. Defaults to `0.01`.
 
 - **`Genemo.stopCondition({ minFitness, maxFitness, maxGenerations })`**
 
