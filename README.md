@@ -1,5 +1,5 @@
 # GeneMO - Genetic Algorithm Library
-[![Build Status](https://travis-ci.org/lukix/genemo.svg?branch=master)](https://travis-ci.org/lukix/genemo) [![Coverage Status](https://coveralls.io/repos/github/lukix/genemo/badge.svg?branch=master)](https://coveralls.io/github/lukix/genemo?branch=master) [![npm version](https://badge.fury.io/js/genemo.svg)](https://badge.fury.io/js/genemo)
+[![Build Status](https://travis-ci.org/lukix/genemo.svg?branch=master)](https://travis-ci.org/lukix/genemo) [![Coverage Status](https://coveralls.io/repos/github/lukix/genemo/badge.svg?branch=master)](https://coveralls.io/github/lukix/genemo?branch=master) [![npm version](https://badge.fury.io/js/genemo.svg)](https://badge.fury.io/js/genemo) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
 Simple to use genetic algorithm library with many predefined operators.
 
@@ -69,6 +69,12 @@ const { evaluatedPopulation, generation } = Genemo.runEvolution({
 - **`Genemo.reproduce({ crossover, mutate, mutationProbability })`**
 
     Returns a function with a signature matching that of `reproduce` property of `Genemo.runEvolution` options object.
+
+    `crossover` - `([Individual, Individual], Rng) => [Individual, Individual]` - takes a pair of parents and a random number generator and returns a pair of children.
+
+    `mutate` - `(Individual) => Individual` - maps an individual to a new individual modified by mutation.
+
+    `mutationProbability` - `number` - mutation probability for a single individual. Defaults to `0.01`.
 
 - **`Genemo.stopCondition({ minFitness, maxFitness, maxGenerations })`**
 
