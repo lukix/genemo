@@ -1,6 +1,6 @@
 {
   "name": "genemo",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Simple to use genetic algorithm library",
   "keywords": [
     "genetic algorithm",
