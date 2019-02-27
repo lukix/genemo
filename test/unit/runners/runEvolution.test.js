@@ -1,4 +1,4 @@
-const Genemo = require('../../src');
+const Genemo = require('../../../src');
 
 describe('runEvolution', () => {
   test('Calls genetic operator functions correct number of times', () => {
