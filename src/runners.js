@@ -19,6 +19,15 @@ const evaluatePopulation = (population, fitnessFunc) => population.map(individua
   fitness: fitnessFunc(individual),
 }));
 
+const evaluatePopulationAsync = (population, fitnessFunc) => (
+  Promise.all(
+    population.map(async individual => ({
+      individual,
+      fitness: await fitnessFunc(individual),
+    })),
+  )
+);
+
 const getGenerationsIterator = withPropsChecking('Genemo.getGenerationsIterator', function* ({
   generateInitialPopulation,
   selection,
@@ -109,7 +118,7 @@ const runEvolutionAsync = withPropsChecking('Genemo.runEvolutionAsync', async ({
   const mainLoopBody = asyncify(async ({ evaluatedPopulation }) => {
     const parentsPopulation = await selection(evaluatedPopulation, random);
     const childrenPopulation = await reproduce(parentsPopulation, random);
-    const evaluatedChildrenPopulation = await evaluatePopulation(childrenPopulation, fitness);
+    const evaluatedChildrenPopulation = await evaluatePopulationAsync(childrenPopulation, fitness);
     const newEvaluatedPopulation = await succession({
       prevPopulation: evaluatedPopulation,
       childrenPopulation: evaluatedChildrenPopulation,
@@ -119,7 +128,7 @@ const runEvolutionAsync = withPropsChecking('Genemo.runEvolutionAsync', async ({
 
   let generation = 0;
   const population = await generateInitialPopulation(random);
-  let evaluatedPopulation = await evaluatePopulation(population, fitness, random);
+  let evaluatedPopulation = await evaluatePopulationAsync(population, fitness, random);
   do {
     generation += 1;
     evaluatedPopulation = await mainLoopBody({ evaluatedPopulation });
