@@ -60,6 +60,16 @@ const { evaluatedPopulation, generation } = Genemo.runEvolution({
   stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
 });
 ```
+
+### Asynchronous execution
+To run the program in a non-blocking way you can use `Genemo.runEvolutionAsync` instead of `Genemo.runEvolution`. Both of these functions take the same parameters,
+but with one significant difference: each function passed to `runEvolutionAsync` (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well). Note that `Genemo.runEvolutionAsync` runs each generation asynchronously, so if a single generation takes too long to complete, it will still block the main thread noticeably.
+```javascript
+Genemo.runEvolutionAsync(options).then(result => {
+  // ...
+});
+```
+
 ## Predefined operators
 ### General
 - **`Genemo.generateInitialPopulation({ generateIndividual, size })`**
