@@ -1,4 +1,4 @@
-const { runEvolution, getGenerationsIterator } = require('./runners');
+const { runEvolution, runEvolutionAsync, getGenerationsIterator } = require('./runners');
 
 const selection = require('./selection');
 const mutation = require('./mutation');
@@ -13,6 +13,7 @@ const elitism = require('./elitism');
 
 module.exports = {
   runEvolution,
+  runEvolutionAsync,
   getGenerationsIterator,
 
   selection,

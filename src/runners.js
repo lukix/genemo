@@ -1,6 +1,9 @@
+/* eslint-disable no-await-in-loop */
+
 const Joi = require('joi');
 const { withPropsChecking } = require('./utils/typeChecking');
 const findInIterator = require('./utils/findInIterator');
+const asyncify = require('./utils/asyncify');
 
 const runnerPropTypes = {
   generateInitialPopulation: Joi.func().maxArity(1).required(),
@@ -80,7 +83,55 @@ const runEvolution = withPropsChecking('Genemo.runEvolution', ({
   stopCondition: Joi.func().maxArity(1).required(),
 });
 
+/**
+ * Runs genetic algorithm until stopCondition returns true
+ * Every generation is run asynchronously.
+ *
+ * @param {Object} options
+ * @param {(random: () => number) => Array<any>} options.generateInitialPopulation
+ * @param {(evaluatedPopulation: Array<any>, random: () => number) => Array<any>} options.selection
+ * @param {(evaluatedPopulation: Array<any>, random: () => number) => Array<any>} options.reproduce
+ * @param {({ prevPopulation: Array<Object>, childrenPopulation: Array<Object> }, random: () => number) => Array<Object>} options.succession
+ * @param {(individual: any) => number} options.fitness
+ * @param {({ evaluatedPopulation: Array<Object>, generation: number }) => boolean} options.stopCondition
+ *
+ * @returns {{ evaluatedPopulation: Array<Object>, generation: number }} Last generation information
+ */
+const runEvolutionAsync = withPropsChecking('Genemo.runEvolutionAsync', async ({
+  generateInitialPopulation,
+  selection,
+  reproduce,
+  succession = ({ childrenPopulation }) => childrenPopulation,
+  fitness,
+  stopCondition,
+  random = Math.random,
+}) => {
+  const mainLoopBody = asyncify(async ({ evaluatedPopulation }) => {
+    const parentsPopulation = await selection(evaluatedPopulation, random);
+    const childrenPopulation = await reproduce(parentsPopulation, random);
+    const evaluatedChildrenPopulation = await evaluatePopulation(childrenPopulation, fitness);
+    const newEvaluatedPopulation = await succession({
+      prevPopulation: evaluatedPopulation,
+      childrenPopulation: evaluatedChildrenPopulation,
+    }, random);
+    return newEvaluatedPopulation;
+  });
+
+  let generation = 0;
+  const population = await generateInitialPopulation(random);
+  let evaluatedPopulation = await evaluatePopulation(population, fitness, random);
+  do {
+    generation += 1;
+    evaluatedPopulation = await mainLoopBody({ evaluatedPopulation });
+  } while (!(await stopCondition({ evaluatedPopulation, generation })));
+  return { evaluatedPopulation, generation };
+})({
+  ...runnerPropTypes,
+  stopCondition: Joi.func().maxArity(1).required(),
+});
+
 module.exports = {
   runEvolution,
+  runEvolutionAsync,
   getGenerationsIterator,
 };
