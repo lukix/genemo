@@ -86,6 +86,10 @@ Genemo.runEvolutionAsync(options).then(result => {
 
     `mutationProbability` - `number` - mutation probability for a single individual. Defaults to `0.01`.
 
+- **`Genemo.reproduceAsync({ crossover, mutate, mutationProbability })`**
+
+    Same as `Genemo.reproduce`, but this one returns a Promise (works with `runEvolutionAsync`, but not with `runEvolution`). It runs all crossovers with `Promise.all` and then all mutations with another `Promise.all`.
+
 - **`Genemo.stopCondition({ minFitness, maxFitness, maxGenerations })`**
 
     Returns a function with a signature matching that of `stopCondition` property of `Genemo.runEvolution` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
