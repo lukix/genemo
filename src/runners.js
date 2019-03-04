@@ -2,7 +2,6 @@
 
 const Joi = require('joi');
 const { withPropsChecking } = require('./utils/typeChecking');
-const findInIterator = require('./utils/findInIterator');
 const asyncify = require('./utils/asyncify');
 
 const runnerPropTypes = {
@@ -71,22 +70,31 @@ const runEvolution = withPropsChecking('Genemo.runEvolution', ({
   generateInitialPopulation,
   selection,
   reproduce,
-  succession,
+  succession = ({ childrenPopulation }) => childrenPopulation,
   fitness,
   stopCondition,
-  random,
+  random = Math.random,
 }) => {
-  const generationsIterator = getGenerationsIterator({
-    generateInitialPopulation,
-    selection,
-    reproduce,
-    succession,
-    fitness,
-    random,
-  });
+  const mainLoopBody = ({ evaluatedPopulation }) => {
+    const parentsPopulation = selection(evaluatedPopulation, random);
+    const childrenPopulation = reproduce(parentsPopulation, random);
+    const evaluatedChildrenPopulation = evaluatePopulation(childrenPopulation, fitness);
+    const newEvaluatedPopulation = succession({
+      prevPopulation: evaluatedPopulation,
+      childrenPopulation: evaluatedChildrenPopulation,
+    }, random);
 
-  const lastGenerationInfo = findInIterator(stopCondition, generationsIterator);
-  return lastGenerationInfo;
+    return newEvaluatedPopulation;
+  };
+
+  let generation = 0;
+  const population = generateInitialPopulation(random);
+  let evaluatedPopulation = evaluatePopulation(population, fitness, random);
+  do {
+    generation += 1;
+    evaluatedPopulation = mainLoopBody({ evaluatedPopulation });
+  } while (!stopCondition({ evaluatedPopulation, generation }));
+  return { evaluatedPopulation, generation };
 })({
   ...runnerPropTypes,
   stopCondition: Joi.func().maxArity(1).required(),
