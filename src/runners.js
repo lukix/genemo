@@ -3,6 +3,7 @@
 const Joi = require('joi');
 const { withPropsChecking } = require('./utils/typeChecking');
 const asyncify = require('./utils/asyncify');
+const DebugDataCollector = require('./utils/DebugDataCollector');
 
 const runnerPropTypes = {
   generateInitialPopulation: Joi.func().maxArity(1).required(),
@@ -74,15 +75,29 @@ const runEvolution = withPropsChecking('Genemo.runEvolution', ({
   fitness,
   stopCondition,
   random = Math.random,
+  iterationCallback = () => {},
 }) => {
+  const debugDataCollector = new DebugDataCollector();
+
   const mainLoopBody = ({ evaluatedPopulation }) => {
+    debugDataCollector.startClock('selection');
     const parentsPopulation = selection(evaluatedPopulation, random);
+    debugDataCollector.collectClockValue('selection');
+
+    debugDataCollector.startClock('reproduce');
     const childrenPopulation = reproduce(parentsPopulation, random);
+    debugDataCollector.collectClockValue('reproduce');
+
+    debugDataCollector.startClock('fitness');
     const evaluatedChildrenPopulation = evaluatePopulation(childrenPopulation, fitness);
+    debugDataCollector.collectClockValue('fitness');
+
+    debugDataCollector.startClock('succession');
     const newEvaluatedPopulation = succession({
       prevPopulation: evaluatedPopulation,
       childrenPopulation: evaluatedChildrenPopulation,
     }, random);
+    debugDataCollector.collectClockValue('succession');
 
     return newEvaluatedPopulation;
   };
@@ -90,14 +105,30 @@ const runEvolution = withPropsChecking('Genemo.runEvolution', ({
   let generation = 0;
   const population = generateInitialPopulation(random);
   let evaluatedPopulation = evaluatePopulation(population, fitness, random);
-  do {
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    debugDataCollector.startClock('iteration');
     generation += 1;
     evaluatedPopulation = mainLoopBody({ evaluatedPopulation });
-  } while (!stopCondition({ evaluatedPopulation, generation }));
-  return { evaluatedPopulation, generation };
+
+    debugDataCollector.startClock('stopCondition');
+    const shouldStop = stopCondition({ evaluatedPopulation, generation });
+    debugDataCollector.collectClockValue('stopCondition');
+
+    debugDataCollector.startClock('iterationCallback');
+    iterationCallback({ evaluatedPopulation, generation, debugData: debugDataCollector.data });
+    debugDataCollector.collectClockValue('iterationCallback');
+
+    if (shouldStop) {
+      return { evaluatedPopulation, generation };
+    }
+    debugDataCollector.collectClockValue('iteration');
+  }
 })({
   ...runnerPropTypes,
   stopCondition: Joi.func().maxArity(1).required(),
+  iterationCallback: Joi.func().maxArity(1),
 });
 
 /**
