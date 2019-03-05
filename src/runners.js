@@ -153,29 +153,64 @@ const runEvolutionAsync = withPropsChecking('Genemo.runEvolutionAsync', async ({
   fitness,
   stopCondition,
   random = Math.random,
+  iterationCallback = () => {},
 }) => {
+  const debugDataCollector = new DebugDataCollector();
+
   const mainLoopBody = asyncify(async ({ evaluatedPopulation }) => {
+    debugDataCollector.startClock('selection');
     const parentsPopulation = await selection(evaluatedPopulation, random);
+    debugDataCollector.collectClockValue('selection');
+
+    debugDataCollector.startClock('reproduce');
     const childrenPopulation = await reproduce(parentsPopulation, random);
+    debugDataCollector.collectClockValue('reproduce');
+
+    debugDataCollector.startClock('fitness');
     const evaluatedChildrenPopulation = await evaluatePopulationAsync(childrenPopulation, fitness);
+    debugDataCollector.collectClockValue('fitness');
+
+    debugDataCollector.startClock('succession');
     const newEvaluatedPopulation = await succession({
       prevPopulation: evaluatedPopulation,
       childrenPopulation: evaluatedChildrenPopulation,
     }, random);
+    debugDataCollector.collectClockValue('succession');
+
     return newEvaluatedPopulation;
   });
 
   let generation = 0;
   const population = await generateInitialPopulation(random);
   let evaluatedPopulation = await evaluatePopulationAsync(population, fitness, random);
-  do {
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    debugDataCollector.startClock('iteration');
     generation += 1;
     evaluatedPopulation = await mainLoopBody({ evaluatedPopulation });
-  } while (!(await stopCondition({ evaluatedPopulation, generation })));
-  return { evaluatedPopulation, generation };
+
+    debugDataCollector.startClock('stopCondition');
+    const shouldStop = await stopCondition({ evaluatedPopulation, generation });
+    debugDataCollector.collectClockValue('stopCondition');
+
+    debugDataCollector.startClock('iterationCallback');
+    await iterationCallback({
+      evaluatedPopulation,
+      generation,
+      debugData: debugDataCollector.data,
+    });
+    debugDataCollector.collectClockValue('iterationCallback');
+
+    if (shouldStop) {
+      return { evaluatedPopulation, generation };
+    }
+    debugDataCollector.collectClockValue('iteration');
+  }
 })({
   ...runnerPropTypes,
   stopCondition: Joi.func().maxArity(1).required(),
+  iterationCallback: Joi.func().maxArity(1),
 });
 
 module.exports = {
