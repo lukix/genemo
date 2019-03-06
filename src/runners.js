@@ -108,7 +108,7 @@ const runEvolution = withPropsChecking('Genemo.runEvolution', ({
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    debugDataCollector.startClock('iteration');
+    debugDataCollector.startClock('lastIteration');
     generation += 1;
     evaluatedPopulation = mainLoopBody({ evaluatedPopulation });
 
@@ -123,7 +123,7 @@ const runEvolution = withPropsChecking('Genemo.runEvolution', ({
     if (shouldStop) {
       return { evaluatedPopulation, generation };
     }
-    debugDataCollector.collectClockValue('iteration');
+    debugDataCollector.collectClockValue('lastIteration');
   }
 })({
   ...runnerPropTypes,
@@ -186,7 +186,7 @@ const runEvolutionAsync = withPropsChecking('Genemo.runEvolutionAsync', async ({
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    debugDataCollector.startClock('iteration');
+    debugDataCollector.startClock('lastIteration');
     generation += 1;
     evaluatedPopulation = await mainLoopBody({ evaluatedPopulation });
 
@@ -205,7 +205,7 @@ const runEvolutionAsync = withPropsChecking('Genemo.runEvolutionAsync', async ({
     if (shouldStop) {
       return { evaluatedPopulation, generation };
     }
-    debugDataCollector.collectClockValue('iteration');
+    debugDataCollector.collectClockValue('lastIteration');
   }
 })({
   ...runnerPropTypes,
