@@ -24,8 +24,9 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | `selection`                 | `(EvaluatedPopulation, Rng) => EvaluatedPopulation`     | Selects individuals for breeding.                          |
 | `reproduce`                 | `(EvaluatedPopulation, Rng) => Population`              | Creates new population from the selected individuals.      |
 | `fitness`                   | `(Individual) => number`                           | Evaluates an individual (chromosome).                      |
-| `stopCondition`             | `({ evaluatedPopulation, generation }, Rng) => boolean` | Returning `true` terminates an algorithm.                  |
+| `stopCondition`             | `({ evaluatedPopulation, generation }, Rng) => boolean` | Returning `true` terminates the algorithm.                  |
 | `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
+| `iterationCallback`         | `({ evaluatedPopulation, generation, debugData }) => undefined` | **Optional**. Callback, which is called in every iteration/generation.                 |
 | `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
 
 `Genemo.runEvolution` returns an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
@@ -70,7 +71,7 @@ Genemo.runEvolutionAsync(options).then(result => {
 });
 ```
 
-## Predefined operators
+## Predefined operators/functions
 ### General
 - **`Genemo.generateInitialPopulation({ generateIndividual, size })`**
 
@@ -93,6 +94,20 @@ Genemo.runEvolutionAsync(options).then(result => {
 - **`Genemo.stopCondition({ minFitness, maxFitness, maxGenerations })`**
 
     Returns a function with a signature matching that of `stopCondition` property of `Genemo.runEvolution` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
+
+- **`Genemo.logIterationData({ include, customLogger })`**
+
+    Returns a function with a signature matching that of `iterationCallback` property of `Genemo.runEvolution` options object. `customLogger` is optional - its default value is a `console.log` function. `include` is an object, which specifies values that should be included in each log:
+    ```
+    {
+      generationNumber = false,
+      minFitness = false,
+      maxFitness = false,
+      avgFitness = false,
+      debugDataKeys = []
+    }
+    ```
+    `debugDataKeys` should be an array of strings. It specifies which values from `debugData` object should be logged. `debugData` object contains information about performance of each element of the running genetic algorithm. Available keys: `lastIteration`, `selection`, `reproduce`, `fitness`, `succession`, `stopCondition`, `iterationCallback`.
 
 ### Selection
 - **`Genemo.selection.roulette({ minimizeFitness })`**

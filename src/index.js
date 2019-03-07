@@ -10,6 +10,7 @@ const { stopCondition } = require('./stopConditions');
 const randomSequenceOf = require('./randomSequenceOf');
 const randomPermutationOf = require('./randomPermutationOf');
 const elitism = require('./elitism');
+const logIterationData = require('./logIterationData');
 
 module.exports = {
   runEvolution,
@@ -24,6 +25,7 @@ module.exports = {
   reproduce,
   reproduceAsync,
   stopCondition,
+  logIterationData,
   randomSequenceOf,
   randomPermutationOf,
   elitism,
