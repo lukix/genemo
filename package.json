@@ -1,6 +1,6 @@
 {
   "name": "genemo",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Simple to use genetic algorithm library",
   "keywords": [
     "genetic algorithm",
@@ -32,8 +32,9 @@
     "url": "https://github.com/lukix/genemo.git"
   },
   "dependencies": {
-    "joi": "14.0.0",
-    "ramda": "0.25.0"
+    "browser-process-hrtime": "1.0.0",
+    "joi": "14.3.1",
+    "ramda": "0.26.1"
   },
   "devDependencies": {
     "@babel/cli": "7.1.2",
@@ -41,15 +42,14 @@
     "@babel/plugin-proposal-object-rest-spread": "7.0.0",
     "@babel/plugin-transform-modules-commonjs": "7.1.0",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^24.1.0",
-    "coveralls": "3.0.2",
-    "eslint": "4.19.1",
+    "babel-jest": "24.3.0",
+    "coveralls": "3.0.3",
+    "eslint": "5.15.1",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "21.27.0",
     "husky": "1.1.2",
-    "jest": "^24.1.0",
-    "random-seed": "0.3.0",
-    "regenerator-runtime": "0.12.1"
+    "jest": "24.3.0",
+    "random-seed": "0.3.0"
   }
 }
