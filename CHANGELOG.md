@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## 0.5.1 - 2019-06-19
 ### Fixed
  - Fixed vulnerabilities in dependencies.
+ - Fixed description of `Genemo.reproduce` - added missing `Rng` param to `mutate` callback.
 
 ## 0.5.0 - 2019-03-07
 ### Added
