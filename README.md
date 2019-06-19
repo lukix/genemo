@@ -83,7 +83,7 @@ Genemo.runEvolutionAsync(options).then(result => {
 
     `crossover` - `([Individual, Individual], Rng) => [Individual, Individual]` - takes a pair of parents and a random number generator and returns a pair of children.
 
-    `mutate` - `(Individual) => Individual` - maps an individual to a new individual modified by mutation.
+    `mutate` - `(Individual, Rng) => Individual` - maps an individual to a new individual modified by mutation.
 
     `mutationProbability` - `number` - mutation probability for a single individual. Defaults to `0.01`.
 
