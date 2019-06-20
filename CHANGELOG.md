@@ -4,7 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## 0.5.2 - 2019-06-20
 ### Fixed
- - Removed `Joi` from dependencies because it doesn't work in web browsers.
+ - Add support for web browsers by removing `Joi` from dependencies.
 
 ## 0.5.1 - 2019-06-19
 ### Fixed
