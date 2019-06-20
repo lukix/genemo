@@ -1,17 +1,16 @@
 /* eslint-disable no-await-in-loop */
 
-const Joi = require('joi');
-const { withPropsChecking } = require('./utils/typeChecking');
+const { checkProps, types } = require('./utils/typeChecking');
 const asyncify = require('./utils/asyncify');
 const DebugDataCollector = require('./utils/DebugDataCollector');
 
 const runnerPropTypes = {
-  generateInitialPopulation: Joi.func().maxArity(1).required(),
-  selection: Joi.func().maxArity(2).required(),
-  reproduce: Joi.func().maxArity(2).required(),
-  succession: Joi.func().maxArity(2),
-  fitness: Joi.func().maxArity(1).required(),
-  random: Joi.func().maxArity(0),
+  generateInitialPopulation: { type: types.FUNCTION, isRequired: true },
+  selection: { type: types.FUNCTION, isRequired: true },
+  reproduce: { type: types.FUNCTION, isRequired: true },
+  succession: { type: types.FUNCTION, isRequired: true },
+  fitness: { type: types.FUNCTION, isRequired: true },
+  random: { type: types.FUNCTION, isRequired: true },
 };
 
 const evaluatePopulation = (population, fitnessFunc) => population.map(individual => ({
@@ -28,7 +27,7 @@ const evaluatePopulationAsync = (population, fitnessFunc) => (
   )
 );
 
-const getGenerationsIterator = withPropsChecking('Genemo.getGenerationsIterator', function* ({
+const getGenerationsIterator = function* ({
   generateInitialPopulation,
   selection,
   reproduce,
@@ -36,6 +35,19 @@ const getGenerationsIterator = withPropsChecking('Genemo.getGenerationsIterator'
   fitness,
   random = Math.random,
 }) {
+  checkProps({
+    functionName: 'Genemo.getGenerationsIterator',
+    props: {
+      generateInitialPopulation,
+      selection,
+      reproduce,
+      succession,
+      fitness,
+      random,
+    },
+    propTypes: { ...runnerPropTypes },
+  });
+
   let generation = 0;
   const population = generateInitialPopulation(random);
   let evaluatedPopulation = evaluatePopulation(population, fitness, random);
@@ -50,9 +62,7 @@ const getGenerationsIterator = withPropsChecking('Genemo.getGenerationsIterator'
     }, random);
     yield { evaluatedPopulation, generation };
   }
-})({
-  ...runnerPropTypes,
-});
+};
 
 /**
  * Runs genetic algorithm until stopCondition returns true
@@ -67,7 +77,7 @@ const getGenerationsIterator = withPropsChecking('Genemo.getGenerationsIterator'
  *
  * @returns {{ evaluatedPopulation: Array<Object>, generation: number }} Last generation information
  */
-const runEvolution = withPropsChecking('Genemo.runEvolution', ({
+const runEvolution = ({
   generateInitialPopulation,
   selection,
   reproduce,
@@ -77,6 +87,25 @@ const runEvolution = withPropsChecking('Genemo.runEvolution', ({
   random = Math.random,
   iterationCallback = () => {},
 }) => {
+  checkProps({
+    functionName: 'Genemo.runEvolution',
+    props: {
+      generateInitialPopulation,
+      selection,
+      reproduce,
+      succession,
+      fitness,
+      stopCondition,
+      random,
+      iterationCallback,
+    },
+    propTypes: {
+      ...runnerPropTypes,
+      stopCondition: { type: types.FUNCTION, isRequired: true },
+      iterationCallback: { type: types.FUNCTION, isRequired: true },
+    },
+  });
+
   const debugDataCollector = new DebugDataCollector();
 
   const mainLoopBody = ({ evaluatedPopulation }) => {
@@ -125,11 +154,7 @@ const runEvolution = withPropsChecking('Genemo.runEvolution', ({
     }
     debugDataCollector.collectClockValue('lastIteration');
   }
-})({
-  ...runnerPropTypes,
-  stopCondition: Joi.func().maxArity(1).required(),
-  iterationCallback: Joi.func().maxArity(1),
-});
+};
 
 /**
  * Runs genetic algorithm until stopCondition returns true
@@ -145,7 +170,7 @@ const runEvolution = withPropsChecking('Genemo.runEvolution', ({
  *
  * @returns {{ evaluatedPopulation: Array<Object>, generation: number }} Last generation information
  */
-const runEvolutionAsync = withPropsChecking('Genemo.runEvolutionAsync', async ({
+const runEvolutionAsync = async ({
   generateInitialPopulation,
   selection,
   reproduce,
@@ -155,6 +180,24 @@ const runEvolutionAsync = withPropsChecking('Genemo.runEvolutionAsync', async ({
   random = Math.random,
   iterationCallback = () => {},
 }) => {
+  checkProps({
+    functionName: 'Genemo.runEvolutionAsync',
+    props: {
+      generateInitialPopulation,
+      selection,
+      reproduce,
+      succession,
+      fitness,
+      stopCondition,
+      random,
+      iterationCallback,
+    },
+    propTypes: {
+      ...runnerPropTypes,
+      stopCondition: { type: types.FUNCTION, isRequired: true },
+      iterationCallback: { type: types.FUNCTION, isRequired: true },
+    },
+  });
   const debugDataCollector = new DebugDataCollector();
 
   const mainLoopBody = asyncify(async ({ evaluatedPopulation }) => {
@@ -207,11 +250,7 @@ const runEvolutionAsync = withPropsChecking('Genemo.runEvolutionAsync', async ({
     }
     debugDataCollector.collectClockValue('lastIteration');
   }
-})({
-  ...runnerPropTypes,
-  stopCondition: Joi.func().maxArity(1).required(),
-  iterationCallback: Joi.func().maxArity(1),
-});
+};
 
 module.exports = {
   runEvolution,
