@@ -5,7 +5,7 @@ module.exports = {
   },
   plugins: ['jest'],
   rules: {
-    'max-len': ['error', { code: 100, ignoreComments: true }],
+    'max-len': ['error', { code: 100, ignoreComments: true, ignoreTemplateLiterals: true }],
     'func-names': ['off'],
   },
 };

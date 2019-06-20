@@ -1,6 +1,6 @@
 {
   "name": "genemo",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Simple to use genetic algorithm library",
   "keywords": [
     "genetic algorithm",
@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "browser-process-hrtime": "1.0.0",
-    "joi": "14.3.1",
     "ramda": "0.26.1"
   },
   "devDependencies": {
