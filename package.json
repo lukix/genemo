@@ -1,9 +1,10 @@
 {
   "name": "genemo",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Simple to use genetic algorithm library",
   "keywords": [
     "genetic algorithm",
+    "genetic algorithms",
     "evolutionary algorithm",
     "metaheuristics",
     "traveling salesman",
