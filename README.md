@@ -62,6 +62,9 @@ const { evaluatedPopulation, generation } = Genemo.runEvolution({
 });
 ```
 
+### Browser example
+Example of using Genemo in browser environment without blocking browser's main thread can be seen in [genemo-web-demo](https://github.com/lukix/genemo-web-demo) repository.
+
 ### Asynchronous execution
 To run the program in a non-blocking way you can use `Genemo.runEvolutionAsync` instead of `Genemo.runEvolution`. Both of these functions take the same parameters,
 but with one significant difference: each function passed to `runEvolutionAsync` (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well). Note that `Genemo.runEvolutionAsync` runs each generation asynchronously, so if a single generation takes too long to complete, it will still block the main thread noticeably.
