@@ -1,6 +1,4 @@
-const getMinValue = arr => Math.min(...arr);
-const getMaxValue = arr => Math.max(...arr);
-const getAvgValue = arr => arr.reduce((sum, curr) => sum + curr) / arr.length;
+const { min, max, mean } = require('./utils/numbersListHelpers');
 
 const logIterationData = ({
   include,
@@ -23,9 +21,9 @@ const logIterationData = ({
 
     const texts = [
       logGenerationNumber && `#${generation}`,
-      logMinFitness && `minFitness = ${getMinValue(fitnessValues)}`,
-      logMaxFitness && `maxFitness = ${getMaxValue(fitnessValues)}`,
-      logAvgFitness && `avgFitness = ${getAvgValue(fitnessValues)}`,
+      logMinFitness && `minFitness = ${min(fitnessValues)}`,
+      logMaxFitness && `maxFitness = ${max(fitnessValues)}`,
+      logAvgFitness && `avgFitness = ${mean(fitnessValues)}`,
       ...debugDataKeys.map(key => (
         debugData[key] && `${key} = ${debugData[key].lastValue.toFixed(2)}ms`
       )),

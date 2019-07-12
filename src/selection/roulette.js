@@ -3,10 +3,11 @@ const {
   normalizeCumulativeFitness,
   selectRouletteElement,
 } = require('./utils/rouletteUtils');
+const { min, max } = require('../utils/numbersListHelpers');
 
 const normalizePopulationFitness = (evaluatedPopulation, minimizeFitness) => {
-  const minFitness = Math.min(...evaluatedPopulation.map(({ fitness }) => fitness));
-  const maxFitness = Math.max(...evaluatedPopulation.map(({ fitness }) => fitness));
+  const minFitness = min(evaluatedPopulation.map(({ fitness }) => fitness));
+  const maxFitness = max(evaluatedPopulation.map(({ fitness }) => fitness));
 
   return evaluatedPopulation.map(evaluatedIndividual => ({
     ...evaluatedIndividual,
