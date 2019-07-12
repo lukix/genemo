@@ -151,6 +151,12 @@ Genemo.runEvolutionAsync(options).then(result => {
     Partially-mapped crossover.
     **Returns** a function that can be used as a `crossover` parameter for `Genemo.reproduce`.
 
+- **`Genemo.crossover.uniform`**
+
+    Uniform crossover.
+    Function that can be used as a `crossover` parameter for `Genemo.reproduce`.
+    Offsprings are created by selecting each gene from one of the parents with equal probability.
+
 ### Mutation
 - **`Genemo.mutation.transformRandomGene(transformFunc)`**
 
