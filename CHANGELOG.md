@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.0 - Unreleased
+- Removed functions `Genemo.runEvolution` and `Genemo.getGenerationsIterator`.
+- Renamed `Genemo.runEvolutionAsync` to `Genemo.run`. It is now the only function for running genetic algorithm.
+- Removed `Genemo.reproduce` function.
+- Renamed `Genemo.reproduceAsync` to `Genemo.reproduce`.
+
 ## 0.6.0 - 2019-07-12
 - Added Uniform Crossover - `Genemo.crossover.uniform`.
 - Fixed `Maximum call stack size exceeded` error when working with big populations (~130k individuals).

@@ -1,7 +1,7 @@
 const Genemo = require('../../../src');
 
-describe('runEvolution', () => {
-  test('Calls genetic operator functions correct number of times', () => {
+describe('run', () => {
+  test('Calls genetic operator functions correct number of times', async (done) => {
     const generateInitialPopulation = jest.fn(() => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const selection = jest.fn(population => population);
     const reproduce = jest.fn(population => population.map(({ individual }) => individual));
@@ -16,11 +16,12 @@ describe('runEvolution', () => {
       stopCondition,
     };
 
-    Genemo.runEvolution(evolutionOptions);
+    await Genemo.run(evolutionOptions);
     expect(generateInitialPopulation).toHaveBeenCalledTimes(1);
     expect(selection).toHaveBeenCalledTimes(2);
     expect(reproduce).toHaveBeenCalledTimes(2);
     expect(fitness).toHaveBeenCalledTimes(10 + 2 * 10);
     expect(stopCondition).toHaveBeenCalledTimes(2);
+    done();
   });
 });

@@ -32,12 +32,10 @@ const evolutionOptions = {
 
 // Run genetic algorithm
 console.time('Execution time:');
-const lastGeneration = Genemo.runEvolution(evolutionOptions);
-console.timeEnd('Execution time:');
-
-const { evaluatedPopulation, generation } = lastGeneration;
-
-console.log({
-  generation,
-  shortestPath: Math.min(...evaluatedPopulation.map(({ fitness }) => fitness)),
+Genemo.run(evolutionOptions).then(({ evaluatedPopulation, generation }) => {
+  console.timeEnd('Execution time:');
+  console.log({
+    generation,
+    shortestPath: Math.min(...evaluatedPopulation.map(({ fitness }) => fitness)),
+  });
 });

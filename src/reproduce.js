@@ -28,45 +28,6 @@ const reproduce = ({
     propTypes: reproducePropTypes,
   });
 
-  return (evaluatedPopulation, random) => {
-    const targetPopulationSize = evaluatedPopulation.length;
-    const newPopulation = [];
-    while (newPopulation.length < targetPopulationSize) {
-      const mother = getRandomIndividual(evaluatedPopulation, random).individual;
-      const father = getRandomIndividual(evaluatedPopulation, random).individual;
-      const [daughter, son] = crossover([mother, father], random);
-      newPopulation.push(daughter, son);
-    }
-
-    if (newPopulation.length > targetPopulationSize) {
-      newPopulation.pop();
-    }
-
-    const mutatedPopulation = newPopulation.map(individual => (
-      random() <= mutationProbability
-        ? mutate(individual, random)
-        : individual
-    ));
-
-    return mutatedPopulation;
-  };
-};
-
-const reproduceAsync = ({
-  mutate,
-  crossover,
-  mutationProbability = 0.01,
-}) => {
-  checkProps({
-    functionName: 'Genemo.reproduceAsync',
-    props: {
-      mutate,
-      crossover,
-      mutationProbability,
-    },
-    propTypes: reproducePropTypes,
-  });
-
   return async (evaluatedPopulation, random) => {
     const targetPopulationSize = evaluatedPopulation.length;
     const crossoverPromises = R.range(0, Math.ceil(targetPopulationSize / 2))
@@ -96,5 +57,4 @@ const reproduceAsync = ({
 
 module.exports = {
   reproduce,
-  reproduceAsync,
 };
