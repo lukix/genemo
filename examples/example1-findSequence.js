@@ -47,12 +47,10 @@ const evolutionOptions = {
 
 // Run genetic algorithm
 console.time('Execution time:');
-const lastGeneration = Genemo.runEvolution(evolutionOptions);
-console.timeEnd('Execution time:');
-
-const { evaluatedPopulation, generation } = lastGeneration;
-
-console.log({
-  generation,
-  maxFitness: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
+Genemo.runEvolutionAsync(evolutionOptions).then(({ evaluatedPopulation, generation }) => {
+  console.timeEnd('Execution time:');
+  console.log({
+    generation,
+    maxFitness: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
+  });
 });

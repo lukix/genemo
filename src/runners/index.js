@@ -1,9 +1,5 @@
-const runEvolution = require('./runEvolution');
-const runEvolutionAsync = require('./runEvolutionAsync');
-const getGenerationsIterator = require('./getGenerationsIterator');
+const runEvolutionAsync = require('./run');
 
 module.exports = {
-  runEvolution,
   runEvolutionAsync,
-  getGenerationsIterator,
 };

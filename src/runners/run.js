@@ -1,11 +1,14 @@
+/* eslint-disable no-await-in-loop */
+
 const { checkProps, types } = require('../utils/typeChecking');
+const asyncify = require('../utils/asyncify');
 const DebugDataCollector = require('../utils/DebugDataCollector');
 const runnerPropTypes = require('./utils/runnerPropTypes');
-const { evaluatePopulation } = require('./utils/evaluatePopulation');
-
+const evaluatePopulation = require('./utils/evaluatePopulation');
 
 /**
  * Runs genetic algorithm until stopCondition returns true
+ * Every generation is run asynchronously.
  *
  * @param {Object} options
  * @param {(random: () => number) => Array<any>} options.generateInitialPopulation
@@ -17,7 +20,7 @@ const { evaluatePopulation } = require('./utils/evaluatePopulation');
  *
  * @returns {{ evaluatedPopulation: Array<Object>, generation: number }} Last generation information
  */
-const runEvolution = ({
+const run = async ({
   generateInitialPopulation,
   selection,
   reproduce,
@@ -28,7 +31,7 @@ const runEvolution = ({
   iterationCallback = () => {},
 }) => {
   checkProps({
-    functionName: 'Genemo.runEvolution',
+    functionName: 'Genemo.run',
     props: {
       generateInitialPopulation,
       selection,
@@ -45,48 +48,51 @@ const runEvolution = ({
       iterationCallback: { type: types.FUNCTION, isRequired: true },
     },
   });
-
   const debugDataCollector = new DebugDataCollector();
 
-  const mainLoopBody = ({ evaluatedPopulation }) => {
+  const mainLoopBody = asyncify(async ({ evaluatedPopulation }) => {
     debugDataCollector.startClock('selection');
-    const parentsPopulation = selection(evaluatedPopulation, random);
+    const parentsPopulation = await selection(evaluatedPopulation, random);
     debugDataCollector.collectClockValue('selection');
 
     debugDataCollector.startClock('reproduce');
-    const childrenPopulation = reproduce(parentsPopulation, random);
+    const childrenPopulation = await reproduce(parentsPopulation, random);
     debugDataCollector.collectClockValue('reproduce');
 
     debugDataCollector.startClock('fitness');
-    const evaluatedChildrenPopulation = evaluatePopulation(childrenPopulation, fitness);
+    const evaluatedChildrenPopulation = await evaluatePopulation(childrenPopulation, fitness);
     debugDataCollector.collectClockValue('fitness');
 
     debugDataCollector.startClock('succession');
-    const newEvaluatedPopulation = succession({
+    const newEvaluatedPopulation = await succession({
       prevPopulation: evaluatedPopulation,
       childrenPopulation: evaluatedChildrenPopulation,
     }, random);
     debugDataCollector.collectClockValue('succession');
 
     return newEvaluatedPopulation;
-  };
+  });
 
   let generation = 0;
-  const population = generateInitialPopulation(random);
-  let evaluatedPopulation = evaluatePopulation(population, fitness, random);
+  const population = await generateInitialPopulation(random);
+  let evaluatedPopulation = await evaluatePopulation(population, fitness, random);
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
     debugDataCollector.startClock('lastIteration');
     generation += 1;
-    evaluatedPopulation = mainLoopBody({ evaluatedPopulation });
+    evaluatedPopulation = await mainLoopBody({ evaluatedPopulation });
 
     debugDataCollector.startClock('stopCondition');
-    const shouldStop = stopCondition({ evaluatedPopulation, generation });
+    const shouldStop = await stopCondition({ evaluatedPopulation, generation });
     debugDataCollector.collectClockValue('stopCondition');
 
     debugDataCollector.startClock('iterationCallback');
-    iterationCallback({ evaluatedPopulation, generation, debugData: debugDataCollector.data });
+    await iterationCallback({
+      evaluatedPopulation,
+      generation,
+      debugData: debugDataCollector.data,
+    });
     debugDataCollector.collectClockValue('iterationCallback');
 
     if (shouldStop) {
@@ -96,4 +102,4 @@ const runEvolution = ({
   }
 };
 
-module.exports = runEvolution;
+module.exports = run;

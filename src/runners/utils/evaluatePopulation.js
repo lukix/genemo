@@ -1,9 +1,4 @@
-const evaluatePopulation = (population, fitnessFunc) => population.map(individual => ({
-  individual,
-  fitness: fitnessFunc(individual),
-}));
-
-const evaluatePopulationAsync = (population, fitnessFunc) => (
+const evaluatePopulation = (population, fitnessFunc) => (
   Promise.all(
     population.map(async individual => ({
       individual,
@@ -12,7 +7,4 @@ const evaluatePopulationAsync = (population, fitnessFunc) => (
   )
 );
 
-module.exports = {
-  evaluatePopulation,
-  evaluatePopulationAsync,
-};
+module.exports = evaluatePopulation;
