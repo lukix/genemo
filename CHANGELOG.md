@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## 1.0.0 - Unreleased
 - Removed functions `Genemo.runEvolution` and `Genemo.getGenerationsIterator`.
 - Renamed `Genemo.runEvolutionAsync` to `Genemo.run`. It is now the only function for running genetic algorithm.
+- Removed `Genemo.reproduce` function.
+- Renamed `Genemo.reproduceAsync` to `Genemo.reproduce`.
 
 ## 0.6.0 - 2019-07-12
 - Added Uniform Crossover - `Genemo.crossover.uniform`.

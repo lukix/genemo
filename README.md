@@ -79,16 +79,13 @@ Each function passed to `Genemo.run` (`selection`, `reproduce`, `fitness`, etc.)
 - **`Genemo.reproduce({ crossover, mutate, mutationProbability })`**
 
     Returns a function with a signature matching that of `reproduce` property of `Genemo.run` options object.
+    It runs all crossovers with `Promise.all` and then all mutations with another `Promise.all`.
 
     `crossover` - `([Individual, Individual], Rng) => [Individual, Individual]` - takes a pair of parents and a random number generator and returns a pair of children.
 
     `mutate` - `(Individual, Rng) => Individual` - maps an individual to a new individual modified by mutation.
 
     `mutationProbability` - `number` - mutation probability for a single individual. Defaults to `0.01`.
-
-- **`Genemo.reproduceAsync({ crossover, mutate, mutationProbability })`**
-
-    Same as `Genemo.reproduce`, but this one returns a Promise. It runs all crossovers with `Promise.all` and then all mutations with another `Promise.all`.
 
 - **`Genemo.stopCondition({ minFitness, maxFitness, maxGenerations })`**
 
