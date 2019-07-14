@@ -1,5 +1,5 @@
-const runEvolutionAsync = require('./run');
+const run = require('./run');
 
 module.exports = {
-  runEvolutionAsync,
+  run,
 };

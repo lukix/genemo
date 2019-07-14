@@ -11,7 +11,7 @@ npm i genemo
 ## Getting Started
 To start a genetic algorithm use this function:
 ```javascript
-Genemo.runEvolutionAsync(options).then(result => {
+Genemo.run(options).then(result => {
   // ...
 });
 ```
@@ -31,7 +31,7 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | `iterationCallback`         | `({ evaluatedPopulation, generation, debugData }) => undefined` | **Optional**. Callback, which is called in every iteration/generation.                 |
 | `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
 
-`Genemo.runEvolutionAsync` returns a promise, which resolves to an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
+`Genemo.run` returns a promise, which resolves to an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
 
 ### Types
 When reading this documentation, you will encounter the following types:
@@ -46,7 +46,7 @@ When reading this documentation, you will encounter the following types:
 ### Example usage
 Full examples with comments can be found in the `./examples` directory. Here is a shorter version:
 ```javascript
-Genemo.runEvolutionAsync({
+Genemo.run({
   generateInitialPopulation: Genemo.generateInitialPopulation({
     generateIndividual, // Here, provide a function which generates an individual
     size: 500,
@@ -68,17 +68,17 @@ Genemo.runEvolutionAsync({
 Example of using Genemo in browser environment without blocking browser's main thread can be seen in [genemo-web-demo](https://github.com/lukix/genemo-web-demo) repository.
 
 ### Asynchronous execution
-Each function passed to `runEvolutionAsync` (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well). Note that `Genemo.runEvolutionAsync` runs each generation asynchronously, but if a single generation takes too long to complete, it will still block browser's main thread noticeably.
+Each function passed to `Genemo.run` (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well). Note that `Genemo.run` runs each generation asynchronously, but if a single generation takes too long to complete, it will still block browser's main thread noticeably.
 
 ## Predefined operators/functions
 ### General
 - **`Genemo.generateInitialPopulation({ generateIndividual, size })`**
 
-    Returns a function with a signature matching that of `generateInitialPopulation` property of `Genemo.runEvolutionAsync` options object. Parameter `generateIndividual` should be a function which takes one parameter (random number generator) and returns a random individual.
+    Returns a function with a signature matching that of `generateInitialPopulation` property of `Genemo.run` options object. Parameter `generateIndividual` should be a function which takes one parameter (random number generator) and returns a random individual.
 
 - **`Genemo.reproduce({ crossover, mutate, mutationProbability })`**
 
-    Returns a function with a signature matching that of `reproduce` property of `Genemo.runEvolutionAsync` options object.
+    Returns a function with a signature matching that of `reproduce` property of `Genemo.run` options object.
 
     `crossover` - `([Individual, Individual], Rng) => [Individual, Individual]` - takes a pair of parents and a random number generator and returns a pair of children.
 
@@ -92,11 +92,11 @@ Each function passed to `runEvolutionAsync` (`selection`, `reproduce`, `fitness`
 
 - **`Genemo.stopCondition({ minFitness, maxFitness, maxGenerations })`**
 
-    Returns a function with a signature matching that of `stopCondition` property of `Genemo.runEvolutionAsync` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
+    Returns a function with a signature matching that of `stopCondition` property of `Genemo.run` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
 
 - **`Genemo.logIterationData({ include, customLogger })`**
 
-    Returns a function with a signature matching that of `iterationCallback` property of `Genemo.runEvolutionAsync` options object. `customLogger` is optional - its default value is a `console.log` function. `include` is an object, which specifies values that should be included in each log:
+    Returns a function with a signature matching that of `iterationCallback` property of `Genemo.run` options object. `customLogger` is optional - its default value is a `console.log` function. `include` is an object, which specifies values that should be included in each log:
     ```
     {
       generationNumber = false,
@@ -111,17 +111,17 @@ Each function passed to `runEvolutionAsync` (`selection`, `reproduce`, `fitness`
 ### Selection
 - **`Genemo.selection.roulette({ minimizeFitness })`**
 
-    Returns a function that can be used as a `selection` parameter for `Genemo.runEvolutionAsync`.
+    Returns a function that can be used as a `selection` parameter for `Genemo.run`.
     `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness. Defaults to `false`.
 
 - **`Genemo.selection.rank({ minimizeFitness })`**
 
-    Returns a function that can be used as a `selection` parameter for `Genemo.runEvolutionAsync`.
+    Returns a function that can be used as a `selection` parameter for `Genemo.run`.
     `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness.
 
 - **`Genemo.selection.tournament({ size, minimizeFitness })`**
 
-    Returns a function that can be used as a `selection` parameter for `Genemo.runEvolutionAsync`.
+    Returns a function that can be used as a `selection` parameter for `Genemo.run`.
     `size` is a number describing how many individuals take part in a tournament.
     `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness.
 
@@ -156,7 +156,7 @@ Each function passed to `runEvolutionAsync` (`selection`, `reproduce`, `fitness`
 ### Mutation
 - **`Genemo.mutation.transformRandomGene(transformFunc)`**
 
-    Returns a function that can be used as a `mutation` parameter for `Genemo.runEvolutionAsync`.
+    Returns a function that can be used as a `mutation` parameter for `Genemo.run`.
     `transformFunc(gene, random)` is a function, which takes a single gene and a random number generator and returns a new gene.
 
 - **`Genemo.mutation.flipBit`**
@@ -171,7 +171,7 @@ Each function passed to `runEvolutionAsync` (`selection`, `reproduce`, `fitness`
 ### Elitism
 - **`Genemo.elitism({ keepFactor, minimizeFitness })`**
 
-    Returns a function that can be used as a `succession` parameter for `Genemo.runEvolutionAsync`.
+    Returns a function that can be used as a `succession` parameter for `Genemo.run`.
     `keepFactor` is a number from 0 to 1 describing what part of best individuals should be kept unchanged.
     `minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness.
 

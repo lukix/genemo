@@ -30,7 +30,7 @@ describe('Find Sequence', () => {
       random,
     };
 
-    const lastGeneration = await Genemo.runEvolutionAsync(evolutionOptions);
+    const lastGeneration = await Genemo.run(evolutionOptions);
     expect(lastGeneration).toMatchSnapshot('findSequence1');
     done();
   });
