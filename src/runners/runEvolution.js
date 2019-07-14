@@ -1,5 +1,3 @@
-/* eslint-disable no-await-in-loop */
-
 const { checkProps, types } = require('../utils/typeChecking');
 const DebugDataCollector = require('../utils/DebugDataCollector');
 const runnerPropTypes = require('./utils/runnerPropTypes');
