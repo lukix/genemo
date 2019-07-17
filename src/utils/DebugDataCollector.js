@@ -1,9 +1,4 @@
-const hrtime = require('browser-process-hrtime');
-
-const getCurrentTimeInMiliseconds = () => {
-  const [seconds, nanoseconds] = hrtime();
-  return seconds * 1e3 + nanoseconds * 1e-6;
-};
+const getCurrentTime = require('./getCurrentTime');
 
 class DebugDataCollector {
   constructor() {
@@ -29,11 +24,11 @@ class DebugDataCollector {
   }
 
   startClock(key) {
-    this.clocks[key] = getCurrentTimeInMiliseconds();
+    this.clocks[key] = getCurrentTime();
   }
 
   collectClockValue(key) {
-    const elapsedTime = getCurrentTimeInMiliseconds() - this.clocks[key];
+    const elapsedTime = getCurrentTime() - this.clocks[key];
     this.collect(key, elapsedTime);
   }
 }
