@@ -21,37 +21,30 @@ const batchIterationExecutor = require('./utils/batchIterationExecutor');
  *
  * @returns {{ evaluatedPopulation: Array<Object>, generation: number }} Last generation information
  */
-const runEvolutionAsync = async ({
-  generateInitialPopulation,
-  selection,
-  reproduce,
-  succession = ({ childrenPopulation }) => childrenPopulation,
-  fitness,
-  stopCondition,
-  random = Math.random,
-  iterationCallback = () => {},
-  maxBlockingTime = 0,
-}) => {
+const runEvolutionAsync = async (options) => {
   checkProps({
     functionName: 'Genemo.runEvolutionAsync',
-    props: {
-      generateInitialPopulation,
-      selection,
-      reproduce,
-      succession,
-      fitness,
-      stopCondition,
-      random,
-      iterationCallback,
-      maxBlockingTime,
-    },
+    props: options,
     propTypes: {
       ...runnerPropTypes,
       stopCondition: { type: types.FUNCTION, isRequired: true },
-      iterationCallback: { type: types.FUNCTION, isRequired: true },
-      maxBlockingTime: { type: types.NUMBER, isRequired: true },
+      iterationCallback: { type: types.FUNCTION, isRequired: false },
+      maxBlockingTime: { type: types.NUMBER, isRequired: false },
     },
   });
+
+  const {
+    generateInitialPopulation,
+    selection,
+    reproduce,
+    succession = ({ childrenPopulation }) => childrenPopulation,
+    fitness,
+    stopCondition,
+    random = Math.random,
+    iterationCallback = () => {},
+    maxBlockingTime = 0,
+  } = options;
+
   const debugDataCollector = new DebugDataCollector();
 
   const mainLoopBody = async ({ evaluatedPopulation }) => {

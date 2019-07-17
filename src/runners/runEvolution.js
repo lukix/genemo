@@ -17,34 +17,27 @@ const { evaluatePopulation } = require('./utils/evaluatePopulation');
  *
  * @returns {{ evaluatedPopulation: Array<Object>, generation: number }} Last generation information
  */
-const runEvolution = ({
-  generateInitialPopulation,
-  selection,
-  reproduce,
-  succession = ({ childrenPopulation }) => childrenPopulation,
-  fitness,
-  stopCondition,
-  random = Math.random,
-  iterationCallback = () => {},
-}) => {
+const runEvolution = (options) => {
   checkProps({
     functionName: 'Genemo.runEvolution',
-    props: {
-      generateInitialPopulation,
-      selection,
-      reproduce,
-      succession,
-      fitness,
-      stopCondition,
-      random,
-      iterationCallback,
-    },
+    props: options,
     propTypes: {
       ...runnerPropTypes,
       stopCondition: { type: types.FUNCTION, isRequired: true },
-      iterationCallback: { type: types.FUNCTION, isRequired: true },
+      iterationCallback: { type: types.FUNCTION, isRequired: false },
     },
   });
+
+  const {
+    generateInitialPopulation,
+    selection,
+    reproduce,
+    succession = ({ childrenPopulation }) => childrenPopulation,
+    fitness,
+    stopCondition,
+    random = Math.random,
+    iterationCallback = () => {},
+  } = options;
 
   const debugDataCollector = new DebugDataCollector();
 

@@ -25,7 +25,7 @@ describe('runEvolutionAsync', () => {
     done();
   });
 
-  test('Runs correct number of iterations when using macrotasks', async (done) => {
+  test('Runs correct number of iterations when not using macrotasks', async (done) => {
     const generateInitialPopulation = () => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const selection = population => population;
     const reproduce = population => population.map(({ individual }) => individual);
