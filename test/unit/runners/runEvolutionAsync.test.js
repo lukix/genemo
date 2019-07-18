@@ -38,7 +38,7 @@ describe('runEvolutionAsync', () => {
       reproduce,
       fitness,
       stopCondition,
-      maxBlockingTime: Infinity,
+      maxBlockingTime: 0,
     };
 
     const { generation } = await Genemo.runEvolutionAsync(evolutionOptions);

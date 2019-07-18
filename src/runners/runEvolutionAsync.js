@@ -42,7 +42,7 @@ const runEvolutionAsync = async (options) => {
     stopCondition,
     random = Math.random,
     iterationCallback = () => {},
-    maxBlockingTime = 0,
+    maxBlockingTime = 16,
   } = options;
 
   const debugDataCollector = new DebugDataCollector();
