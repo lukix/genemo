@@ -4,6 +4,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## 0.7.0 - Unreleased
 - Added `maxBlockingTime` option to `Genemo.runEvolutionAsync`.
+- Fixed `setImmediate` fallback code.
 
 ## 0.6.0 - 2019-07-12
 - Added Uniform Crossover - `Genemo.crossover.uniform`.
