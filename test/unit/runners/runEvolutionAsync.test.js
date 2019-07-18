@@ -24,4 +24,25 @@ describe('runEvolutionAsync', () => {
     expect(stopCondition).toHaveBeenCalledTimes(2);
     done();
   });
+
+  test('Runs correct number of iterations when not using macrotasks', async (done) => {
+    const generateInitialPopulation = () => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const selection = population => population;
+    const reproduce = population => population.map(({ individual }) => individual);
+    const fitness = () => 1;
+    const stopCondition = Genemo.stopCondition({ maxGenerations: 2 });
+
+    const evolutionOptions = {
+      generateInitialPopulation,
+      selection,
+      reproduce,
+      fitness,
+      stopCondition,
+      maxBlockingTime: 0,
+    };
+
+    const { generation } = await Genemo.runEvolutionAsync(evolutionOptions);
+    expect(generation).toEqual(2);
+    done();
+  });
 });

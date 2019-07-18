@@ -1,10 +1,10 @@
 /* eslint-disable no-await-in-loop */
 
 const { checkProps, types } = require('../utils/typeChecking');
-const asyncify = require('../utils/asyncify');
 const DebugDataCollector = require('../utils/DebugDataCollector');
 const runnerPropTypes = require('./utils/runnerPropTypes');
 const { evaluatePopulationAsync } = require('./utils/evaluatePopulation');
+const batchIterationExecutor = require('./utils/batchIterationExecutor');
 
 /**
  * Runs genetic algorithm until stopCondition returns true
@@ -17,40 +17,37 @@ const { evaluatePopulationAsync } = require('./utils/evaluatePopulation');
  * @param {({ prevPopulation: Array<Object>, childrenPopulation: Array<Object> }, random: () => number) => Array<Object>} options.succession
  * @param {(individual: any) => number} options.fitness
  * @param {({ evaluatedPopulation: Array<Object>, generation: number }) => boolean} options.stopCondition
+ * @param {number} options.maxBlockingTime
  *
  * @returns {{ evaluatedPopulation: Array<Object>, generation: number }} Last generation information
  */
-const runEvolutionAsync = async ({
-  generateInitialPopulation,
-  selection,
-  reproduce,
-  succession = ({ childrenPopulation }) => childrenPopulation,
-  fitness,
-  stopCondition,
-  random = Math.random,
-  iterationCallback = () => {},
-}) => {
+const runEvolutionAsync = async (options) => {
   checkProps({
     functionName: 'Genemo.runEvolutionAsync',
-    props: {
-      generateInitialPopulation,
-      selection,
-      reproduce,
-      succession,
-      fitness,
-      stopCondition,
-      random,
-      iterationCallback,
-    },
+    props: options,
     propTypes: {
       ...runnerPropTypes,
       stopCondition: { type: types.FUNCTION, isRequired: true },
-      iterationCallback: { type: types.FUNCTION, isRequired: true },
+      iterationCallback: { type: types.FUNCTION, isRequired: false },
+      maxBlockingTime: { type: types.NUMBER, isRequired: false },
     },
   });
+
+  const {
+    generateInitialPopulation,
+    selection,
+    reproduce,
+    succession = ({ childrenPopulation }) => childrenPopulation,
+    fitness,
+    stopCondition,
+    random = Math.random,
+    iterationCallback = () => {},
+    maxBlockingTime = 16,
+  } = options;
+
   const debugDataCollector = new DebugDataCollector();
 
-  const mainLoopBody = asyncify(async ({ evaluatedPopulation }) => {
+  const mainLoopBody = async ({ evaluatedPopulation }) => {
     debugDataCollector.startClock('selection');
     const parentsPopulation = await selection(evaluatedPopulation, random);
     debugDataCollector.collectClockValue('selection');
@@ -71,6 +68,11 @@ const runEvolutionAsync = async ({
     debugDataCollector.collectClockValue('succession');
 
     return newEvaluatedPopulation;
+  };
+
+  const executeMainLoopBody = batchIterationExecutor({
+    executeMainLoopBody: mainLoopBody,
+    maxBlockingTime,
   });
 
   let generation = 0;
@@ -81,7 +83,7 @@ const runEvolutionAsync = async ({
   while (true) {
     debugDataCollector.startClock('lastIteration');
     generation += 1;
-    evaluatedPopulation = await mainLoopBody({ evaluatedPopulation });
+    evaluatedPopulation = await executeMainLoopBody({ evaluatedPopulation });
 
     debugDataCollector.startClock('stopCondition');
     const shouldStop = await stopCondition({ evaluatedPopulation, generation });

@@ -28,6 +28,7 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
 | `iterationCallback`         | `({ evaluatedPopulation, generation, debugData }) => undefined` | **Optional**. Callback, which is called in every iteration/generation.                 |
 | `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
+| `maxBlockingTime`                | `number` | **Optional**. Time in milliseconds, after which the next iteration is called using asynchronously (as a macrotask). Defaults to `16`, which corresponds to roughly 60 fps. **Works only with `runEvolutionAsync`**.               |
 
 `Genemo.runEvolution` returns an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
 
@@ -66,8 +67,11 @@ const { evaluatedPopulation, generation } = Genemo.runEvolution({
 Example of using Genemo in browser environment without blocking browser's main thread can be seen in [genemo-web-demo](https://github.com/lukix/genemo-web-demo) repository.
 
 ### Asynchronous execution
-To run the program in a non-blocking way you can use `Genemo.runEvolutionAsync` instead of `Genemo.runEvolution`. Both of these functions take the same parameters,
-but with one significant difference: each function passed to `runEvolutionAsync` (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well). Note that `Genemo.runEvolutionAsync` runs each generation asynchronously, so if a single generation takes too long to complete, it will still block the main thread noticeably.
+To run the program in a non-blocking way you can use `Genemo.runEvolutionAsync` instead of `Genemo.runEvolution`. Both of these functions take the same parameters, but with one significant difference: each function passed to `runEvolutionAsync` (`selection`, `reproduce`, `fitness`, etc. can return a `Promise` (synchronous functions work as well).
+From time to time `Genemo.runEvolutionAsync` runs next generation asynchronously to avoid blocking browser's main thread.
+However, if a single generation takes too long to complete, it will still block the main thread.
+To control the frequency of asynchronous iteration executions, use `maxBlockingTime` option.
+Keep in mind that `runEvolutionAsync` is significantly slower than `runEvolution`. It should be improved in future versions, however, currently the best solution is to use `runEvolution` with Web Workers when running in browser environment.
 ```javascript
 Genemo.runEvolutionAsync(options).then(result => {
   // ...

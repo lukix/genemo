@@ -2,26 +2,21 @@ const { checkProps } = require('../utils/typeChecking');
 const runnerPropTypes = require('./utils/runnerPropTypes');
 const { evaluatePopulation } = require('./utils/evaluatePopulation');
 
-const getGenerationsIterator = function* ({
-  generateInitialPopulation,
-  selection,
-  reproduce,
-  succession = ({ childrenPopulation }) => childrenPopulation,
-  fitness,
-  random = Math.random,
-}) {
+const getGenerationsIterator = function* (options) {
   checkProps({
     functionName: 'Genemo.getGenerationsIterator',
-    props: {
-      generateInitialPopulation,
-      selection,
-      reproduce,
-      succession,
-      fitness,
-      random,
-    },
+    props: options,
     propTypes: { ...runnerPropTypes },
   });
+
+  const {
+    generateInitialPopulation,
+    selection,
+    reproduce,
+    succession = ({ childrenPopulation }) => childrenPopulation,
+    fitness,
+    random = Math.random,
+  } = options;
 
   let generation = 0;
   const population = generateInitialPopulation(random);
