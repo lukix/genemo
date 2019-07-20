@@ -6,10 +6,10 @@ describe('logIterationData', () => {
     const iterationCallback = Genemo.logIterationData({
       customLogger: mockLogger,
       include: {
-        minFitness: true,
-        maxFitness: true,
-        avgFitness: true,
-        debugDataKeys: ['customKey'],
+        minFitness: { show: true },
+        maxFitness: { show: true },
+        avgFitness: { show: true },
+        performanceDataKeys: [{ key: 'customKey' }],
       },
     });
 
@@ -20,7 +20,7 @@ describe('logIterationData', () => {
         { fitness: 10 },
         { fitness: 5 },
       ],
-      debugData: { customKey: { lastValue: 3.1990 } },
+      performanceData: { customKey: { lastValue: 3.1990 } },
     });
 
     const expectedLogStr = 'minFitness = 5, maxFitness = 10, avgFitness = 8, customKey = 3.20ms';
@@ -31,13 +31,13 @@ describe('logIterationData', () => {
     const mockLogger = jest.fn(() => {});
     const iterationCallback = Genemo.logIterationData({
       customLogger: mockLogger,
-      include: { generationNumber: true },
+      include: { iteration: { show: true } },
     });
 
     iterationCallback({
       generation: 1,
       evaluatedPopulation: [],
-      debugData: {},
+      performanceData: {},
     });
 
     const expectedLogStr = '#1';
@@ -48,13 +48,13 @@ describe('logIterationData', () => {
     const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
     const iterationCallback = Genemo.logIterationData({
-      include: { generationNumber: true },
+      include: { iteration: { show: true } },
     });
 
     iterationCallback({
       generation: 10,
       evaluatedPopulation: [],
-      debugData: {},
+      performanceData: {},
     });
 
     const expectedLogStr = '#10';

@@ -59,12 +59,12 @@ const run = async (options) => {
     const childrenPopulation = await reproduce(parentsPopulation, random);
     debugDataCollector.collectClockValue('reproduce');
 
-    debugDataCollector.startClock('fitness');
+    debugDataCollector.startClock('evaluatePopulation');
     const evaluatedChildrenPopulation = mergeFitnessValuesWithPopulation(
       childrenPopulation,
       await evaluatePopulation(childrenPopulation, random),
     );
-    debugDataCollector.collectClockValue('fitness');
+    debugDataCollector.collectClockValue('evaluatePopulation');
 
     debugDataCollector.startClock('succession');
     const newEvaluatedPopulation = await succession({
@@ -102,11 +102,12 @@ const run = async (options) => {
     await iterationCallback({
       evaluatedPopulation,
       generation,
-      debugData: debugDataCollector.data,
+      performanceData: debugDataCollector.data,
     });
     debugDataCollector.collectClockValue('iterationCallback');
 
     if (shouldStop) {
+      debugDataCollector.collectClockValue('lastIteration');
       return { evaluatedPopulation, generation };
     }
     debugDataCollector.collectClockValue('lastIteration');
