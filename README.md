@@ -23,9 +23,9 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | Property                    | Signature                                          | Description                                                |
 |-----------------------------|----------------------------------------------------|------------------------------------------------------------|
 | `generateInitialPopulation` | `(Rng) => Population`                                 | Generates initial population of individuals (chromosomes). |
-| `selection`                 | `(EvaluatedPopulation, Rng) => EvaluatedPopulation`     | Selects individuals for breeding.                          |
-| `reproduce`                 | `(EvaluatedPopulation, Rng) => Population`              | Creates new population from the selected individuals.      |
-| `fitness`                   | `(Individual) => number`                           | Evaluates an individual (chromosome).                      |
+| `selection`                 | `(EvaluatedPopulation, Rng) => EvaluatedPopulation`   | Selects individuals for breeding.                          |
+| `reproduce`                 | `(EvaluatedPopulation, Rng) => Population`            | Creates new population from the selected individuals.      |
+| `evaluatePopulation`        | `(Population, Rng) => Array<number`>         | Maps an array of individuals to an array of fitness values.                      |
 | `stopCondition`             | `({ evaluatedPopulation, generation }, Rng) => boolean` | Returning `true` terminates the algorithm.                  |
 | `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
 | `iterationCallback`         | `({ evaluatedPopulation, generation, debugData }) => undefined` | **Optional**. Callback, which is called in every iteration/generation.                 |
@@ -58,7 +58,7 @@ Genemo.run({
     mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
     mutationProbability: 0.01,
   }),
-  fitness: fitnessFunction, // You need to provide your own fitness function
+  evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }), // You need to provide your own fitness function
   stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
 }).then(({ evaluatedPopulation, generation }) => {
   // ...
@@ -84,6 +84,10 @@ Genemo.run(options).then(result => {
 - **`Genemo.generateInitialPopulation({ generateIndividual, size })`**
 
     Returns a function with a signature matching that of `generateInitialPopulation` property of `Genemo.run` options object. Parameter `generateIndividual` should be a function which takes one parameter (random number generator) and returns a random individual.
+
+- **`Genemo.evaluatePopulation({ fitnessFunction })`**
+
+    Returns a function with a signature matching that of `evaluatePopulation` property of `Genemo.run` options object. Parameter `fitnessFunction` should be a function which takes an individual as a parameter and returns its fitness (as a number).
 
 - **`Genemo.reproduce({ crossover, mutate, mutationProbability })`**
 

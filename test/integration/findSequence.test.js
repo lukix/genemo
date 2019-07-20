@@ -25,7 +25,7 @@ describe('Find Sequence', () => {
         mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
         mutationProbability: 0.03,
       }),
-      fitness: fitnessFunction,
+      evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
       stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 100 }),
       random,
     };

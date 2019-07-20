@@ -26,7 +26,7 @@ const evolutionOptions = {
     mutate: Genemo.mutation.swapTwoGenes,
     mutationProbability: 0.02,
   }),
-  fitness: fitnessFunction,
+  evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
   stopCondition: Genemo.stopCondition({ maxFitness: 2085, maxGenerations: 1000 }),
 };
 

@@ -38,8 +38,8 @@ const evolutionOptions = {
     mutationProbability: 0.01,
   }),
 
-  // Fitness function to evaluate an individual
-  fitness: fitnessFunction,
+  // evaluatePopulation with custom fitness function to evaluate an individual
+  evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
 
   // Let's stop our algorithm when some individual reaches fitness >= 50 or after 1000 generations.
   stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 5000 }),
