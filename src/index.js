@@ -5,6 +5,7 @@ const mutation = require('./mutation');
 const crossover = require('./crossover');
 
 const { generateInitialPopulation } = require('./generateInitialPopulation');
+const evaluatePopulation = require('./evaluatePopulation');
 const { reproduce } = require('./reproduce');
 const { stopCondition } = require('./stopConditions');
 const randomSequenceOf = require('./randomSequenceOf');
@@ -20,6 +21,7 @@ module.exports = {
   crossover,
 
   generateInitialPopulation,
+  evaluatePopulation,
   reproduce,
   stopCondition,
   logIterationData,

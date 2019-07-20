@@ -5,14 +5,14 @@ describe('run', () => {
     const generateInitialPopulation = jest.fn(() => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const selection = jest.fn(population => population);
     const reproduce = jest.fn(population => population.map(({ individual }) => individual));
-    const fitness = jest.fn(() => 1);
+    const evaluatePopulation = jest.fn(arr => arr.map(() => 1));
     const stopCondition = jest.fn(Genemo.stopCondition({ maxGenerations: 2 }));
 
     const evolutionOptions = {
       generateInitialPopulation,
       selection,
       reproduce,
-      fitness,
+      evaluatePopulation,
       stopCondition,
     };
 
@@ -20,7 +20,7 @@ describe('run', () => {
     expect(generateInitialPopulation).toHaveBeenCalledTimes(1);
     expect(selection).toHaveBeenCalledTimes(2);
     expect(reproduce).toHaveBeenCalledTimes(2);
-    expect(fitness).toHaveBeenCalledTimes(10 + 2 * 10);
+    expect(evaluatePopulation).toHaveBeenCalledTimes(3);
     expect(stopCondition).toHaveBeenCalledTimes(2);
     done();
   });
@@ -29,14 +29,14 @@ describe('run', () => {
     const generateInitialPopulation = () => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const selection = population => population;
     const reproduce = population => population.map(({ individual }) => individual);
-    const fitness = () => 1;
+    const evaluatePopulation = jest.fn(arr => arr.map(() => 1));
     const stopCondition = Genemo.stopCondition({ maxGenerations: 2 });
 
     const evolutionOptions = {
       generateInitialPopulation,
       selection,
       reproduce,
-      fitness,
+      evaluatePopulation,
       stopCondition,
       maxBlockingTime: 0,
     };

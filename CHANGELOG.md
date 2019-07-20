@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Renamed `Genemo.runEvolutionAsync` to `Genemo.run`. It is now the only function for running genetic algorithm.
 - Removed `Genemo.reproduce` function.
 - Renamed `Genemo.reproduceAsync` to `Genemo.reproduce`.
+- Replaced `fitness` option from runner with `evaluatePopulation` option.
+- Added `Genemo.evaluatePopulation` function.
 
 ## 0.7.0 - 2019-07-18
 - Added `maxBlockingTime` option to `Genemo.runEvolutionAsync`.

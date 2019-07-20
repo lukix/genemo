@@ -1,10 +1,18 @@
 /* eslint-disable no-await-in-loop */
 
+const R = require('ramda');
 const { checkProps } = require('../utils/typeChecking');
 const DebugDataCollector = require('../utils/DebugDataCollector');
 const runnerPropTypes = require('./utils/runnerPropTypes');
-const evaluatePopulation = require('./utils/evaluatePopulation');
+// const evaluatePopulation = require('./utils/evaluatePopulation');
 const batchIterationExecutor = require('./utils/batchIterationExecutor');
+
+const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
+  R.zip(population, fitnessValues).map(([individual, fitness]) => ({
+    individual,
+    fitness,
+  }))
+);
 
 /**
  * Runs genetic algorithm until stopCondition returns true
@@ -15,7 +23,7 @@ const batchIterationExecutor = require('./utils/batchIterationExecutor');
  * @param {(evaluatedPopulation: Array<any>, random: () => number) => Array<any>} options.selection
  * @param {(evaluatedPopulation: Array<any>, random: () => number) => Array<any>} options.reproduce
  * @param {({ prevPopulation: Array<Object>, childrenPopulation: Array<Object> }, random: () => number) => Array<Object>} options.succession
- * @param {(individual: any) => number} options.fitness
+ * @param {(individual: any) => number} options.evaluatePopulation
  * @param {({ evaluatedPopulation: Array<Object>, generation: number }) => boolean} options.stopCondition
  * @param {number} options.maxBlockingTime
  *
@@ -33,7 +41,7 @@ const run = async (options) => {
     selection,
     reproduce,
     succession = ({ childrenPopulation }) => childrenPopulation,
-    fitness,
+    evaluatePopulation,
     stopCondition,
     random = Math.random,
     iterationCallback = () => {},
@@ -52,7 +60,10 @@ const run = async (options) => {
     debugDataCollector.collectClockValue('reproduce');
 
     debugDataCollector.startClock('fitness');
-    const evaluatedChildrenPopulation = await evaluatePopulation(childrenPopulation, fitness);
+    const evaluatedChildrenPopulation = mergeFitnessValuesWithPopulation(
+      childrenPopulation,
+      await evaluatePopulation(childrenPopulation, random),
+    );
     debugDataCollector.collectClockValue('fitness');
 
     debugDataCollector.startClock('succession');
@@ -71,8 +82,11 @@ const run = async (options) => {
   });
 
   let generation = 0;
-  const population = await generateInitialPopulation(random);
-  let evaluatedPopulation = await evaluatePopulation(population, fitness, random);
+  const initialPopulation = await generateInitialPopulation(random);
+  let evaluatedPopulation = mergeFitnessValuesWithPopulation(
+    initialPopulation,
+    await evaluatePopulation(initialPopulation, random),
+  );
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
