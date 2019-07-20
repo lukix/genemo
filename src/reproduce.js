@@ -28,16 +28,15 @@ const reproduce = ({
     propTypes: reproducePropTypes,
   });
 
-  return async (evaluatedPopulation, random) => {
+  return (evaluatedPopulation, random) => {
     const targetPopulationSize = evaluatedPopulation.length;
-    const crossoverPromises = R.range(0, Math.ceil(targetPopulationSize / 2))
+
+    const childrenPairs = R.range(0, Math.ceil(targetPopulationSize / 2))
       .map(() => {
         const mother = getRandomIndividual(evaluatedPopulation, random).individual;
         const father = getRandomIndividual(evaluatedPopulation, random).individual;
         return crossover([mother, father], random);
       });
-
-    const childrenPairs = await Promise.all(crossoverPromises);
     const newPopulation = childrenPairs
       .reduce((childrenList, siblings) => {
         childrenList.push(...siblings);
@@ -45,11 +44,11 @@ const reproduce = ({
       }, [])
       .slice(0, targetPopulationSize);
 
-    const mutatedPopulation = await Promise.all(newPopulation.map(individual => (
+    const mutatedPopulation = newPopulation.map(individual => (
       random() <= mutationProbability
         ? mutate(individual, random)
         : individual
-    )));
+    ));
 
     return mutatedPopulation;
   };

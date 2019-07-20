@@ -1,9 +1,8 @@
 const Genemo = require('../src');
-const asyncify = require('../src/utils/asyncify');
 const cyclicProvider = require('./test-utils/cyclicProvider');
 
 describe('reproduce', () => {
-  test('Returns correct population with odd number of individuals', async (done) => {
+  test('Returns correct population with odd number of individuals', () => {
     const random = cyclicProvider([
       0.41, 0.21,
       0.0, 0.99,
@@ -23,12 +22,11 @@ describe('reproduce', () => {
       mutate: individual => individual,
       crossover: (([a, b]) => [a, b]),
     });
-    const result = await reproduce(evaluatedPopulation, random);
+    const result = reproduce(evaluatedPopulation, random);
     expect(result).toStrictEqual(expectedResult);
-    done();
   });
 
-  test('Calls mutation for the right individuals', async (done) => {
+  test('Calls mutation for the right individuals', () => {
     const random = cyclicProvider([
       0.41, 0.21,
       0.0, 0.99,
@@ -46,12 +44,11 @@ describe('reproduce', () => {
     const expectedResult = [2, 101, 0, 104, 1];
 
     const reproduce = Genemo.reproduce({
-      mutate: asyncify(individual => individual + 100),
-      crossover: asyncify(([a, b]) => [a, b]),
+      mutate: individual => individual + 100,
+      crossover: ([a, b]) => [a, b],
       mutationProbability: 0.1,
     });
-    const result = await reproduce(evaluatedPopulation, random);
+    const result = reproduce(evaluatedPopulation, random);
     expect(result).toStrictEqual(expectedResult);
-    done();
   });
 });
