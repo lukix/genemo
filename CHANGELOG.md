@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Removed `Genemo.reproduce` function.
 - Renamed `Genemo.reproduceAsync` to `Genemo.reproduce`.
 
+## 0.7.0 - 2019-07-18
+- Added `maxBlockingTime` option to `Genemo.runEvolutionAsync`.
+- Fixed `setImmediate` fallback code.
+
 ## 0.6.0 - 2019-07-12
 - Added Uniform Crossover - `Genemo.crossover.uniform`.
 - Fixed `Maximum call stack size exceeded` error when working with big populations (~130k individuals).

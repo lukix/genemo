@@ -30,6 +30,7 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
 | `iterationCallback`         | `({ evaluatedPopulation, generation, debugData }) => undefined` | **Optional**. Callback, which is called in every iteration/generation.                 |
 | `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
+| `maxBlockingTime`                | `number` | **Optional**. Time in milliseconds, after which the next iteration is called using asynchronously (as a macrotask). Defaults to `Infinity`, which means that macrotasks are never used by default.               |
 
 `Genemo.run` returns a promise, which resolves to an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
 
@@ -68,7 +69,15 @@ Genemo.run({
 Example of using Genemo in browser environment without blocking browser's main thread can be seen in [genemo-web-demo](https://github.com/lukix/genemo-web-demo) repository.
 
 ### Asynchronous execution
-Each function passed to `Genemo.run` (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well). Note that `Genemo.run` runs each generation asynchronously, but if a single generation takes too long to complete, it will still block browser's main thread noticeably.
+Each function passed to `Genemo.run` (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well).
+From time to time `Genemo.run` runs next generation asynchronously to avoid blocking browser's main thread.
+However, if a single generation takes too long to complete, it will still block the main thread.
+To control the frequency of asynchronous iteration executions, use `maxBlockingTime` option.
+```javascript
+Genemo.run(options).then(result => {
+  // ...
+});
+```
 
 ## Predefined operators/functions
 ### General
