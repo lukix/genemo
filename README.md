@@ -30,7 +30,7 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
 | `iterationCallback`         | `({ evaluatedPopulation, generation, debugData }) => undefined` | **Optional**. Callback, which is called in every iteration/generation.                 |
 | `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
-| `maxBlockingTime`                | `number` | **Optional**. Time in milliseconds, after which the next iteration is called using asynchronously (as a macrotask). Defaults to `Infinity`, which means that macrotasks are never used by default.               |
+| `maxBlockingTime`                | `number` | **Optional**. Time in milliseconds, after which the next iteration is called asynchronously (as a macrotask). Defaults to `Infinity`, which means that macrotasks are never used by default.               |
 
 `Genemo.run` returns a promise, which resolves to an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
 
