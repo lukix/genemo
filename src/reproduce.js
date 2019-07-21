@@ -1,6 +1,7 @@
 const R = require('ramda');
 const randomFromRange = require('./utils/randomFromRange');
 const { checkProps, types } = require('./utils/typeChecking');
+const Timer = require('./utils/timer');
 
 const reproducePropTypes = {
   mutate: { type: types.FUNCTION, isRequired: true },
@@ -28,9 +29,12 @@ const reproduce = ({
     propTypes: reproducePropTypes,
   });
 
-  return (evaluatedPopulation, random) => {
+  const timer = Timer();
+
+  return (evaluatedPopulation, random, collectLog) => {
     const targetPopulationSize = evaluatedPopulation.length;
 
+    timer.start();
     const childrenPairs = R.range(0, Math.ceil(targetPopulationSize / 2))
       .map(() => {
         const mother = getRandomIndividual(evaluatedPopulation, random).individual;
@@ -43,12 +47,15 @@ const reproduce = ({
         return childrenList;
       }, [])
       .slice(0, targetPopulationSize);
+    collectLog('crossover', timer.stop());
 
+    timer.start();
     const mutatedPopulation = newPopulation.map(individual => (
       random() <= mutationProbability
         ? mutate(individual, random)
         : individual
     ));
+    collectLog('mutation', timer.stop());
 
     return mutatedPopulation;
   };

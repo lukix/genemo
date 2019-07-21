@@ -9,7 +9,7 @@ describe('logIterationData', () => {
         minFitness: { show: true },
         maxFitness: { show: true },
         avgFitness: { show: true },
-        performanceDataKeys: [{ key: 'customKey' }],
+        logsKeys: [{ key: 'customKey' }],
       },
     });
 
@@ -20,7 +20,7 @@ describe('logIterationData', () => {
         { fitness: 10 },
         { fitness: 5 },
       ],
-      performanceData: { customKey: { lastValue: 3.1990 } },
+      logs: { customKey: { lastValue: 3.1990 } },
     });
 
     const expectedLogStr = 'minFitness = 5, maxFitness = 10, avgFitness = 8, customKey = 3.20ms';
@@ -37,7 +37,7 @@ describe('logIterationData', () => {
     iterationCallback({
       generation: 1,
       evaluatedPopulation: [],
-      performanceData: {},
+      logs: {},
     });
 
     const expectedLogStr = '#1';
@@ -54,7 +54,7 @@ describe('logIterationData', () => {
     iterationCallback({
       generation: 10,
       evaluatedPopulation: [],
-      performanceData: {},
+      logs: {},
     });
 
     const expectedLogStr = '#10';

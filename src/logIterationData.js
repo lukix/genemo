@@ -11,7 +11,7 @@ const logIterationData = ({
   ({
     evaluatedPopulation,
     generation: iteration,
-    performanceData,
+    logs,
   }) => {
     const iterationNumber = {
       show: false,
@@ -21,7 +21,7 @@ const logIterationData = ({
     const minFitness = { show: false, formatter: fitnessFormatter, ...(include.minFitness || {}) };
     const maxFitness = { show: false, formatter: fitnessFormatter, ...(include.maxFitness || {}) };
     const avgFitness = { show: false, formatter: fitnessFormatter, ...(include.avgFitness || {}) };
-    const performanceDataKeys = include.performanceDataKeys || [];
+    const logsKeys = include.logsKeys || [];
 
     const fitnessValues = evaluatedPopulation.map(({ fitness }) => fitness);
 
@@ -30,8 +30,8 @@ const logIterationData = ({
       minFitness.show && minFitness.formatter('minFitness', min(fitnessValues)),
       maxFitness.show && maxFitness.formatter('maxFitness', max(fitnessValues)),
       avgFitness.show && avgFitness.formatter('avgFitness', mean(fitnessValues)),
-      ...performanceDataKeys.map(({ key, formatter = timeFormatter }) => (
-        performanceData[key] && formatter(key, performanceData[key].lastValue)
+      ...logsKeys.map(({ key, formatter = timeFormatter }) => (
+        logs[key] && formatter(key, logs[key].lastValue)
       )),
     ].filter(text => Boolean(text));
 
