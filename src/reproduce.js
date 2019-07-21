@@ -6,7 +6,7 @@ const Timer = require('./utils/timer');
 const reproducePropTypes = {
   mutate: { type: types.FUNCTION, isRequired: true },
   crossover: { type: types.FUNCTION, isRequired: true },
-  mutationProbability: { type: types.NUMBER, isRequired: true },
+  mutationProbability: { type: types.NUMBER, isRequired: false },
 };
 
 const getRandomIndividual = (population, random) => {
@@ -14,20 +14,18 @@ const getRandomIndividual = (population, random) => {
   return population[index];
 };
 
-const reproduce = ({
-  mutate,
-  crossover,
-  mutationProbability = 0.01,
-}) => {
+const reproduce = (options) => {
   checkProps({
     functionName: 'Genemo.reproduce',
-    props: {
-      mutate,
-      crossover,
-      mutationProbability,
-    },
+    props: options,
     propTypes: reproducePropTypes,
   });
+
+  const {
+    mutate,
+    crossover,
+    mutationProbability = 0.01,
+  } = options;
 
   const timer = Timer();
 
