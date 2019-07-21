@@ -24,7 +24,7 @@ describe('logIterationData', () => {
     });
 
     const expectedLogStr = 'minFitness = 5, maxFitness = 10, avgFitness = 8, customKey = 3.20ms';
-    expect(mockLogger).toBeCalledWith(expectedLogStr);
+    expect(mockLogger).toHaveBeenCalledWith(expectedLogStr);
   });
 
   test('customLogger should be called with a correct string for default arguments', () => {
@@ -41,7 +41,7 @@ describe('logIterationData', () => {
     });
 
     const expectedLogStr = '#1';
-    expect(mockLogger).toBeCalledWith(expectedLogStr);
+    expect(mockLogger).toHaveBeenCalledWith(expectedLogStr);
   });
 
   test('should call default custom logger', () => {
@@ -58,6 +58,6 @@ describe('logIterationData', () => {
     });
 
     const expectedLogStr = '#10';
-    expect(consoleLogSpy).toBeCalledWith(expectedLogStr);
+    expect(consoleLogSpy).toHaveBeenCalledWith(expectedLogStr);
   });
 });

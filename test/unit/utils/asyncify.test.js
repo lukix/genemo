@@ -9,7 +9,7 @@ describe('asyncify', () => {
       expect(result).toStrictEqual(arg);
       done();
     });
-    expect(mockFn).toBeCalledTimes(0);
+    expect(mockFn).toHaveBeenCalledTimes(0);
   });
 
   test('Correctly handles exception', (done) => {
@@ -20,6 +20,6 @@ describe('asyncify', () => {
       expect(result).toStrictEqual(arg);
       done();
     });
-    expect(mockFn).toBeCalledTimes(0);
+    expect(mockFn).toHaveBeenCalledTimes(0);
   });
 });
