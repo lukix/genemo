@@ -103,21 +103,19 @@ const run = async (options) => {
     const shouldStop = await stopCondition({ evaluatedPopulation, iteration });
     logsCollector.collectClockValue('stopCondition');
 
-    logsCollector.startClock('iterationCallback');
-    await iterationCallback({
+    const iterationData = {
       evaluatedPopulation,
       iteration,
       logs: logsCollector.data,
-    });
+    };
+
+    logsCollector.startClock('iterationCallback');
+    await iterationCallback(iterationData);
     logsCollector.collectClockValue('iterationCallback');
 
     if (shouldStop) {
       logsCollector.collectClockValue('lastIteration');
-      return {
-        evaluatedPopulation,
-        iteration,
-        logs: logsCollector.data,
-      };
+      return iterationData;
     }
     logsCollector.collectClockValue('lastIteration');
   }
