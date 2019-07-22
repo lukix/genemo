@@ -24,7 +24,7 @@ const logIterationData = (options) => {
 
   return ({
     evaluatedPopulation,
-    generation: iteration,
+    iteration,
     logs,
   }) => {
     const iterationNumber = {

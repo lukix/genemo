@@ -2,7 +2,7 @@ const rand = require('random-seed');
 const Genemo = require('../../src');
 
 describe('Find Sequence', () => {
-  test('Last generation matches snapshot', async (done) => {
+  test('Last iteration population matches snapshot', async (done) => {
     const { random } = rand.create('seed');
 
     const generateIndividual = Genemo.randomSequenceOf([true, false], 50);
@@ -26,12 +26,13 @@ describe('Find Sequence', () => {
         mutationProbability: 0.03,
       }),
       evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
-      stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 100 }),
+      stopCondition: Genemo.stopCondition({ minFitness: 50, maxIterations: 100 }),
       random,
+      collectLogs: false,
     };
 
-    const lastGeneration = await Genemo.run(evolutionOptions);
-    expect(lastGeneration).toMatchSnapshot('findSequence1');
+    const result = await Genemo.run(evolutionOptions);
+    expect(result).toMatchSnapshot('findSequence1');
     done();
   });
 });

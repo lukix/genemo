@@ -26,13 +26,14 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | `selection`                 | `(EvaluatedPopulation, Rng) => EvaluatedPopulation`   | Selects individuals for breeding.                          |
 | `reproduce`                 | `(EvaluatedPopulation, Rng, collectLog) => Population`| Creates new population from the selected individuals.      |
 | `evaluatePopulation`        | `(Population, Rng) => Array<number`>         | Maps an array of individuals to an array of fitness values.                      |
-| `stopCondition`             | `({ evaluatedPopulation, generation }, Rng) => boolean` | Returning `true` terminates the algorithm.                  |
+| `stopCondition`             | `({ evaluatedPopulation, iteration }, Rng) => boolean` | Returning `true` terminates the algorithm.                  |
 | `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
-| `iterationCallback`         | `({ evaluatedPopulation, generation, logs }) => undefined` | **Optional**. Callback, which is called in every iteration/generation.                 |
+| `iterationCallback`         | `({ evaluatedPopulation, iteration, logs }) => undefined` | **Optional**. Callback, which is called in every iteration.                 |
 | `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
 | `maxBlockingTime`                | `number` | **Optional**. Time in milliseconds, after which the next iteration is called asynchronously (as a macrotask). Defaults to `Infinity`, which means that macrotasks are never used by default.               |
+| `collectLogs`                | `boolean` | **Optional**. Indicates if the logs about performance should be collected. Default value is `true`.     |
 
-`Genemo.run` returns a promise, which resolves to an object `{ evaluatedPopulation: EvaluatedPopulation, generation: number }`, which contains information about a population (along with fitness values) from the last generation and a number of the last generation.
+`Genemo.run` returns a promise, which resolves to an object `{ evaluatedPopulation: EvaluatedPopulation, iteration: number }`, which contains information about the population (along with fitness values) from the last iteration and the last iteration number.
 
 ### Types
 When reading this documentation, you will encounter the following types:
@@ -59,8 +60,8 @@ Genemo.run({
     mutationProbability: 0.02,
   }),
   evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }), // You need to provide your own fitness function
-  stopCondition: Genemo.stopCondition({ maxGenerations: 100 }),
-}).then(({ evaluatedPopulation, generation }) => {
+  stopCondition: Genemo.stopCondition({ maxIterations: 100 }),
+}).then(({ evaluatedPopulation, iteration }) => {
   // ...
 });
 ```
@@ -70,8 +71,8 @@ Example of using Genemo in browser environment without blocking browser's main t
 
 ### Asynchronous execution
 Each function passed to `Genemo.run` (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well).
-From time to time `Genemo.run` runs next generation asynchronously to avoid blocking browser's main thread.
-However, if a single generation takes too long to complete, it will still block the main thread.
+From time to time `Genemo.run` runs next iteration asynchronously to avoid blocking browser's main thread.
+However, if a single iteration takes too long to complete, it will still block the main thread.
 To control the frequency of asynchronous iteration executions, use `maxBlockingTime` option.
 ```javascript
 Genemo.run(options).then(result => {
@@ -100,7 +101,7 @@ Genemo.run(options).then(result => {
 
     `mutationProbability` - `number` - mutation probability for a single individual. Defaults to `0.01`.
 
-- **`Genemo.stopCondition({ minFitness, maxFitness, maxGenerations })`**
+- **`Genemo.stopCondition({ minFitness, maxFitness, maxIterations })`**
 
     Returns a function with a signature matching that of `stopCondition` property of `Genemo.run` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
 

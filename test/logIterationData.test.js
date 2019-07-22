@@ -14,7 +14,7 @@ describe('logIterationData', () => {
     });
 
     iterationCallback({
-      generation: 1,
+      iteration: 1,
       evaluatedPopulation: [
         { fitness: 9 },
         { fitness: 10 },
@@ -35,7 +35,7 @@ describe('logIterationData', () => {
     });
 
     iterationCallback({
-      generation: 1,
+      iteration: 1,
       evaluatedPopulation: [],
       logs: {},
     });
@@ -52,7 +52,7 @@ describe('logIterationData', () => {
     });
 
     iterationCallback({
-      generation: 10,
+      iteration: 10,
       evaluatedPopulation: [],
       logs: {},
     });
@@ -71,7 +71,7 @@ describe('logIterationData', () => {
     });
 
     iterationCallback({
-      generation: 10,
+      iteration: 10,
       evaluatedPopulation: [],
       logs: { customKey: { lastValue: 5 } },
     });
@@ -90,7 +90,7 @@ describe('logIterationData', () => {
     });
 
     iterationCallback({
-      generation: 10,
+      iteration: 10,
       evaluatedPopulation: [{ fitness: 2 }],
     });
 
