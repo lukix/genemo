@@ -114,6 +114,7 @@ const run = async (options) => {
       return {
         evaluatedPopulation,
         iteration,
+        logs: logsCollector.data,
       };
     }
     logsCollector.collectClockValue('lastIteration');
