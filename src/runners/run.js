@@ -24,6 +24,7 @@ const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
  * @param {(individual: any) => number} options.evaluatePopulation
  * @param {({ evaluatedPopulation: Array<Object>, iteration: number }) => boolean} options.stopCondition
  * @param {number} options.maxBlockingTime
+ * @param {boolean} options.collectLogs
  *
  * @returns {{ evaluatedPopulation: Array<Object>, iteration: number }} Last iteration information
  */
@@ -44,9 +45,10 @@ const run = async (options) => {
     random = Math.random,
     iterationCallback = () => {},
     maxBlockingTime = Infinity,
+    collectLogs = true,
   } = options;
 
-  const logsCollector = new DebugDataCollector();
+  const logsCollector = new DebugDataCollector({ collectLogs });
   const collectReproduceLog = (key, value) => logsCollector.collect(`reproduce.${key}`, value);
 
   const mainLoopBody = async ({ evaluatedPopulation }) => {

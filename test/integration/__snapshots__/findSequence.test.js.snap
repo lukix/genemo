@@ -2755,52 +2755,6 @@ Object {
     },
   ],
   "iteration": 100,
-  "logs": Object {
-    "evaluatePopulation": Object {
-      "lastValue": 0.28820399940013885,
-      "meanValue": 0.42703395977616315,
-      "samples": 100,
-    },
-    "iterationCallback": Object {
-      "lastValue": 0.020526990294456482,
-      "meanValue": 0.01009947046637535,
-      "samples": 100,
-    },
-    "lastIteration": Object {
-      "lastValue": 3.3085930049419403,
-      "meanValue": 5.255909980386496,
-      "samples": 100,
-    },
-    "reproduce": Object {
-      "lastValue": 0.8518839925527573,
-      "meanValue": 1.2562557291984557,
-      "samples": 100,
-    },
-    "reproduce.crossover": Object {
-      "lastValue": 0.4532430022954941,
-      "meanValue": 1.0387481804192074,
-      "samples": 100,
-    },
-    "reproduce.mutation": Object {
-      "lastValue": 0.28779299557209015,
-      "meanValue": 0.15430791869759555,
-      "samples": 100,
-    },
-    "selection": Object {
-      "lastValue": 1.8745560050010681,
-      "meanValue": 3.353770370632409,
-      "samples": 100,
-    },
-    "stopCondition": Object {
-      "lastValue": 0.06363499164581299,
-      "meanValue": 0.056372150331735614,
-      "samples": 100,
-    },
-    "succession": Object {
-      "lastValue": 0.013548001646995544,
-      "meanValue": 0.011474779695272446,
-      "samples": 100,
-    },
-  },
+  "logs": Object {},
 }
 `;

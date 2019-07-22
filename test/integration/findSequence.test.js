@@ -28,6 +28,7 @@ describe('Find Sequence', () => {
       evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
       stopCondition: Genemo.stopCondition({ minFitness: 50, maxIterations: 100 }),
       random,
+      collectLogs: false,
     };
 
     const result = await Genemo.run(evolutionOptions);

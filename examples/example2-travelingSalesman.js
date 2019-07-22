@@ -28,6 +28,11 @@ const evolutionOptions = {
   }),
   evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
   stopCondition: Genemo.stopCondition({ maxFitness: 2085, maxIterations: 1000 }),
+  iterationCallback: Genemo.logIterationData({
+    include: {
+      logsKeys: [{ key: 'lastIteration' }],
+    },
+  }),
 };
 
 // Run genetic algorithm

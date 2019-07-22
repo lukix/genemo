@@ -31,6 +31,7 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 | `iterationCallback`         | `({ evaluatedPopulation, iteration, logs }) => undefined` | **Optional**. Callback, which is called in every iteration.                 |
 | `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
 | `maxBlockingTime`                | `number` | **Optional**. Time in milliseconds, after which the next iteration is called asynchronously (as a macrotask). Defaults to `Infinity`, which means that macrotasks are never used by default.               |
+| `collectLogs`                | `boolean` | **Optional**. Indicates if the logs about performance should be collected. Default value is `true`.     |
 
 `Genemo.run` returns a promise, which resolves to an object `{ evaluatedPopulation: EvaluatedPopulation, iteration: number }`, which contains information about the population (along with fitness values) from the last iteration and the last iteration number.
 
