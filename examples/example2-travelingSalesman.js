@@ -27,12 +27,7 @@ const evolutionOptions = {
     mutationProbability: 0.02,
   }),
   evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
-  stopCondition: Genemo.stopCondition({ maxFitness: 2084, maxGenerations: 1000 }),
-  iterationCallback: Genemo.logIterationData({
-    include: {
-      logsKeys: [{ key: 'reproduce.crossover' }, { key: 'reproduce.mutation' }],
-    },
-  }),
+  stopCondition: Genemo.stopCondition({ maxFitness: 2085, maxGenerations: 1000 }),
 };
 
 // Run genetic algorithm
