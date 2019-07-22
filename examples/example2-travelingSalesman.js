@@ -27,15 +27,15 @@ const evolutionOptions = {
     mutationProbability: 0.02,
   }),
   evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
-  stopCondition: Genemo.stopCondition({ maxFitness: 2085, maxGenerations: 1000 }),
+  stopCondition: Genemo.stopCondition({ maxFitness: 2085, maxIterations: 1000 }),
 };
 
 // Run genetic algorithm
 console.time('Execution time:');
-Genemo.run(evolutionOptions).then(({ evaluatedPopulation, generation }) => {
+Genemo.run(evolutionOptions).then(({ evaluatedPopulation, iteration }) => {
   console.timeEnd('Execution time:');
   console.log({
-    generation,
+    iteration,
     shortestPath: Math.min(...evaluatedPopulation.map(({ fitness }) => fitness)),
   });
 });

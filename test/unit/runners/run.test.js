@@ -6,7 +6,7 @@ describe('run', () => {
     const selection = jest.fn(population => population);
     const reproduce = jest.fn(population => population.map(({ individual }) => individual));
     const evaluatePopulation = jest.fn(arr => arr.map(() => 1));
-    const stopCondition = jest.fn(Genemo.stopCondition({ maxGenerations: 2 }));
+    const stopCondition = jest.fn(Genemo.stopCondition({ maxIterations: 2 }));
 
     const evolutionOptions = {
       generateInitialPopulation,
@@ -30,7 +30,7 @@ describe('run', () => {
     const selection = population => population;
     const reproduce = population => population.map(({ individual }) => individual);
     const evaluatePopulation = jest.fn(arr => arr.map(() => 1));
-    const stopCondition = Genemo.stopCondition({ maxGenerations: 2 });
+    const stopCondition = Genemo.stopCondition({ maxIterations: 2 });
 
     const evolutionOptions = {
       generateInitialPopulation,
@@ -41,8 +41,8 @@ describe('run', () => {
       maxBlockingTime: 0,
     };
 
-    const { generation } = await Genemo.run(evolutionOptions);
-    expect(generation).toEqual(2);
+    const { iteration } = await Genemo.run(evolutionOptions);
+    expect(iteration).toEqual(2);
     done();
   });
 });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Find Sequence Last generation matches snapshot: findSequence1 1`] = `
+exports[`Find Sequence Last iteration population matches snapshot: findSequence1 1`] = `
 Object {
   "evaluatedPopulation": Array [
     Object {
@@ -2754,6 +2754,6 @@ Object {
       ],
     },
   ],
-  "generation": 100,
+  "iteration": 100,
 }
 `;

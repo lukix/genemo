@@ -41,16 +41,16 @@ const evolutionOptions = {
   // evaluatePopulation with custom fitness function to evaluate an individual
   evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
 
-  // Let's stop our algorithm when some individual reaches fitness >= 50 or after 1000 generations.
-  stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 5000 }),
+  // Let's stop our algorithm when some individual reaches fitness >= 50 or after 1000 iterations.
+  stopCondition: Genemo.stopCondition({ minFitness: 50, maxIterations: 5000 }),
 };
 
 // Run genetic algorithm
 console.time('Execution time:');
-Genemo.run(evolutionOptions).then(({ evaluatedPopulation, generation }) => {
+Genemo.run(evolutionOptions).then(({ evaluatedPopulation, iteration }) => {
   console.timeEnd('Execution time:');
   console.log({
-    generation,
+    iteration,
     maxFitness: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
   });
 });

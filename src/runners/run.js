@@ -15,7 +15,6 @@ const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
 
 /**
  * Runs genetic algorithm until stopCondition returns true
- * Every generation is run asynchronously.
  *
  * @param {Object} options
  * @param {(random: () => number) => Array<any>} options.generateInitialPopulation
@@ -23,10 +22,10 @@ const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
  * @param {(evaluatedPopulation: Array<any>, random: () => number) => Array<any>} options.reproduce
  * @param {({ prevPopulation: Array<Object>, childrenPopulation: Array<Object> }, random: () => number) => Array<Object>} options.succession
  * @param {(individual: any) => number} options.evaluatePopulation
- * @param {({ evaluatedPopulation: Array<Object>, generation: number }) => boolean} options.stopCondition
+ * @param {({ evaluatedPopulation: Array<Object>, iteration: number }) => boolean} options.stopCondition
  * @param {number} options.maxBlockingTime
  *
- * @returns {{ evaluatedPopulation: Array<Object>, generation: number }} Last generation information
+ * @returns {{ evaluatedPopulation: Array<Object>, iteration: number }} Last iteration information
  */
 const run = async (options) => {
   checkProps({
@@ -85,7 +84,7 @@ const run = async (options) => {
     maxBlockingTime,
   });
 
-  let generation = 0;
+  let iteration = 0;
   const initialPopulation = await generateInitialPopulation(random);
   let evaluatedPopulation = mergeFitnessValuesWithPopulation(
     initialPopulation,
@@ -95,17 +94,17 @@ const run = async (options) => {
   // eslint-disable-next-line no-constant-condition
   while (true) {
     logsCollector.startClock('lastIteration');
-    generation += 1;
+    iteration += 1;
     evaluatedPopulation = await executeMainLoopBody({ evaluatedPopulation });
 
     logsCollector.startClock('stopCondition');
-    const shouldStop = await stopCondition({ evaluatedPopulation, generation });
+    const shouldStop = await stopCondition({ evaluatedPopulation, iteration });
     logsCollector.collectClockValue('stopCondition');
 
     logsCollector.startClock('iterationCallback');
     await iterationCallback({
       evaluatedPopulation,
-      generation,
+      iteration,
       logs: logsCollector.data,
     });
     logsCollector.collectClockValue('iterationCallback');
@@ -114,7 +113,7 @@ const run = async (options) => {
       logsCollector.collectClockValue('lastIteration');
       return {
         evaluatedPopulation,
-        generation,
+        iteration,
       };
     }
     logsCollector.collectClockValue('lastIteration');
