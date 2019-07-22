@@ -16,22 +16,60 @@ Genemo.run(options).then(result => {
 });
 ```
 `options` is an object which specifies genetic operators (functions) used in a genetic algorithm.
-The table below describes all properties you need to pass with `options` object.
-All options are required, but for most of them you can use an existing function from the library.
+All the properties you can pass in the `options` object are described below.
 Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is described later in this document.
 
-| Property                    | Signature                                          | Description                                                |
-|-----------------------------|----------------------------------------------------|------------------------------------------------------------|
-| `generateInitialPopulation` | `(Rng) => Population`                                 | Generates initial population of individuals (chromosomes). |
-| `selection`                 | `(EvaluatedPopulation, Rng) => EvaluatedPopulation`   | Selects individuals for breeding.                          |
-| `reproduce`                 | `(EvaluatedPopulation, Rng, collectLog) => Population`| Creates new population from the selected individuals.      |
-| `evaluatePopulation`        | `(Population, Rng) => Array<number`>         | Maps an array of individuals to an array of fitness values.                      |
-| `stopCondition`             | `({ evaluatedPopulation, iteration }, Rng) => boolean` | Returning `true` terminates the algorithm.                  |
-| `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
-| `iterationCallback`         | `({ evaluatedPopulation, iteration, logs }) => undefined` | **Optional**. Callback, which is called in every iteration.                 |
-| `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
-| `maxBlockingTime`                | `number` | **Optional**. Time in milliseconds, after which the next iteration is called asynchronously (as a macrotask). Defaults to `Infinity`, which means that macrotasks are never used by default.               |
-| `collectLogs`                | `boolean` | **Optional**. Indicates if the logs about performance should be collected. Default value is `true`.     |
+- **`generateInitialPopulation`** - Generates initial population of individuals (chromosomes).<br />
+**Type**: `(Rng) => Population`<br />
+**Required**: Yes<br />
+**Available values**: [`Genemo.generateInitialPopulation()`]()
+
+- **`selection`** - Selects individuals for breeding.<br />
+**Type**: `(EvaluatedPopulation, Rng) => EvaluatedPopulation`<br />
+**Required**: Yes<br />
+**Available values**: [`Genemo.selection.tournament()`](), [`Genemo.selection.rank()`](), [`Genemo.selection.roulette()`]()
+
+- **`reproduce`** - Creates new population from the selected individuals.<br />
+**Type**: `(EvaluatedPopulation, Rng, collectLog) => Population`<br />
+**Required**: Yes<br />
+**Available values**: [`Genemo.reproduce()`]()
+
+- **`evaluatePopulation`** - Maps an array of individuals to an array of fitness values.<br />
+**Type**: `(Population, Rng) => Array<number>`<br />
+**Required**: Yes<br />
+**Available values**: [`Genemo.evaluatePopulation()`]()
+
+- **`stopCondition`** - Returning `true` terminates the algorithm.<br />
+**Type**: `({ evaluatedPopulation, iteration }, Rng) => boolean`<br />
+**Required**: Yes<br />
+**Available values**: [`Genemo.stopCondition()`]()
+
+- **`succession`** -  Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).<br />
+**Type**: `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation`<br />
+**Required**: No<br />
+**Default:** `({ childrenPopulation }) => childrenPopulation`<br />
+**Available values**: [`Genemo.elitism()`]()
+
+- **`iterationCallback`** - Callback, which is called in every iteration.<br />
+**Type**: `({ evaluatedPopulation, iteration, logs }) => undefined`<br />
+**Required**: No<br />
+**Default:** `() => {}`<br />
+**Available values**: [`Genemo.logIterationData()`]()
+
+- **`random`** - Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1).<br />
+**Type**: `() => number`<br />
+**Required**: No<br />
+**Default:** `Math.random`<br />
+
+- **`maxBlockingTime`** - Time in milliseconds, after which the next iteration is called asynchronously (as a macrotask).<br />
+**Type**: `number`<br />
+**Required**: No<br />
+**Default:** `Infinity`<br />
+
+- **`collectLogs`** - Indicates if the logs about performance should be collected.<br />
+**Type**: `boolean`<br />
+**Required**: No<br />
+**Default:** `true`<br />
 
 `Genemo.run` returns a promise, which resolves to an object `{ evaluatedPopulation: EvaluatedPopulation, iteration: number }`, which contains information about the population (along with fitness values) from the last iteration and the last iteration number.
 
