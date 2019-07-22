@@ -6,10 +6,10 @@ describe('logIterationData', () => {
     const iterationCallback = Genemo.logIterationData({
       customLogger: mockLogger,
       include: {
-        minFitness: true,
-        maxFitness: true,
-        avgFitness: true,
-        debugDataKeys: ['customKey'],
+        minFitness: { show: true },
+        maxFitness: { show: true },
+        avgFitness: { show: true },
+        logsKeys: [{ key: 'customKey' }],
       },
     });
 
@@ -20,44 +20,81 @@ describe('logIterationData', () => {
         { fitness: 10 },
         { fitness: 5 },
       ],
-      debugData: { customKey: { lastValue: 3.1990 } },
+      logs: { customKey: { lastValue: 3.1990 } },
     });
 
     const expectedLogStr = 'minFitness = 5, maxFitness = 10, avgFitness = 8, customKey = 3.20ms';
-    expect(mockLogger).toBeCalledWith(expectedLogStr);
+    expect(mockLogger).toHaveBeenCalledWith(expectedLogStr);
   });
 
   test('customLogger should be called with a correct string for default arguments', () => {
     const mockLogger = jest.fn(() => {});
     const iterationCallback = Genemo.logIterationData({
       customLogger: mockLogger,
-      include: { generationNumber: true },
+      include: { iteration: { show: true } },
     });
 
     iterationCallback({
       generation: 1,
       evaluatedPopulation: [],
-      debugData: {},
+      logs: {},
     });
 
     const expectedLogStr = '#1';
-    expect(mockLogger).toBeCalledWith(expectedLogStr);
+    expect(mockLogger).toHaveBeenCalledWith(expectedLogStr);
   });
 
   test('should call default custom logger', () => {
     const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
     const iterationCallback = Genemo.logIterationData({
-      include: { generationNumber: true },
+      include: { iteration: { show: true } },
     });
 
     iterationCallback({
       generation: 10,
       evaluatedPopulation: [],
-      debugData: {},
+      logs: {},
     });
 
     const expectedLogStr = '#10';
-    expect(consoleLogSpy).toBeCalledWith(expectedLogStr);
+    expect(consoleLogSpy).toHaveBeenCalledWith(expectedLogStr);
+  });
+
+  test('logs custom formatter should return a correct string', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    const iterationCallback = Genemo.logIterationData({
+      include: {
+        logsKeys: [{ key: 'customKey', formatter: (key, value) => `${key}-${value}-suffix` }],
+      },
+    });
+
+    iterationCallback({
+      generation: 10,
+      evaluatedPopulation: [],
+      logs: { customKey: { lastValue: 5 } },
+    });
+
+    const expectedLogStr = 'customKey-5-suffix';
+    expect(consoleLogSpy).toHaveBeenCalledWith(expectedLogStr);
+  });
+
+  test('avgFitness custom formatter should return a correct string', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    const iterationCallback = Genemo.logIterationData({
+      include: {
+        avgFitness: { show: true, formatter: (key, value) => `${key}-${value}-suffix` },
+      },
+    });
+
+    iterationCallback({
+      generation: 10,
+      evaluatedPopulation: [{ fitness: 2 }],
+    });
+
+    const expectedLogStr = 'avgFitness-2-suffix';
+    expect(consoleLogSpy).toHaveBeenCalledWith(expectedLogStr);
   });
 });

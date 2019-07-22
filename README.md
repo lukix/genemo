@@ -24,11 +24,11 @@ Meaning of types *Rng*, *Population*, *EvaluatedPopulation* and *Individual* is 
 |-----------------------------|----------------------------------------------------|------------------------------------------------------------|
 | `generateInitialPopulation` | `(Rng) => Population`                                 | Generates initial population of individuals (chromosomes). |
 | `selection`                 | `(EvaluatedPopulation, Rng) => EvaluatedPopulation`   | Selects individuals for breeding.                          |
-| `reproduce`                 | `(EvaluatedPopulation, Rng) => Population`            | Creates new population from the selected individuals.      |
+| `reproduce`                 | `(EvaluatedPopulation, Rng, collectLog) => Population`| Creates new population from the selected individuals.      |
 | `evaluatePopulation`        | `(Population, Rng) => Array<number`>         | Maps an array of individuals to an array of fitness values.                      |
 | `stopCondition`             | `({ evaluatedPopulation, generation }, Rng) => boolean` | Returning `true` terminates the algorithm.                  |
 | `succession`                | `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation` | **Optional**. Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).                  |
-| `iterationCallback`         | `({ evaluatedPopulation, generation, debugData }) => undefined` | **Optional**. Callback, which is called in every iteration/generation.                 |
+| `iterationCallback`         | `({ evaluatedPopulation, generation, logs }) => undefined` | **Optional**. Callback, which is called in every iteration/generation.                 |
 | `random`                | `() => number` | **Optional**. Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1). If not provided, `Math.random` will be used.                 |
 | `maxBlockingTime`                | `number` | **Optional**. Time in milliseconds, after which the next iteration is called asynchronously (as a macrotask). Defaults to `Infinity`, which means that macrotasks are never used by default.               |
 
@@ -50,16 +50,16 @@ Full examples with comments can be found in the `./examples` directory. Here is 
 Genemo.run({
   generateInitialPopulation: Genemo.generateInitialPopulation({
     generateIndividual, // Here, provide a function which generates an individual
-    size: 500,
+    size: 200,
   }),
   selection: Genemo.selection.roulette(),
   reproduce: Genemo.reproduce({
     crossover: Genemo.crossover.singlePoint,
     mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
-    mutationProbability: 0.01,
+    mutationProbability: 0.02,
   }),
   evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }), // You need to provide your own fitness function
-  stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 1000 }),
+  stopCondition: Genemo.stopCondition({ maxGenerations: 100 }),
 }).then(({ evaluatedPopulation, generation }) => {
   // ...
 });
@@ -109,14 +109,19 @@ Genemo.run(options).then(result => {
     Returns a function with a signature matching that of `iterationCallback` property of `Genemo.run` options object. `customLogger` is optional - its default value is a `console.log` function. `include` is an object, which specifies values that should be included in each log:
     ```
     {
-      generationNumber = false,
-      minFitness = false,
-      maxFitness = false,
-      avgFitness = false,
-      debugDataKeys = []
+      iteration = { show: false, formatter: iterationFormatter },
+      minFitness = { show: false, formatter: fitnessFormatter },
+      maxFitness = { show: false, formatter: fitnessFormatter },
+      avgFitness = { show: false, formatter: fitnessFormatter },
+      logsKeys = []
     }
     ```
-    `debugDataKeys` should be an array of strings. It specifies which values from `debugData` object should be logged. `debugData` object contains information about performance of each element of the running genetic algorithm. Available keys: `lastIteration`, `selection`, `reproduce`, `fitness`, `succession`, `stopCondition`, `iterationCallback`.
+    `logsKeys` should be an array of objects. Each object have a `key` property, which specifies which values from `logs` object should be logged.
+    `fotmatter` is an optional property, which specifies a function for formating data `(key, value) => string`.
+
+    Available keys from `Genemo.run`: `lastIteration`, `selection`, `reproduce`, `fitness`, `succession`, `stopCondition`, `iterationCallback`.
+
+    Available keys from `Genemo.reproduce`: `reproduce.crossover`, `reproduce.mutation`.
 
 ### Selection
 - **`Genemo.selection.roulette({ minimizeFitness })`**

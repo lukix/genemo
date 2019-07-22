@@ -22,7 +22,7 @@ describe('reproduce', () => {
       mutate: individual => individual,
       crossover: (([a, b]) => [a, b]),
     });
-    const result = reproduce(evaluatedPopulation, random);
+    const result = reproduce(evaluatedPopulation, random, () => null);
     expect(result).toStrictEqual(expectedResult);
   });
 
@@ -48,7 +48,7 @@ describe('reproduce', () => {
       crossover: ([a, b]) => [a, b],
       mutationProbability: 0.1,
     });
-    const result = reproduce(evaluatedPopulation, random);
+    const result = reproduce(evaluatedPopulation, random, () => null);
     expect(result).toStrictEqual(expectedResult);
   });
 });

@@ -3,12 +3,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## 1.0.0 - Unreleased
-- Removed functions `Genemo.runEvolution` and `Genemo.getGenerationsIterator`.
-- Renamed `Genemo.runEvolutionAsync` to `Genemo.run`. It is now the only function for running genetic algorithm.
-- Removed `Genemo.reproduce` function.
-- Renamed `Genemo.reproduceAsync` to `Genemo.reproduce`.
+- Replaced `runEvolution`, `runEvolutionAsync` and `getGenerationsIterator` with `Genemo.run`.
+- Removed `Genemo.reproduceAsync` function.
 - Replaced `fitness` option from runner with `evaluatePopulation` option.
+- Added `maxBlockingTime` param to the runner function (`Genemo.run`).
 - Added `Genemo.evaluatePopulation` function.
+- Added passing `collectLog` function to `Genemo.reproduce` as the 3rd argument.
+- Changed `Genemo.logIterationData` API.
+- Renamed `debugData` key to `logs` in `iterationCallback`.
 
 ## 0.7.0 - 2019-07-18
 - Added `maxBlockingTime` option to `Genemo.runEvolutionAsync`.

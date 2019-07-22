@@ -11,6 +11,6 @@ describe('asyncify on browser env', () => {
       expect(result).toStrictEqual(arg);
       done();
     });
-    expect(mockFn).toBeCalledTimes(0);
+    expect(mockFn).toHaveBeenCalledTimes(0);
   });
 });
