@@ -60,4 +60,41 @@ describe('logIterationData', () => {
     const expectedLogStr = '#10';
     expect(consoleLogSpy).toHaveBeenCalledWith(expectedLogStr);
   });
+
+  test('logs custom formatter should return a correct string', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    const iterationCallback = Genemo.logIterationData({
+      include: {
+        logsKeys: [{ key: 'customKey', formatter: (key, value) => `${key}-${value}-suffix` }],
+      },
+    });
+
+    iterationCallback({
+      generation: 10,
+      evaluatedPopulation: [],
+      logs: { customKey: { lastValue: 5 } },
+    });
+
+    const expectedLogStr = 'customKey-5-suffix';
+    expect(consoleLogSpy).toHaveBeenCalledWith(expectedLogStr);
+  });
+
+  test('avgFitness custom formatter should return a correct string', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+
+    const iterationCallback = Genemo.logIterationData({
+      include: {
+        avgFitness: { show: true, formatter: (key, value) => `${key}-${value}-suffix` },
+      },
+    });
+
+    iterationCallback({
+      generation: 10,
+      evaluatedPopulation: [{ fitness: 2 }],
+    });
+
+    const expectedLogStr = 'avgFitness-2-suffix';
+    expect(consoleLogSpy).toHaveBeenCalledWith(expectedLogStr);
+  });
 });
