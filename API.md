@@ -192,44 +192,66 @@ Takes an object with the following properties:
   **Default value**: `false`<br />
 
 ### **`Genemo.crossover.singlePoint`**
-Function that can be used as a `crossover` parameter for `Genemo.reproduce`.
+Single-point crossover.<br />
+Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
 ### **`Genemo.crossover.twoPoint`**
-Function that can be used as a `crossover` parameter for `Genemo.reproduce`.
+Two-point crossover.<br />
+Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
 ### **`Genemo.crossover.kPoint(k)`**
-**Returns** a function that can be used as a `crossover` parameter for `Genemo.reproduce`.
+K-point crossover.<br />
+Returned function is applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
+Takes one argument:
+
+- **`k`** - number of crosover points.<br />
+  **Type**: `number`<br />
 
 ### **`Genemo.crossover.orderOne`**
-**Returns** a function that can be used as a `crossover` parameter for `Genemo.reproduce`.
+Order 1 crossover.<br />
+Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
 ### **`Genemo.crossover.PMX`**
-Partially-mapped crossover.
-**Returns** a function that can be used as a `crossover` parameter for `Genemo.reproduce`.
+Partially-mapped crossover.<br />
+Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
 ### **`Genemo.crossover.uniform`**
-Uniform crossover.
-Function that can be used as a `crossover` parameter for `Genemo.reproduce`.
-Offsprings are created by selecting each gene from one of the parents with equal probability.
+Uniform crossover.Offsprings are created by selecting each gene from one of the parents with equal probability.<br />
+Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
 ### **`Genemo.mutation.transformRandomGene(transformFunc)`**
-Returns a function that can be used as a `mutation` parameter for `Genemo.run`.
-`transformFunc(gene, random)` is a function, which takes a single gene and a random number generator and returns a new gene.
+Transforms random gene from individual. Individual must be represented as an array of genes.
+Returned function is applicable to: `Genemo.reproduce`'s `mutate` parameter.<br />
+Takes one argument:
+
+- **`transformFunc`** - function which transforms one gene.<br />
+  **Type**: `(gene, Rng) => mutatedGene`<br />
 
 ### **`Genemo.mutation.flipBit`**
-Function that can be used as an argument for `Genemo.mutation.transformRandomGene`.
+Negates value of a random gene (array element) of an individual.<br />
+Applicable to: `Genemo.reproduce`'s `transformRandomGene` parameter.<br />
 
 ### **`Genemo.mutation.swapTwoGenes`**
-Swaps places of two randomly chosen genes (array elements).
-This function can be used as an argument for `Genemo.mutation.transformRandomGene`.
+Swaps places of two randomly chosen genes (array elements) of an individual.<br />
+Applicable to: `Genemo.reproduce`'s `transformRandomGene` parameter.<br />
 
 ### **`Genemo.elitism({ keepFactor, minimizeFitness })`**
-Returns a function that can be used as a `succession` parameter for `Genemo.run`.
-`keepFactor` is a number from 0 to 1 describing what part of best individuals should be kept unchanged.
-`minimizeFitness` is a boolean value indicating if we are aiming at minimizing or maximizing fitness.
+Succession strategy, which keeps best individuals regerdless of reproduce's outcome.
+Returned function is applicable to: `Genemo.run`'s `succession` parameter.<br />
+Takes an object with the following properties:
+
+- **`keepFactor`** - tournament size<br />
+  **Type**: `number`<br />
+
+- **`minimizeFitness`** - if true, succession's purpose will be to minimize fitness.<br />
+  **Type**: `boolean`<br />
+  **Optional**<br />
+  **Default value**: `false`<br />
 
 ### **`Genemo.randomSequenceOf(valuesSet, length)`**
-Returns a function which takes a random number generator and returns an array of random elements from `valuesSet` of length equal to `length`. Returned function can be used as a `generateIndividual` parameter for `Genemo.generateInitialPopulation`.
+Returns a function which takes a random number generator and returns an array of random elements from `valuesSet` of length equal to `length`.<br />
+Returned function is applicable to: `Genemo.generateInitialPopulation`'s `generateIndividual` parameter.
 
 ### **`Genemo.randomPermutationOf(valuesSet)`**
-Returns a function which takes a random number generator and returns a random permutation of elements from `valuesSet`. Returned function can be used as a `generateIndividual` parameter for `Genemo.generateInitialPopulation`.
+Returns a function which takes a random number generator and returns a random permutation of elements from `valuesSet`.<br />
+Returned function is applicable to: `Genemo.generateInitialPopulation`'s `generateIndividual` parameter.
