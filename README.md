@@ -67,30 +67,30 @@ GeneMO exports a `Genemo` object with properties listed in the hierarchy below.<
 Full description of each property can be found in [API.md](./API.md).
 
 - `Genemo`
-  - [`run`](./API.md#genemo-run-options)
-  - [`generateInitialPopulation`](./API.md#genemo-generateinitialpopulation-generateindividual-size)
-  - `evaluatePopulation`
-  - `reproduce`
-  - `stopCondition`
-  - `logIterationData`
-  - `randomSequenceOf`
-  - `randomPermutationOf`
+  - [`run`](./API.md#genemorunoptions)
+  - [`generateInitialPopulation`](./API.md#genemogenerateinitialpopulation-generateindividual-size-)
+  - [`evaluatePopulation`](./API.md#genemoevaluatepopulation-fitnessfunction-)
+  - [`reproduce`](./API.md#genemoreproduce-crossover-mutate-mutationprobability-)
+  - [`stopCondition`](./API.md#genemostopcondition-minfitness-maxfitness-maxiterations-)
+  - [`logIterationData`](./API.md#genemologiterationdata-include-customlogger-)
+  - [`randomSequenceOf`](./API.md#genemorandomsequenceofvaluesset-length)
+  - [`randomPermutationOf`](./API.md#genemorandompermutationofvaluesset)
   - `selection`
-    - `roulette`
-    - `rank`
-    - `tournament`
+    - [`roulette`](./API.md#genemoselectionroulette-minimizefitness-)
+    - [`rank`](./API.md#genemoselectionrank-minimizefitness-)
+    - [`tournament`](./API.md#genemoselectiontournament-size-minimizefitness-)
   - `crossover`
-    - `singlePoint`
-    - `twoPoint`
-    - `kPoint`
-    - `orderOne`
-    - `PMX`
-    - `uniform`
+    - [`singlePoint`](./API.md#genemocrossoversinglepoint)
+    - [`twoPoint`](./API.md#genemocrossovertwopoint)
+    - [`kPoint`](./API.md#genemocrossoverkpointk)
+    - [`orderOne`](./API.md#genemocrossoverorderone)
+    - [`PMX`](./API.md#genemocrossoverpmx)
+    - [`uniform`](./API.md#genemocrossoveruniform)
   - `mutation`
-    - `transformRandomGene`
-    - `flipBit`
-    - `swapTwoGenes`
-  -  `elitism`
+    - [`transformRandomGene`](./API.md#genemomutationtransformrandomgenetransformfunc)
+    - [`flipBit`](./API.md#genemomutationflipbit)
+    - [`swapTwoGenes`](./API.md#genemomutationswaptwogenes)
+  -  [`elitism`](./API.md#genemoelitism-keepfactor-minimizefitness-)
 
 ## How To Contribute
 Just do it! If you want to reassure yourself that your code will be merged,
