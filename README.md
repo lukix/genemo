@@ -1,7 +1,7 @@
 # GeneMO - Genetic Algorithm Library
 [![Build Status](https://travis-ci.org/lukix/genemo.svg?branch=master)](https://travis-ci.org/lukix/genemo) [![Coverage Status](https://coveralls.io/repos/github/lukix/genemo/badge.svg?branch=master)](https://coveralls.io/github/lukix/genemo?branch=master) [![npm version](https://badge.fury.io/js/genemo.svg)](https://badge.fury.io/js/genemo) [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 
-Simple to use genetic algorithm library with many predefined operators. Supports both NodeJS and web browsers.
+Simple to use genetic algorithm library. It enables fast prototyping by providing a number of universal genetic operators (for selection, crossover, mutation, etc.) and easy customization. Supports both NodeJS and web browsers.
 
 #### Table of Contents
 [Installation](#installation)<br />
@@ -16,7 +16,7 @@ npm i genemo
 ```
 
 ## Example Usage
-Full examples with comments can be found in the `./examples` directory. Here is a shorter version:
+Full examples with comments can be found in the [`./examples`](./tree/master/examples) directory. Here is a shorter version:
 ```javascript
 Genemo.run({
   generateInitialPopulation: Genemo.generateInitialPopulation({
@@ -39,30 +39,40 @@ Genemo.run({
 Example of using GeneMO in the browser environment without blocking browser's main thread can be found in [genemo-web-demo](https://github.com/lukix/genemo-web-demo) repository.
 
 ## Getting Started
-To start a genetic algorithm use `Genemo.run` function:
+A single most important element of GeneMO library is a [`Genemo.run`](./API.md#genemorunoptions) function.
+It runs a genetic algorithm by executing a number of user-specified functions, like for example:
+generation of initial population, selection, fitness function, etc.
+
+By providing a rich collection of universal genetic operators, GeneMO lets you build an initial
+version of your genetic algorithm very quickly. Then you can refine your program by gradually
+replacing GeneMO's universal genetic operators with custom, problem specific operators.
+
+Usually, it is enough to implement a custom function for generating random individual/solution
+and a fitness function. Rest of the required functions can be taken from the GeneMO library.
+However, keep in mind that problem specific operators usually give better results.
+
+Read [API Reference](#api-reference) for detailed description of all the options required by [`Genemo.run`](./API.md#genemorunoptions).<br />
+See [Example Usage](#example-usage) to quickly get familiar with basic usage of GeneMO.
+
 ```javascript
 Genemo.run(options).then(result => {
   // ...
 });
 ```
-`options` is an object which specifies genetic operators (functions) used in a genetic algorithm.
-All the properties you can pass in the `options` object are described below.
 
-`Genemo.run` returns a promise, which resolves to an object `{ evaluatedPopulation: EvaluatedPopulation, iteration: number, logs: object }`, which contains information about the population (along with fitness values) from the last iteration, last iteration number and object with logs.
+[`Genemo.run`](./API.md#genemorunoptions) returns a promise, which resolves to an object:
+```
+{ evaluatedPopulation: EvaluatedPopulation, iteration: number, logs: object }
+```
+It contains information about the population (along with fitness values) from the final iteration, number of iterations and an object with logs (mostly with performance data).
 
 ### Asynchronous execution
-Each function passed to `Genemo.run` (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well).
-From time to time `Genemo.run` runs next iteration asynchronously to avoid blocking browser's main thread.
+Each function passed to [`Genemo.run`](./API.md#genemorunoptions) (`selection`, `reproduce`, `fitness`, etc.) can return a `Promise` (synchronous functions work as well).
+From time to time [`Genemo.run`](./API.md#genemorunoptions) runs next iteration asynchronously to avoid blocking browser's main thread.
 However, if a single iteration takes too long to complete, it will still block the main thread.
 To control the frequency of asynchronous iteration executions, use `maxBlockingTime` option.
-```javascript
-Genemo.run(options).then(result => {
-  // ...
-});
-```
 
 ## API Reference
-
 GeneMO exports a `Genemo` object with properties listed in the hierarchy below.<br />
 Full description of each property can be found in [API.md](./API.md).
 
