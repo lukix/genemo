@@ -1,3 +1,3 @@
-const flipBit = geneBooleanValue => !geneBooleanValue;
+const flipBit = () => geneBooleanValue => !geneBooleanValue;
 
 module.exports = flipBit;

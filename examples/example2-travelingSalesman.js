@@ -22,17 +22,12 @@ const evolutionOptions = {
   }),
   selection: Genemo.selection.rank({ minimizeFitness: true }),
   reproduce: Genemo.reproduce({
-    crossover: Genemo.crossover.orderOne,
-    mutate: Genemo.mutation.swapTwoGenes,
+    crossover: Genemo.crossover.orderOne(),
+    mutate: Genemo.mutation.swapTwoGenes(),
     mutationProbability: 0.02,
   }),
   evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
   stopCondition: Genemo.stopCondition({ maxFitness: 2085, maxIterations: 1000 }),
-  iterationCallback: Genemo.logIterationData({
-    include: {
-      logsKeys: [{ key: 'lastIteration' }],
-    },
-  }),
 };
 
 // Run genetic algorithm
