@@ -18,7 +18,7 @@ const createChildUsingOrderOneCrossover = ([parent1, parent2], minIndex, maxInde
   return child;
 };
 
-const orderOne = ([mother, father], random) => {
+const orderOne = () => ([mother, father], random) => {
   const individualLength = mother.length;
   const index1 = randomFromRange(random)(0, individualLength - 1);
   const index2 = randomFromRange(random)(0, individualLength - 1);

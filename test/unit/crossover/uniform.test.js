@@ -16,7 +16,7 @@ describe('Uniform crossover', () => {
       [11, 20, 30, 41, 51],
     ];
 
-    const result = Genemo.crossover.uniform([mother, father], random);
+    const result = Genemo.crossover.uniform()([mother, father], random);
     expect(result).toStrictEqual(offsprings);
   });
 });

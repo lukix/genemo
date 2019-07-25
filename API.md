@@ -1,7 +1,7 @@
 # API Reference
 
 ## Types
-To make this API reference more concise and readable, a few "types" has been introduced.
+To make this API reference more concise and readable, a few "types" have been introduced.
 Those "types" are just aliases for some plain JavaScript structures.
 
 | Type                  | Translates to                                       | Description                                                    |
@@ -205,13 +205,13 @@ Takes an object with the following properties:
   **Optional**<br />
   **Default value**: `false`<br />
 
-### **`Genemo.crossover.singlePoint`**
+### **`Genemo.crossover.singlePoint()`**
 Single-point crossover.<br />
-Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
+Returned function is applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
-### **`Genemo.crossover.twoPoint`**
+### **`Genemo.crossover.twoPoint()`**
 Two-point crossover.<br />
-Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
+Returned function is applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
 ### **`Genemo.crossover.kPoint(k)`**
 K-point crossover.<br />
@@ -221,17 +221,17 @@ Takes one argument:
 - **`k`** - number of crosover points.<br />
   **Type**: `number`<br />
 
-### **`Genemo.crossover.orderOne`**
+### **`Genemo.crossover.orderOne()`**
 Order 1 crossover.<br />
-Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
+Returned function is applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
-### **`Genemo.crossover.PMX`**
+### **`Genemo.crossover.PMX()`**
 Partially-mapped crossover.<br />
-Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
+Returned function is applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
-### **`Genemo.crossover.uniform`**
-Uniform crossover.Offsprings are created by selecting each gene from one of the parents with equal probability.<br />
-Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
+### **`Genemo.crossover.uniform()`**
+Uniform crossover. Offsprings are created by selecting each gene from one of the parents with equal probability.<br />
+Returned function is applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
 ### **`Genemo.mutation.transformRandomGene(transformFunc)`**
 Transforms random gene from individual. Individual must be represented as an array of genes.
@@ -241,10 +241,10 @@ Takes one argument:
 - **`transformFunc`** - function which transforms one gene.<br />
   **Type**: `(gene, Rng) => mutatedGene`<br />
 
-### **`Genemo.mutation.flipBit`**
+### **`Genemo.mutation.flipBit()`**
 Negates value of a random gene (array element) of an individual.<br />
-Applicable to: `Genemo.reproduce`'s `transformRandomGene` parameter.<br />
+Returned function is applicable to: `Genemo.reproduce`'s `transformRandomGene` parameter.<br />
 
-### **`Genemo.mutation.swapTwoGenes`**
+### **`Genemo.mutation.swapTwoGenes()`**
 Swaps places of two randomly chosen genes (array elements) of an individual.<br />
-Applicable to: `Genemo.reproduce`'s `transformRandomGene` parameter.<br />
+Returned function is applicable to: `Genemo.reproduce`'s `transformRandomGene` parameter.<br />

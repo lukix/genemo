@@ -33,8 +33,8 @@ const evolutionOptions = {
   // A function, which creates a new population from the selected individuals from the previous one.
   // Usually consists of crossover and mutation.
   reproduce: Genemo.reproduce({
-    crossover: Genemo.crossover.singlePoint,
-    mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
+    crossover: Genemo.crossover.singlePoint(),
+    mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit()),
     mutationProbability: 0.01,
   }),
 

@@ -45,7 +45,7 @@ const createChildUsingPMXCrossover = ([parent1, parent2], minIndex, maxIndex) =>
   return child;
 };
 
-const PMX = ([mother, father], random) => {
+const PMX = () => ([mother, father], random) => {
   const individualLength = mother.length;
   const index1 = randomFromRange(random)(0, individualLength - 1);
   const index2 = randomFromRange(random)(0, individualLength - 1);

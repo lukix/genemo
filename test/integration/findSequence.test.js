@@ -21,8 +21,8 @@ describe('Find Sequence', () => {
       }),
       selection: Genemo.selection.roulette(),
       reproduce: Genemo.reproduce({
-        crossover: Genemo.crossover.singlePoint,
-        mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
+        crossover: Genemo.crossover.singlePoint(),
+        mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit()),
         mutationProbability: 0.03,
       }),
       evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
