@@ -75,6 +75,7 @@ Full description of each property can be found in [API.md](./API.md).
   - [`logIterationData`](./API.md#genemologiterationdata-include-customlogger-)
   - [`randomSequenceOf`](./API.md#genemorandomsequenceofvaluesset-length)
   - [`randomPermutationOf`](./API.md#genemorandompermutationofvaluesset)
+  - [`elitism`](./API.md#genemoelitism-keepfactor-minimizefitness-)
   - `selection`
     - [`roulette`](./API.md#genemoselectionroulette-minimizefitness-)
     - [`rank`](./API.md#genemoselectionrank-minimizefitness-)
@@ -90,7 +91,6 @@ Full description of each property can be found in [API.md](./API.md).
     - [`transformRandomGene`](./API.md#genemomutationtransformrandomgenetransformfunc)
     - [`flipBit`](./API.md#genemomutationflipbit)
     - [`swapTwoGenes`](./API.md#genemomutationswaptwogenes)
-  -  [`elitism`](./API.md#genemoelitism-keepfactor-minimizefitness-)
 
 ## How To Contribute
 Just do it! If you want to reassure yourself that your code will be merged,

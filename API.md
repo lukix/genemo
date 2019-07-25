@@ -191,6 +191,27 @@ Takes an object with the following properties:
   **Optional**<br />
   **Default value**: `false`<br />
 
+### **`Genemo.randomSequenceOf(valuesSet, length)`**
+Returns a function which takes a random number generator and returns an array of random elements from `valuesSet` of length equal to `length`.<br />
+Returned function is applicable to: `Genemo.generateInitialPopulation`'s `generateIndividual` parameter.
+
+### **`Genemo.randomPermutationOf(valuesSet)`**
+Returns a function which takes a random number generator and returns a random permutation of elements from `valuesSet`.<br />
+Returned function is applicable to: `Genemo.generateInitialPopulation`'s `generateIndividual` parameter.
+
+### **`Genemo.elitism({ keepFactor, minimizeFitness })`**
+Succession strategy, which keeps best individuals regerdless of reproduce's outcome.
+Returned function is applicable to: `Genemo.run`'s `succession` parameter.<br />
+Takes an object with the following properties:
+
+- **`keepFactor`** - tournament size<br />
+  **Type**: `number`<br />
+
+- **`minimizeFitness`** - if true, succession's purpose will be to minimize fitness.<br />
+  **Type**: `boolean`<br />
+  **Optional**<br />
+  **Default value**: `false`<br />
+
 ### **`Genemo.crossover.singlePoint`**
 Single-point crossover.<br />
 Applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
@@ -234,24 +255,3 @@ Applicable to: `Genemo.reproduce`'s `transformRandomGene` parameter.<br />
 ### **`Genemo.mutation.swapTwoGenes`**
 Swaps places of two randomly chosen genes (array elements) of an individual.<br />
 Applicable to: `Genemo.reproduce`'s `transformRandomGene` parameter.<br />
-
-### **`Genemo.elitism({ keepFactor, minimizeFitness })`**
-Succession strategy, which keeps best individuals regerdless of reproduce's outcome.
-Returned function is applicable to: `Genemo.run`'s `succession` parameter.<br />
-Takes an object with the following properties:
-
-- **`keepFactor`** - tournament size<br />
-  **Type**: `number`<br />
-
-- **`minimizeFitness`** - if true, succession's purpose will be to minimize fitness.<br />
-  **Type**: `boolean`<br />
-  **Optional**<br />
-  **Default value**: `false`<br />
-
-### **`Genemo.randomSequenceOf(valuesSet, length)`**
-Returns a function which takes a random number generator and returns an array of random elements from `valuesSet` of length equal to `length`.<br />
-Returned function is applicable to: `Genemo.generateInitialPopulation`'s `generateIndividual` parameter.
-
-### **`Genemo.randomPermutationOf(valuesSet)`**
-Returns a function which takes a random number generator and returns a random permutation of elements from `valuesSet`.<br />
-Returned function is applicable to: `Genemo.generateInitialPopulation`'s `generateIndividual` parameter.
