@@ -127,6 +127,7 @@ Takes an object with the following properties:
 Returns a function with a signature matching that of `stopCondition` property of `Genemo.run` options object. Use `minFitness` for maximization problems and `maxFitness` for minimization.
 
 ### **`Genemo.logIterationData({ include, customLogger })`**
+Returns a function which logs iteration data (mostly performance data).
 Returned function is applicable to: `Genemo.run`'s `iterationCallback` parameter.<br />
 Takes an object with the following properties:
 
@@ -134,32 +135,24 @@ Takes an object with the following properties:
   **Type**: `object`<br />
   **Properties** (all optional):
     - `iteration`
+      - Signature: `{ show: boolean, formatter: (key, value) => string }`
     - `minFitness`
+      - Signature: `{ show: boolean, formatter: (key, value) => string }`
     - `maxFitness`
+      - Signature: `{ show: boolean, formatter: (key, value) => string }`
     - `avgFitness`
+      - Signature: `{ show: boolean, formatter: (key, value) => string }`
     - `logsKeys`
+      - Signature: `Array<{ key: string, formatter: (key, value) => string }>`
+      - Available keys for `Genemo.run`: `lastIteration`, `selection`, `reproduce`, `fitness`, `succession`, `stopCondition`, `iterationCallback`
+      - Available keys for `Genemo.reproduce`: `reproduce.crossover`, `reproduce.mutation`
+
+    Formatters are optional.
 
 - **`customLogger`** - logs provided string value<br />
   **Type**: `(string) => undefined`<br />
   **Optional**<br />
   **Default value**: `console.log`
- <!-- `include` is an object, which specifies values that should be included in each log:
-```
-{
-  iteration = { show: false, formatter: iterationFormatter },
-  minFitness = { show: false, formatter: fitnessFormatter },
-  maxFitness = { show: false, formatter: fitnessFormatter },
-  avgFitness = { show: false, formatter: fitnessFormatter },
-  logsKeys = []
-}
-```
-`logsKeys` should be an array of objects. Each object have a `key` property, which specifies which values from `logs` object should be logged.
-`fotmatter` is an optional property, which specifies a function for formating data `(key, value) => string`.
-
-Available keys from `Genemo.run`: `lastIteration`, `selection`, `reproduce`, `fitness`, `succession`, `stopCondition`, `iterationCallback`.
-
-Available keys from `Genemo.reproduce`: `reproduce.crossover`, `reproduce.mutation`.
--->
 
 ### **`Genemo.selection.roulette({ minimizeFitness })`**
 Returned function is applicable to: `Genemo.run`'s `selection` parameter.<br />
