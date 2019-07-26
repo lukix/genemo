@@ -13,6 +13,12 @@ const checkProps = ({ functionName, propTypes, props }) => {
       throw Error(`Invalid Property \`${key}\` supplied to \`${functionName}\`, expected ${type}, but received ${actualType}`);
     }
   });
+
+  Object.keys(props).forEach((key) => {
+    if (!propTypes[key]) {
+      throw Error(`Property \`${key}\` is not allowed in \`${functionName}\``);
+    }
+  });
 };
 
 const types = {
