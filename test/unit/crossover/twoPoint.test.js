@@ -16,7 +16,7 @@ describe('Two-point crossover', () => {
       [11, 21, 31, 41, 50, 60, 70, 80, 91, 101],
     ];
 
-    const result = Genemo.crossover.twoPoint([mother, father], random);
+    const result = Genemo.crossover.twoPoint()([mother, father], random);
     expect(result).toStrictEqual(offsprings);
   });
 });

@@ -22,22 +22,20 @@ const evolutionOptions = {
   }),
   selection: Genemo.selection.rank({ minimizeFitness: true }),
   reproduce: Genemo.reproduce({
-    crossover: Genemo.crossover.orderOne,
-    mutate: Genemo.mutation.swapTwoGenes,
+    crossover: Genemo.crossover.orderOne(),
+    mutate: Genemo.mutation.swapTwoGenes(),
     mutationProbability: 0.02,
   }),
-  fitness: fitnessFunction,
-  stopCondition: Genemo.stopCondition({ maxFitness: 2085, maxGenerations: 1000 }),
+  evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
+  stopCondition: Genemo.stopCondition({ maxFitness: 2085, maxIterations: 1000 }),
 };
 
 // Run genetic algorithm
 console.time('Execution time:');
-const lastGeneration = Genemo.runEvolution(evolutionOptions);
-console.timeEnd('Execution time:');
-
-const { evaluatedPopulation, generation } = lastGeneration;
-
-console.log({
-  generation,
-  shortestPath: Math.min(...evaluatedPopulation.map(({ fitness }) => fitness)),
+Genemo.run(evolutionOptions).then(({ evaluatedPopulation, iteration }) => {
+  console.timeEnd('Execution time:');
+  console.log({
+    iteration,
+    shortestPath: Math.min(...evaluatedPopulation.map(({ fitness }) => fitness)),
+  });
 });

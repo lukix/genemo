@@ -40,4 +40,13 @@ describe('checkProps', () => {
     });
     expect(testFunc).toThrow(Error);
   });
+
+  test('Should throw an error when called with not allowed prop', () => {
+    const testFunc = () => checkProps({
+      functionName: 'test func',
+      propTypes: { key1: { type: types.NUMBER, isRequired: true } },
+      props: { key1: 0, key2: 'not-allowed' },
+    });
+    expect(testFunc).toThrow(Error);
+  });
 });

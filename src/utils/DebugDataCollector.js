@@ -1,12 +1,17 @@
 const getCurrentTime = require('./getCurrentTime');
 
 class DebugDataCollector {
-  constructor() {
+  constructor({ collectLogs }) {
     this.data = {};
     this.clocks = {};
+    this.collectLogs = collectLogs;
   }
 
   collect(key, value) {
+    if (!this.collectLogs) {
+      return;
+    }
+
     this.data[key] = this.data[key]
       ? {
         samples: this.data[key].samples + 1,

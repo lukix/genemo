@@ -31,7 +31,7 @@ describe('roulette', () => {
       { fitness: 4 },
     ];
 
-    const roulette = Genemo.selection.roulette();
+    const roulette = Genemo.selection.roulette({ minimizeFitness: false });
     const result = roulette(evaluatedPopulation, random);
     expect(result).toStrictEqual(offspring);
   });

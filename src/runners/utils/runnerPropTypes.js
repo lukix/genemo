@@ -5,8 +5,12 @@ const runnerPropTypes = {
   selection: { type: types.FUNCTION, isRequired: true },
   reproduce: { type: types.FUNCTION, isRequired: true },
   succession: { type: types.FUNCTION, isRequired: false },
-  fitness: { type: types.FUNCTION, isRequired: true },
+  evaluatePopulation: { type: types.FUNCTION, isRequired: true },
   random: { type: types.FUNCTION, isRequired: false },
+  stopCondition: { type: types.FUNCTION, isRequired: true },
+  iterationCallback: { type: types.FUNCTION, isRequired: false },
+  maxBlockingTime: { type: types.NUMBER, isRequired: false },
+  collectLogs: { type: types.BOOLEAN, isRequired: false },
 };
 
 module.exports = runnerPropTypes;

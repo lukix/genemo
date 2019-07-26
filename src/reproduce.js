@@ -1,11 +1,12 @@
 const R = require('ramda');
 const randomFromRange = require('./utils/randomFromRange');
 const { checkProps, types } = require('./utils/typeChecking');
+const Timer = require('./utils/timer');
 
 const reproducePropTypes = {
   mutate: { type: types.FUNCTION, isRequired: true },
   crossover: { type: types.FUNCTION, isRequired: true },
-  mutationProbability: { type: types.NUMBER, isRequired: true },
+  mutationProbability: { type: types.NUMBER, isRequired: false },
 };
 
 const getRandomIndividual = (population, random) => {
@@ -13,82 +14,46 @@ const getRandomIndividual = (population, random) => {
   return population[index];
 };
 
-const reproduce = ({
-  mutate,
-  crossover,
-  mutationProbability = 0.01,
-}) => {
+const reproduce = (options) => {
   checkProps({
     functionName: 'Genemo.reproduce',
-    props: {
-      mutate,
-      crossover,
-      mutationProbability,
-    },
+    props: options,
     propTypes: reproducePropTypes,
   });
 
-  return (evaluatedPopulation, random) => {
+  const {
+    mutate,
+    crossover,
+    mutationProbability = 0.01,
+  } = options;
+
+  const timer = Timer();
+
+  return (evaluatedPopulation, random, collectLog) => {
     const targetPopulationSize = evaluatedPopulation.length;
-    const newPopulation = [];
-    while (newPopulation.length < targetPopulationSize) {
-      const mother = getRandomIndividual(evaluatedPopulation, random).individual;
-      const father = getRandomIndividual(evaluatedPopulation, random).individual;
-      const [daughter, son] = crossover([mother, father], random);
-      newPopulation.push(daughter, son);
-    }
 
-    if (newPopulation.length > targetPopulationSize) {
-      newPopulation.pop();
-    }
-
-    const mutatedPopulation = newPopulation.map(individual => (
-      random() <= mutationProbability
-        ? mutate(individual, random)
-        : individual
-    ));
-
-    return mutatedPopulation;
-  };
-};
-
-const reproduceAsync = ({
-  mutate,
-  crossover,
-  mutationProbability = 0.01,
-}) => {
-  checkProps({
-    functionName: 'Genemo.reproduceAsync',
-    props: {
-      mutate,
-      crossover,
-      mutationProbability,
-    },
-    propTypes: reproducePropTypes,
-  });
-
-  return async (evaluatedPopulation, random) => {
-    const targetPopulationSize = evaluatedPopulation.length;
-    const crossoverPromises = R.range(0, Math.ceil(targetPopulationSize / 2))
+    timer.start();
+    const childrenPairs = R.range(0, Math.ceil(targetPopulationSize / 2))
       .map(() => {
         const mother = getRandomIndividual(evaluatedPopulation, random).individual;
         const father = getRandomIndividual(evaluatedPopulation, random).individual;
         return crossover([mother, father], random);
       });
-
-    const childrenPairs = await Promise.all(crossoverPromises);
     const newPopulation = childrenPairs
       .reduce((childrenList, siblings) => {
         childrenList.push(...siblings);
         return childrenList;
       }, [])
       .slice(0, targetPopulationSize);
+    collectLog('crossover', timer.stop());
 
-    const mutatedPopulation = await Promise.all(newPopulation.map(individual => (
+    timer.start();
+    const mutatedPopulation = newPopulation.map(individual => (
       random() <= mutationProbability
         ? mutate(individual, random)
         : individual
-    )));
+    ));
+    collectLog('mutation', timer.stop());
 
     return mutatedPopulation;
   };
@@ -96,5 +61,4 @@ const reproduceAsync = ({
 
 module.exports = {
   reproduce,
-  reproduceAsync,
 };

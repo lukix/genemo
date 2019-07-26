@@ -28,31 +28,29 @@ const evolutionOptions = {
 
   // Selection function chooses individuals from population for breeding
   // Let's use a very common selection method - roulette selection.
-  selection: Genemo.selection.roulette(),
+  selection: Genemo.selection.roulette({ minimizeFitness: false }),
 
   // A function, which creates a new population from the selected individuals from the previous one.
   // Usually consists of crossover and mutation.
   reproduce: Genemo.reproduce({
-    crossover: Genemo.crossover.singlePoint,
-    mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
+    crossover: Genemo.crossover.singlePoint(),
+    mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit()),
     mutationProbability: 0.01,
   }),
 
-  // Fitness function to evaluate an individual
-  fitness: fitnessFunction,
+  // evaluatePopulation with custom fitness function to evaluate an individual
+  evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }),
 
-  // Let's stop our algorithm when some individual reaches fitness >= 50 or after 1000 generations.
-  stopCondition: Genemo.stopCondition({ minFitness: 50, maxGenerations: 5000 }),
+  // Let's stop our algorithm when some individual reaches fitness >= 50 or after 1000 iterations.
+  stopCondition: Genemo.stopCondition({ minFitness: 50, maxIterations: 5000 }),
 };
 
 // Run genetic algorithm
 console.time('Execution time:');
-const lastGeneration = Genemo.runEvolution(evolutionOptions);
-console.timeEnd('Execution time:');
-
-const { evaluatedPopulation, generation } = lastGeneration;
-
-console.log({
-  generation,
-  maxFitness: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
+Genemo.run(evolutionOptions).then(({ evaluatedPopulation, iteration }) => {
+  console.timeEnd('Execution time:');
+  console.log({
+    iteration,
+    maxFitness: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
+  });
 });

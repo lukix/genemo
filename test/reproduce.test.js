@@ -22,7 +22,7 @@ describe('reproduce', () => {
       mutate: individual => individual,
       crossover: (([a, b]) => [a, b]),
     });
-    const result = reproduce(evaluatedPopulation, random);
+    const result = reproduce(evaluatedPopulation, random, () => null);
     expect(result).toStrictEqual(expectedResult);
   });
 
@@ -45,10 +45,10 @@ describe('reproduce', () => {
 
     const reproduce = Genemo.reproduce({
       mutate: individual => individual + 100,
-      crossover: (([a, b]) => [a, b]),
+      crossover: ([a, b]) => [a, b],
       mutationProbability: 0.1,
     });
-    const result = reproduce(evaluatedPopulation, random);
+    const result = reproduce(evaluatedPopulation, random, () => null);
     expect(result).toStrictEqual(expectedResult);
   });
 });

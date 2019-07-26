@@ -1,12 +1,12 @@
 const stopCondition = ({
   minFitness = Infinity,
   maxFitness = -Infinity,
-  maxGenerations = Infinity,
+  maxIterations = Infinity,
 }) => (
-  ({ evaluatedPopulation, generation }) => (
+  ({ evaluatedPopulation, iteration }) => (
     evaluatedPopulation.some(({ fitness }) => fitness >= minFitness)
     || evaluatedPopulation.some(({ fitness }) => fitness <= maxFitness)
-    || generation >= maxGenerations
+    || iteration >= maxIterations
   )
 );
 
