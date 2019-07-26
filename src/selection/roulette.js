@@ -28,7 +28,7 @@ const calculateCumulativeFitness = populationWithNormalizedFitness => (
   ).slice(1)
 );
 
-const rouletteSelection = ({ minimizeFitness = false } = {}) => (evaluatedPopulation, random) => {
+const rouletteSelection = ({ minimizeFitness }) => (evaluatedPopulation, random) => {
   const populationWithNormalizedFitness = normalizePopulationFitness(
     evaluatedPopulation,
     minimizeFitness,

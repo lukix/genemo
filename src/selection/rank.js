@@ -5,7 +5,7 @@ const {
 
 const calculateArithmeticSeries = (first, last, count) => count * (first + last) / 2;
 
-const rankSelection = ({ minimizeFitness = false } = {}) => (evaluatedPopulation, random) => {
+const rankSelection = ({ minimizeFitness } = {}) => (evaluatedPopulation, random) => {
   const compareFitness = minimizeFitness
     ? (a, b) => b.fitness - a.fitness
     : (a, b) => a.fitness - b.fitness;

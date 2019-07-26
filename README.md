@@ -16,7 +16,7 @@ npm i genemo
 ```
 
 ## Example Usage
-Full examples with comments can be found in the [`./examples`](./tree/master/examples) directory. Here is a shorter version:
+Full examples with comments can be found in the [`./examples`](./examples) directory. Here is a shorter version:
 ```javascript
 Genemo.run({
   generateInitialPopulation: Genemo.generateInitialPopulation({

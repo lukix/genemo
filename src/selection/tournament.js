@@ -3,7 +3,7 @@ const findBestIndividual = require('../utils/findBestIndividual');
 
 const tournament = ({
   size,
-  minimizeFitness = false,
+  minimizeFitness,
 }) => (evaluatedPopulation, random) => (
   new Array(evaluatedPopulation.length).fill().map(() => {
     const individuals = new Array(size).fill().map(() => {
