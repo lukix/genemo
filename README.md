@@ -23,7 +23,7 @@ Genemo.run({
     generateIndividual, // Here, provide a function which generates an individual
     size: 200,
   }),
-  selection: Genemo.selection.roulette(),
+  selection: Genemo.selection.roulette({ minimizeFitness: false }),
   reproduce: Genemo.reproduce({
     crossover: Genemo.crossover.singlePoint,
     mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
