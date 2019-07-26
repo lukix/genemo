@@ -160,8 +160,6 @@ Takes an object with the following properties:
 
 - **`minimizeFitness`** - if true, selection's purpose will be to minimize fitness.<br />
   **Type**: `boolean`<br />
-  **Optional**<br />
-  **Default value**: `false`<br />
 
 ### **`Genemo.selection.rank({ minimizeFitness })`**
 Returned function is applicable to: `Genemo.run`'s `selection` parameter.<br />
@@ -169,8 +167,6 @@ Takes an object with the following properties:
 
 - **`minimizeFitness`** - if true, selection's purpose will be to minimize fitness.<br />
   **Type**: `boolean`<br />
-  **Optional**<br />
-  **Default value**: `false`<br />
 
 ### **`Genemo.selection.tournament({ size, minimizeFitness })`**
 Returned function is applicable to: `Genemo.run`'s `selection` parameter.<br />
@@ -181,8 +177,6 @@ Takes an object with the following properties:
 
 - **`minimizeFitness`** - if true, selection's purpose will be to minimize fitness.<br />
   **Type**: `boolean`<br />
-  **Optional**<br />
-  **Default value**: `false`<br />
 
 ### **`Genemo.randomSequenceOf(valuesSet, length)`**
 Returns a function which takes a random number generator and returns an array of random elements from `valuesSet` of length equal to `length`.<br />
@@ -202,8 +196,6 @@ Takes an object with the following properties:
 
 - **`minimizeFitness`** - if true, succession's purpose will be to minimize fitness.<br />
   **Type**: `boolean`<br />
-  **Optional**<br />
-  **Default value**: `false`<br />
 
 ### **`Genemo.crossover.singlePoint()`**
 Single-point crossover.<br />

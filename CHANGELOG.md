@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Renamed `debugData` key to `logs` in `iterationCallback`.
 - Added `collectLogs` param to the runner function (`Genemo.run`).
 - Changed all crossover and mutation functions to higher-order functions (for consistency).
+- Remove default value for `minimizeFitness` properties.
 
 ## 0.7.0 - 2019-07-18
 - Added `maxBlockingTime` option to `Genemo.runEvolutionAsync`.
