@@ -1,7 +1,7 @@
 {
   "name": "genemo",
-  "version": "1.0.0",
-  "description": "Simple to use genetic algorithm library",
+  "version": "1.0.1",
+  "description": "Simple to use genetic algorithms library. Supports both NodeJS and web browsers.",
   "keywords": [
     "genetic algorithm",
     "genetic algorithms",
