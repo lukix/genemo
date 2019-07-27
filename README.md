@@ -25,8 +25,8 @@ Genemo.run({
   }),
   selection: Genemo.selection.roulette({ minimizeFitness: false }),
   reproduce: Genemo.reproduce({
-    crossover: Genemo.crossover.singlePoint,
-    mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit),
+    crossover: Genemo.crossover.singlePoint(),
+    mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit()),
     mutationProbability: 0.02,
   }),
   evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }), // You need to provide your own fitness function
