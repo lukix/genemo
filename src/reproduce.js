@@ -3,7 +3,7 @@ const randomFromRange = require('./utils/randomFromRange');
 const { checkProps, types } = require('./utils/typeChecking');
 const Timer = require('./utils/timer');
 
-const reproducePropTypes = {
+const propTypes = {
   mutate: { type: types.FUNCTION, isRequired: true },
   crossover: { type: types.FUNCTION, isRequired: true },
   mutationProbability: { type: types.NUMBER, isRequired: false },
@@ -18,7 +18,7 @@ const reproduce = (options) => {
   checkProps({
     functionName: 'Genemo.reproduce',
     props: options,
-    propTypes: reproducePropTypes,
+    propTypes,
   });
 
   const {

@@ -16,6 +16,7 @@ describe('tournament', () => {
     // Input
     const tournamentSelection = Genemo.selection.tournament({
       size: 3,
+      minimizeFitness: false,
     });
     const random = cyclicProvider([
       0.0, 0.2, 0.4,

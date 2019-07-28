@@ -1,4 +1,5 @@
 const R = require('ramda');
+const { checkProps, types } = require('../utils/typeChecking');
 const {
   normalizeCumulativeFitness,
   selectRouletteElement,
@@ -28,18 +29,34 @@ const calculateCumulativeFitness = populationWithNormalizedFitness => (
   ).slice(1)
 );
 
-const rouletteSelection = ({ minimizeFitness }) => (evaluatedPopulation, random) => {
-  const populationWithNormalizedFitness = normalizePopulationFitness(
-    evaluatedPopulation,
+const propTypes = {
+  minimizeFitness: { type: types.BOOLEAN, isRequired: true },
+};
+
+const rouletteSelection = (options) => {
+  checkProps({
+    functionName: 'Genemo.selection.roulette',
+    props: options,
+    propTypes,
+  });
+
+  const {
     minimizeFitness,
-  );
+  } = options;
 
-  const cumulativeFitness = calculateCumulativeFitness(populationWithNormalizedFitness);
-  const normalizedCumulativeFitness = normalizeCumulativeFitness(cumulativeFitness);
+  return (evaluatedPopulation, random) => {
+    const populationWithNormalizedFitness = normalizePopulationFitness(
+      evaluatedPopulation,
+      minimizeFitness,
+    );
 
-  return new Array(evaluatedPopulation.length).fill().map(() => (
-    selectRouletteElement(normalizedCumulativeFitness, random())
-  ));
+    const cumulativeFitness = calculateCumulativeFitness(populationWithNormalizedFitness);
+    const normalizedCumulativeFitness = normalizeCumulativeFitness(cumulativeFitness);
+
+    return new Array(evaluatedPopulation.length).fill().map(() => (
+      selectRouletteElement(normalizedCumulativeFitness, random())
+    ));
+  };
 };
 
 module.exports = rouletteSelection;
