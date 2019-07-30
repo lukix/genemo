@@ -4,6 +4,7 @@ const kPoint = require('./kPoint');
 const orderOne = require('./orderOne');
 const PMX = require('./pmx');
 const uniform = require('./uniform');
+const edgeRecombination = require('./edgeRecombination');
 
 
 module.exports = {
@@ -13,4 +14,5 @@ module.exports = {
   orderOne,
   PMX,
   uniform,
+  edgeRecombination,
 };
