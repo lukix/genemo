@@ -10,7 +10,7 @@ const getNeighbors = (array, index) => {
 
   const neighborBIndex = (index + 1) % array.length;
 
-  // Can I use Set to remove duplicates? Yes, because it works on indices. But don't we want to remove duplicated elements(genes) as well? Probably not
+  // Can I use Set to remove duplicates? Yes, but it needs to be specified in documentation
   return [...new Set([neighborAIndex, neighborBIndex])]
     .filter(neighborIndex => neighborIndex !== index)
     .map(neighborIndex => array[neighborIndex]);
@@ -102,11 +102,12 @@ const edgeRecombination = (options = {}) => {
 
   return ([mother, father], random) => {
     const son = createSingleChild([mother, father], hashGene, random);
-    // const daughter = createSingleChild([father, mother], random);
-    return [son, []]; // TODO
+    const daughter = createSingleChild([mother, father], hashGene, random);
+    return [son, daughter];
   };
 };
 
 module.exports = edgeRecombination;
 module.exports.getNeighbors = getNeighbors;
 module.exports.createNeighborsMap = createNeighborsMap;
+module.exports.createSingleChild = createSingleChild;

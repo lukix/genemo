@@ -1,5 +1,9 @@
 const Genemo = require('../../../src');
-const { getNeighbors, createNeighborsMap } = require('../../../src/crossover/edgeRecombination');
+const {
+  getNeighbors,
+  createNeighborsMap,
+  createSingleChild,
+} = require('../../../src/crossover/edgeRecombination');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
 // Common inputs
@@ -71,17 +75,31 @@ describe('Edge recombination crossover', () => {
     expect(neighborsMap).toStrictEqual(expectedResult);
   });
 
-  test('Returns correct offsprings', () => {
+  test('createSingleChild returns a correct offspring', () => {
     // Input
     const random = cyclicProvider([0.0, 0.2, 0.0, 0.2, 0.99, 0.99, 0.2]);
+    const hashGene = gene => gene;
 
     // Expected result
-    const offsprings = [
-      ['A', 'B', 'F', 'E', 'G', 'C', 'D'],
-      [],
+    const expectedResult = ['A', 'B', 'F', 'E', 'G', 'C', 'D'];
+
+    const result = createSingleChild([mother, father], hashGene, random);
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  test('Returns correct offsprings', () => {
+    // Input
+    const parentA = ['A', 'B', 'C'];
+    const parentB = ['C', 'A', 'B'];
+    const random = cyclicProvider([0.99, 0.0, 0.2]);
+
+    // Expected result
+    const expectedResult = [
+      ['C', 'B', 'A'],
+      ['A', 'C', 'B'],
     ];
 
-    const result = Genemo.crossover.edgeRecombination()([mother, father], random);
-    expect(result).toStrictEqual(offsprings);
+    const result = Genemo.crossover.edgeRecombination()([parentA, parentB], random);
+    expect(result).toStrictEqual(expectedResult);
   });
 });
