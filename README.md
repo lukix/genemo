@@ -97,6 +97,7 @@ Full description of each property can be found in [API.md](./API.md).
     - [`orderOne`](./API.md#genemocrossoverorderone)
     - [`PMX`](./API.md#genemocrossoverpmx)
     - [`uniform`](./API.md#genemocrossoveruniform)
+    - [`edgeRecombination`](./API.md#genemocrossoveredgerecombination-hashgene-)
   - `mutation`
     - [`transformRandomGene`](./API.md#genemomutationtransformrandomgenetransformfunc)
     - [`flipBit`](./API.md#genemomutationflipbit)

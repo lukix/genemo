@@ -225,6 +225,19 @@ Returned function is applicable to: `Genemo.reproduce`'s `crossover` parameter.<
 Uniform crossover. Offsprings are created by selecting each gene from one of the parents with equal probability.<br />
 Returned function is applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
 
+### **`Genemo.crossover.edgeRecombination({ hashGene })`**
+Edge recombination crossover. It is an order-based crossover.<br />
+Returned function is applicable to: `Genemo.reproduce`'s `crossover` parameter.<br />
+Takes an optional object with a single property:
+
+- **`hashGene`** - Function which returns an identificator of a given gene for comparison purposes.
+  It is used to distinguish genes when using `===` comparison and structures like `Map` and `Set`.
+  If you represent a gene by a value of a simple type (for example string or number), then the default value
+  of `hashGene` will work just fine.<br />
+  **Type**: `gene => geneHash`<br />
+  **Optional**<br />
+  **Default value**: `gene => gene`
+
 ### **`Genemo.mutation.transformRandomGene(transformFunc)`**
 Transforms random gene from individual. Individual must be represented as an array of genes.
 Returned function is applicable to: `Genemo.reproduce`'s `mutate` parameter.<br />
