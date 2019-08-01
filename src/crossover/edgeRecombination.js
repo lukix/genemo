@@ -11,7 +11,6 @@ const getNeighbors = (array, index) => {
 
   const neighborBIndex = (index + 1) % array.length;
 
-  // Can I use Set to remove duplicates? Yes, but it needs to be specified in documentation
   return [...new Set([neighborAIndex, neighborBIndex])]
     .filter(neighborIndex => neighborIndex !== index)
     .map(neighborIndex => array[neighborIndex]);
@@ -85,7 +84,7 @@ const appendRemainingGenesToChild = (
       return randomItem(genesWithLeastNeighbors);
     })()
     : (() => {
-      const nodesNotInChild = parent.filter( // assume that mother and father have the same set of genes
+      const nodesNotInChild = parent.filter(
         gene => !newChild.some(childGene => hashGene(gene) === hashGene(childGene)),
       );
       return randomItem(nodesNotInChild);
