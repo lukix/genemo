@@ -1,7 +1,8 @@
 /* eslint-disable no-loop-func */
 
 const { checkProps, types } = require('../utils/typeChecking');
-const RandomFromRange = require('../utils/randomFromRange');
+const { min } = require('../utils/numbersListHelpers');
+const RandomItem = require('../utils/randomItem');
 
 const getNeighbors = (array, index) => {
   const neighborAIndex = index === 0
@@ -48,8 +49,12 @@ const appendRemainingGenesToChild = (
   neighborsMap,
   parent,
   hashGene,
-  randomFromRange,
+  randomItem,
 ) => {
+  if (child.length >= parent.length) {
+    return child;
+  }
+
   const currentGeneHash = hashGene(currentGene);
   const newChild = [...child, currentGene];
 
@@ -70,36 +75,34 @@ const appendRemainingGenesToChild = (
         gene => [gene, newNeighborsMap.get(hashGene(gene))],
       );
 
-      const minNeighborsNumber = Math.min(
-        ...genesNeighbors.map(([, neighbors]) => neighbors.length),
+      const minNeighborsNumber = min(
+        genesNeighbors.map(([, neighbors]) => neighbors.length),
       );
       const genesWithLeastNeighbors = genesNeighbors
         .filter(([, neighbors]) => neighbors.length === minNeighborsNumber)
         .map(([gene]) => gene);
 
-      return genesWithLeastNeighbors[randomFromRange(0, genesWithLeastNeighbors.length - 1)];
+      return randomItem(genesWithLeastNeighbors);
     })()
     : (() => {
       const nodesNotInChild = parent.filter( // assume that mother and father have the same set of genes
         gene => !newChild.some(childGene => hashGene(gene) === hashGene(childGene)),
       );
-      return nodesNotInChild[randomFromRange(0, nodesNotInChild.length - 1)];
+      return randomItem(nodesNotInChild);
     })();
 
-  return newChild.length < parent.length
-    ? appendRemainingGenesToChild(
-      newChild,
-      nextGene,
-      newNeighborsMap,
-      parent,
-      hashGene,
-      randomFromRange,
-    )
-    : newChild;
+  return appendRemainingGenesToChild(
+    newChild,
+    nextGene,
+    newNeighborsMap,
+    parent,
+    hashGene,
+    randomItem,
+  );
 };
 
 const createSingleChild = ([mother, father], hashGene, random) => {
-  const randomFromRange = RandomFromRange(random);
+  const randomItem = RandomItem(random);
   const neighborsMap = createNeighborsMap(mother, father, hashGene);
   const child = [];
   const currentGene = random() < 0.5 ? mother[0] : father[0];
@@ -110,7 +113,7 @@ const createSingleChild = ([mother, father], hashGene, random) => {
     neighborsMap,
     mother,
     hashGene,
-    randomFromRange,
+    randomItem,
   );
 };
 
