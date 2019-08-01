@@ -42,27 +42,32 @@ const createNeighborsMap = (individualA, individualB, hashGene) => {
   return mergedNeighborsMap;
 };
 
-const createSingleChild = ([mother, father], hashGene, random) => {
-  const randomFromRange = RandomFromRange(random);
-  let neighborsMap = createNeighborsMap(mother, father, hashGene);
-  const child = [];
-  let currentGene = random() < 0.5 ? mother[0] : father[0];
-  while (child.length < mother.length) {
-    child.push(currentGene);
+const appendRemainingGenesToChild = (
+  child,
+  currentGene,
+  neighborsMap,
+  parent,
+  hashGene,
+  randomFromRange,
+) => {
+  const currentGeneHash = hashGene(currentGene);
+  const newChild = [...child, currentGene];
 
-    // Remove currentGene from neighbor lists
-    const currentGeneHash = hashGene(currentGene);
-    neighborsMap = new Map([...neighborsMap.entries()].map(([hash, neighbors]) => [
-      hash,
-      neighbors.filter(neighbor => hashGene(neighbor) !== currentGeneHash),
-    ]));
+  // Remove currentGene from neighbor lists
+  const newNeighborsMap = new Map([...neighborsMap.entries()].map(([hash, neighbors]) => [
+    hash,
+    neighbors.filter(neighbor => hashGene(neighbor) !== currentGeneHash),
+  ]));
 
-    const neighborsOfCurrentGene = neighborsMap.get(currentGeneHash);
-    if (neighborsOfCurrentGene && neighborsOfCurrentGene.length > 0) {
+  const neighborsOfCurrentGene = newNeighborsMap.get(currentGeneHash);
+  const hasCurrentGeneAnyNeighbors = neighborsOfCurrentGene && neighborsOfCurrentGene.length > 0;
+
+  const nextGene = hasCurrentGeneAnyNeighbors
+    ? (() => {
       //   Determine neighbor of currentGene that has fewest neighbors
-      const currentGeneNeighbors = neighborsMap.get(currentGeneHash);
+      const currentGeneNeighbors = newNeighborsMap.get(currentGeneHash);
       const genesNeighbors = currentGeneNeighbors.map(
-        gene => [gene, neighborsMap.get(hashGene(gene))],
+        gene => [gene, newNeighborsMap.get(hashGene(gene))],
       );
 
       const minNeighborsNumber = Math.min(
@@ -72,21 +77,45 @@ const createSingleChild = ([mother, father], hashGene, random) => {
         .filter(([, neighbors]) => neighbors.length === minNeighborsNumber)
         .map(([gene]) => gene);
 
-      currentGene = genesWithLeastNeighbors[randomFromRange(0, genesWithLeastNeighbors.length - 1)];
-    } else {
-      const nodesNotInChild = mother.filter( // assume that mother and father have the same set of genes
-        gene => !child.some(childGene => hashGene(gene) === hashGene(childGene)),
+      return genesWithLeastNeighbors[randomFromRange(0, genesWithLeastNeighbors.length - 1)];
+    })()
+    : (() => {
+      const nodesNotInChild = parent.filter( // assume that mother and father have the same set of genes
+        gene => !newChild.some(childGene => hashGene(gene) === hashGene(childGene)),
       );
-      currentGene = nodesNotInChild[randomFromRange(0, nodesNotInChild.length - 1)];
-    }
-  }
+      return nodesNotInChild[randomFromRange(0, nodesNotInChild.length - 1)];
+    })();
 
+  return newChild.length < parent.length
+    ? appendRemainingGenesToChild(
+      newChild,
+      nextGene,
+      newNeighborsMap,
+      parent,
+      hashGene,
+      randomFromRange,
+    )
+    : newChild;
+};
 
-  return child;
+const createSingleChild = ([mother, father], hashGene, random) => {
+  const randomFromRange = RandomFromRange(random);
+  const neighborsMap = createNeighborsMap(mother, father, hashGene);
+  const child = [];
+  const currentGene = random() < 0.5 ? mother[0] : father[0];
+
+  return appendRemainingGenesToChild(
+    child,
+    currentGene,
+    neighborsMap,
+    mother,
+    hashGene,
+    randomFromRange,
+  );
 };
 
 const propTypes = {
-  compareGenes: { type: types.FUNCTION, isRequired: false },
+  hashGene: { type: types.FUNCTION, isRequired: false },
 };
 
 const edgeRecombination = (options = {}) => {
