@@ -6,10 +6,6 @@ const {
 } = require('../../../src/crossover/edgeRecombination');
 const cyclicProvider = require('../../test-utils/cyclicProvider');
 
-// Common inputs
-const mother = ['A', 'B', 'F', 'E', 'D', 'G', 'C'];
-const father = ['G', 'F', 'A', 'B', 'C', 'D', 'E'];
-
 describe('Edge recombination crossover', () => {
   test('getNeighbors function works for the first element', () => {
     // Input
@@ -57,6 +53,8 @@ describe('Edge recombination crossover', () => {
 
   test('createNeighborsMap function returns a correct map', () => {
     // Given
+    const mother = ['A', 'B', 'F', 'E', 'D', 'G', 'C'];
+    const father = ['G', 'F', 'A', 'B', 'C', 'D', 'E'];
     const hashGene = gene => gene;
     const expectedResult = new Map([
       ['A', ['C', 'B', 'F']],
@@ -77,6 +75,8 @@ describe('Edge recombination crossover', () => {
 
   test('createSingleChild returns a correct offspring', () => {
     // Input
+    const mother = ['A', 'B', 'F', 'E', 'D', 'G', 'C'];
+    const father = ['G', 'F', 'A', 'B', 'C', 'D', 'E'];
     const random = cyclicProvider([0.0, 0.2, 0.0, 0.2, 0.99, 0.99, 0.2]);
     const hashGene = gene => gene;
 
@@ -87,10 +87,24 @@ describe('Edge recombination crossover', () => {
     expect(result).toStrictEqual(expectedResult);
   });
 
+  test('createSingleChild returns a correct offspring for single-gene parents', () => {
+    // Input
+    const mother = ['A'];
+    const father = ['A'];
+    const random = cyclicProvider([0.2]);
+    const hashGene = gene => gene;
+
+    // Expected result
+    const expectedResult = ['A'];
+
+    const result = createSingleChild([mother, father], hashGene, random);
+    expect(result).toStrictEqual(expectedResult);
+  });
+
   test('Returns correct offsprings', () => {
     // Input
-    const parentA = ['A', 'B', 'C'];
-    const parentB = ['C', 'A', 'B'];
+    const mother = ['A', 'B', 'C'];
+    const father = ['C', 'A', 'B'];
     const random = cyclicProvider([0.99, 0.0, 0.2]);
 
     // Expected result
@@ -99,7 +113,7 @@ describe('Edge recombination crossover', () => {
       ['A', 'C', 'B'],
     ];
 
-    const result = Genemo.crossover.edgeRecombination()([parentA, parentB], random);
+    const result = Genemo.crossover.edgeRecombination()([mother, father], random);
     expect(result).toStrictEqual(expectedResult);
   });
 });
