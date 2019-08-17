@@ -5,6 +5,7 @@ const { checkProps } = require('../utils/typeChecking');
 const DebugDataCollector = require('../utils/DebugDataCollector');
 const runnerPropTypes = require('./utils/runnerPropTypes');
 const batchIterationExecutor = require('./utils/batchIterationExecutor');
+const { min, max } = require('../utils/numbersListHelpers');
 
 const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
   R.zip(population, fitnessValues).map(([individual, fitness]) => ({
@@ -107,6 +108,20 @@ const run = async (options) => {
       evaluatedPopulation,
       iteration,
       logs: logsCollector.data,
+      // eslint-disable-next-line no-loop-func
+      getLowestFitnessIndividual: () => {
+        const lowestFitness = min(evaluatedPopulation.map(({ fitness }) => fitness));
+        const evaluatedIndividualWithLowestFitness = evaluatedPopulation
+          .find(({ fitness }) => fitness === lowestFitness);
+        return evaluatedIndividualWithLowestFitness;
+      },
+      // eslint-disable-next-line no-loop-func
+      getHighestFitnessIndividual: () => {
+        const highestFitness = max(evaluatedPopulation.map(({ fitness }) => fitness));
+        const evaluatedIndividualWithHighestFitness = evaluatedPopulation
+          .find(({ fitness }) => fitness === highestFitness);
+        return evaluatedIndividualWithHighestFitness;
+      },
     };
 
     logsCollector.startClock('iterationCallback');

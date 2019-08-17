@@ -32,7 +32,11 @@ describe('Find Sequence', () => {
     };
 
     const result = await Genemo.run(evolutionOptions);
-    expect(result).toMatchSnapshot('findSequence1');
+    expect({
+      ...result,
+      lowestFitnessIndividual: result.getLowestFitnessIndividual(),
+      highestFitnessIndividual: result.getHighestFitnessIndividual(),
+    }).toMatchSnapshot('findSequence1');
     done();
   });
 });

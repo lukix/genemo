@@ -20,7 +20,9 @@ Returns a promise, which resolves to an object:
 {
   evaluatedPopulation: EvaluatedPopulation,
   iteration: number,
-  logs: object
+  logs: object,
+  getLowestFitnessIndividual: () => ({ fitness: number, indvidual: Individual }),
+  getHighestFitnessIndividual: () => ({ fitness: number, indvidual: Individual })
 }
 ```
 `Genemo.run` takes a single argument - `options`. It is an object with the following properties:
@@ -57,7 +59,7 @@ Returns a promise, which resolves to an object:
 **Available values**: [`Genemo.elitism()`]()
 
 - **`iterationCallback`** - Callback, which is called in every iteration.<br />
-**Type**: `({ evaluatedPopulation, iteration, logs }) => undefined`<br />
+**Type**: `({ evaluatedPopulation, iteration, logs, getLowestFitnessIndividual, getHighestFitnessIndividual }) => undefined`<br />
 **Required**: No<br />
 **Default:** `() => {}`<br />
 **Available values**: [`Genemo.logIterationData()`]()

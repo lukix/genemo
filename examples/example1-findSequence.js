@@ -47,10 +47,10 @@ const evolutionOptions = {
 
 // Run genetic algorithm
 console.time('Execution time:');
-Genemo.run(evolutionOptions).then(({ evaluatedPopulation, iteration }) => {
+Genemo.run(evolutionOptions).then(({ iteration, getHighestFitnessIndividual }) => {
   console.timeEnd('Execution time:');
   console.log({
     iteration,
-    maxFitness: Math.max(...evaluatedPopulation.map(({ fitness }) => fitness)),
+    maxFitness: getHighestFitnessIndividual().fitness,
   });
 });
