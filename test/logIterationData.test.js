@@ -21,6 +21,8 @@ describe('logIterationData', () => {
         { fitness: 5 },
       ],
       logs: { customKey: { lastValue: 3.1990 } },
+      getLowestFitnessIndividual: () => ({ fitness: 5 }),
+      getHighestFitnessIndividual: () => ({ fitness: 10 }),
     });
 
     const expectedLogStr = 'minFitness = 5, maxFitness = 10, avgFitness = 8, customKey = 3.20ms';
