@@ -18,6 +18,8 @@ npm i genemo
 ## Example Usage
 Full examples with comments can be found in the [`./examples`](./examples) directory. Here is a shorter version:
 ```javascript
+const Genemo = require('genemo');
+
 Genemo.run({
   generateInitialPopulation: Genemo.generateInitialPopulation({
     generateIndividual, // Here, provide a function which generates an individual
@@ -31,7 +33,7 @@ Genemo.run({
   }),
   evaluatePopulation: Genemo.evaluatePopulation({ fitnessFunction }), // You need to provide your own fitness function
   stopCondition: Genemo.stopCondition({ maxIterations: 100 }),
-}).then(({ evaluatedPopulation, iteration }) => {
+}).then(({ evaluatedPopulation }) => {
   // ...
 });
 ```
