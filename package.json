@@ -1,6 +1,6 @@
 {
   "name": "genemo",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Simple to use genetic algorithms library. Supports both NodeJS and web browsers.",
   "keywords": [
     "genetic algorithm",
@@ -41,15 +41,14 @@
     "@babel/core": "7.5.5",
     "@babel/plugin-proposal-object-rest-spread": "7.5.5",
     "@babel/plugin-transform-modules-commonjs": "7.5.0",
-    "babel-core": "7.0.0-bridge.0",
     "babel-jest": "24.9.0",
     "coveralls": "3.0.6",
     "eslint": "6.2.2",
-    "eslint-config-airbnb-base": "13.2.0",
+    "eslint-config-airbnb-base": "14.0.0",
     "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-jest": "22.13.7",
-    "husky": "1.1.2",
-    "jest": "24.8.0",
+    "eslint-plugin-jest": "22.15.2",
+    "husky": "3.0.4",
+    "jest": "24.9.0",
     "random-seed": "0.3.0"
   }
 }

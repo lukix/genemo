@@ -4,7 +4,7 @@ const {
   selectRouletteElement,
 } = require('./utils/rouletteUtils');
 
-const calculateArithmeticSeries = (first, last, count) => count * (first + last) / 2;
+const calculateArithmeticSeries = (first, last, count) => (count * (first + last)) / 2;
 
 const propTypes = {
   minimizeFitness: { type: types.BOOLEAN, isRequired: true },
