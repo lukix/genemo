@@ -1,10 +1,24 @@
 const { fork } = require('child_process');
 const R = require('ramda');
 
+const createNodeJSWorker = (workerFileName) => {
+  const worker = fork(workerFileName);
+  return {
+    once: (...args) => {
+      worker.once(...args);
+    },
+    send: (...args) => {
+      worker.send(...args);
+    },
+  };
+};
+
+const createWorker = createNodeJSWorker;
+
 const createParallelExecutor = ({ workersNumber, workerFileName }) => {
   // Initialize workers
   const workers = R.range(0, workersNumber).map(() => ({
-    process: fork(workerFileName),
+    worker: createWorker(workerFileName),
     isBusy: false,
   }));
 
@@ -22,13 +36,13 @@ const createParallelExecutor = ({ workersNumber, workerFileName }) => {
 
     const availableJob = scheduledJobs.shift();
 
-    availableWorker.process.once('message', (message) => {
+    availableWorker.worker.once('message', (message) => {
       // TODO: Check message.type
       availableWorker.isBusy = false;
       availableJob.onFinish(message.data);
       triggerWorkersManagement();
     });
-    availableWorker.process.send({
+    availableWorker.worker.send({
       type: 'run',
       data: availableJob.data,
     });

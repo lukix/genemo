@@ -1,3 +1,7 @@
+/**
+ * THIS EXAMPLE WORKS ONLY ON NODEJS ENVIRONMENT, BECAUSE IT USES child_process MODULE
+ */
+
 const Genemo = require('../../lib');
 const distances = require('../data/distances17.json');
 
