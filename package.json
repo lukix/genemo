@@ -15,6 +15,7 @@
     "dev": "babel --watch src -d lib",
     "example1": "node ./examples/example1-findSequence.js",
     "example2": "node ./examples/example2-travelingSalesman.js",
+    "example3": "node ./examples/example3-parallelExecution/example3.js",
     "test": "jest --coverage",
     "build": "babel src -d lib",
     "lint": "eslint ./**/*.js",
