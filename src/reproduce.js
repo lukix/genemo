@@ -3,6 +3,8 @@ const randomFromRange = require('./utils/randomFromRange');
 const { checkProps, types } = require('./utils/typeChecking');
 const Timer = require('./utils/timer');
 
+const DEFAULT_MUTATION_PROBABILITY = 0.01;
+
 const reproducePropTypes = {
   mutate: { type: types.FUNCTION, isRequired: true },
   crossover: { type: types.FUNCTION, isRequired: true },
@@ -30,7 +32,7 @@ const reproduceHighLevel = (options) => {
   const {
     mutate, // TODO: Change to mutateAll (not only name!)
     crossoverAll,
-    mutationProbability = 0.01,
+    mutationProbability = DEFAULT_MUTATION_PROBABILITY,
   } = options;
 
   const timer = Timer();
@@ -43,9 +45,9 @@ const reproduceHighLevel = (options) => {
       .map(() => {
         const mother = getRandomIndividual(evaluatedPopulation, random).individual;
         const father = getRandomIndividual(evaluatedPopulation, random).individual;
-        return [mother, father]; // TODO: What about "random"?
+        return [mother, father];
       });
-    const childrenPairs = await crossoverAll(parentsPairs);
+    const childrenPairs = await crossoverAll(parentsPairs, random);
     const newPopulation = childrenPairs
       .reduce((childrenList, siblings) => {
         childrenList.push(...siblings);
@@ -76,7 +78,7 @@ const reproduce = (options) => {
   const {
     mutate,
     crossover,
-    mutationProbability = 0.01,
+    mutationProbability = DEFAULT_MUTATION_PROBABILITY,
   } = options;
 
   const timer = Timer();

@@ -5,7 +5,6 @@
 const Genemo = require('../../lib');
 const distances = require('../data/distances17.json');
 
-const evaluatePopulationInChunks = require('./utils/evaluatePopulationInChunks');
 const mapInChunks = require('./utils/mapInChunks');
 const createParallelExecutor = require('./utils/createParallelExecutor');
 
@@ -15,15 +14,15 @@ const generateIndividual = Genemo.randomPermutationOf(cities);
 const WORKERS_NUMBER = 4;
 
 // ---EVALUATE POPULATION---
-const evaluateInParallel = createParallelExecutor({
+const evaluateChunk = createParallelExecutor({
   workersNumber: WORKERS_NUMBER,
   workerFileName: './examples/example3-parallelExecution/evaluateChunkWorker.js',
 });
 
-const evaluatePopulation = evaluatePopulationInChunks(
-  WORKERS_NUMBER,
-  chunk => evaluateInParallel(chunk),
-);
+const evaluatePopulation = mapInChunks({
+  numberOfChunks: WORKERS_NUMBER,
+  mapFunction: evaluateChunk,
+});
 
 // ---REPRODUCE---
 const crossoverChunk = createParallelExecutor({
@@ -31,7 +30,10 @@ const crossoverChunk = createParallelExecutor({
   workerFileName: './examples/example3-parallelExecution/crossoverChunkWorker.js',
 });
 
-const crossoverInChunks = mapInChunks(WORKERS_NUMBER, crossoverChunk);
+const crossoverInChunks = mapInChunks({
+  numberOfChunks: WORKERS_NUMBER,
+  mapFunction: crossoverChunk,
+});
 
 const reproduce = Genemo.reproduceHighLevel({
   crossoverAll: crossoverInChunks,
@@ -40,7 +42,6 @@ const reproduce = Genemo.reproduceHighLevel({
 });
 
 // ---EVOLUTION OPTIONS---
-
 const evolutionOptions = {
   generateInitialPopulation: Genemo.generateInitialPopulation({
     generateIndividual,
@@ -68,4 +69,5 @@ Genemo.run(evolutionOptions).then(({ iteration, getLowestFitnessIndividual }) =>
     iteration,
     shortestPath: getLowestFitnessIndividual().fitness,
   });
+  // TODO: Close forked processes
 });
