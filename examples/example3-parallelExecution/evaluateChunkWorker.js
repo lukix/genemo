@@ -5,7 +5,7 @@ const createWorkerProcess = require('./utils/createWorkerProcess');
 
 // Fitness is measured as a path total length
 const fitnessFunction = (individual) => {
-  for (let i = 0; i < 1e6; i += 1) {
+  for (let i = 0; i < 1e5; i += 1) {
     // This loop emulates heavy computations to show advantage of parallel execution
   }
 
