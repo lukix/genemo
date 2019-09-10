@@ -1,12 +1,13 @@
 /**
- * THIS EXAMPLE WORKS ONLY ON NODEJS ENVIRONMENT, BECAUSE IT USES child_process MODULE
+ * THIS EXAMPLE WORKS ONLY ON NODEJS ENVIRONMENT, BECAUSE IT USES child_process MODULE (in createNodeJSWorker function)
  */
 
 const Genemo = require('../../lib');
 const distances = require('../data/distances17.json');
 
-const mapInChunks = require('./utils/mapInChunks');
+const mapInAsyncChunks = require('./utils/mapInAsyncChunks');
 const createParallelExecutor = require('./utils/createParallelExecutor');
+const { createNodeJSWorker } = require('./utils/createWorker');
 
 const cities = [...Array(distances.length).keys()];
 const generateIndividual = Genemo.randomPermutationOf(cities);
@@ -14,23 +15,25 @@ const generateIndividual = Genemo.randomPermutationOf(cities);
 const WORKERS_NUMBER = 4;
 
 // ---EVALUATE POPULATION---
-const evaluateChunk = createParallelExecutor({
+const [evaluateChunk, terminateEvaluateWorkers] = createParallelExecutor({
   workersNumber: WORKERS_NUMBER,
   workerFileName: './examples/example3-parallelExecution/evaluateChunkWorker.js',
+  createWorker: createNodeJSWorker,
 });
 
-const evaluatePopulation = mapInChunks({
+const evaluatePopulation = mapInAsyncChunks({
   numberOfChunks: WORKERS_NUMBER,
   mapFunction: evaluateChunk,
 });
 
 // ---REPRODUCE---
-const crossoverChunk = createParallelExecutor({
+const [crossoverChunk, terminateCrossoverWorkers] = createParallelExecutor({
   workersNumber: WORKERS_NUMBER,
   workerFileName: './examples/example3-parallelExecution/crossoverChunkWorker.js',
+  createWorker: createNodeJSWorker,
 });
 
-const crossoverInChunks = mapInChunks({
+const crossoverInChunks = mapInAsyncChunks({
   numberOfChunks: WORKERS_NUMBER,
   mapFunction: crossoverChunk,
 });
@@ -69,5 +72,6 @@ Genemo.run(evolutionOptions).then(({ iteration, getLowestFitnessIndividual }) =>
     iteration,
     shortestPath: getLowestFitnessIndividual().fitness,
   });
-  // TODO: Close forked processes
+  terminateEvaluateWorkers();
+  terminateCrossoverWorkers();
 });
