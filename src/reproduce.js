@@ -11,7 +11,7 @@ const reproducePropTypes = {
   mutationProbability: { type: types.NUMBER, isRequired: false },
 };
 
-const reproduceHighLevelPropTypes = {
+const reproduceBatchPropTypes = {
   mutateAll: { type: types.FUNCTION, isRequired: true },
   crossoverAll: { type: types.FUNCTION, isRequired: true },
   mutationProbability: { type: types.NUMBER, isRequired: false },
@@ -22,11 +22,11 @@ const getRandomIndividual = (population, random) => {
   return population[index];
 };
 
-const reproduceHighLevel = (options) => {
+const reproduceBatch = (options) => {
   checkProps({
-    functionName: 'Genemo.reproduceHighLevel',
+    functionName: 'Genemo.reproduceBatch',
     props: options,
-    propTypes: reproduceHighLevelPropTypes,
+    propTypes: reproduceBatchPropTypes,
   });
 
   const {
@@ -132,6 +132,6 @@ const reproduce = (options) => {
 };
 
 module.exports = {
-  reproduceHighLevel,
+  reproduceBatch,
   reproduce,
 };

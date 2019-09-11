@@ -39,7 +39,7 @@ const crossoverInChunks = mapInAsyncChunks({
 });
 
 const map = transform => (array, ...args) => array.map(item => transform(item, ...args));
-const reproduce = Genemo.reproduceHighLevel({
+const reproduce = Genemo.reproduceBatch({
   crossoverAll: crossoverInChunks,
   mutateAll: map(Genemo.mutation.swapTwoGenes()), // TODO: better naming / better API
   mutationProbability: 0.02,
