@@ -12,7 +12,7 @@ const reproducePropTypes = {
 };
 
 const reproduceHighLevelPropTypes = {
-  mutate: { type: types.FUNCTION, isRequired: true },
+  mutateAll: { type: types.FUNCTION, isRequired: true },
   crossoverAll: { type: types.FUNCTION, isRequired: true },
   mutationProbability: { type: types.NUMBER, isRequired: false },
 };
@@ -30,7 +30,7 @@ const reproduceHighLevel = (options) => {
   });
 
   const {
-    mutate, // TODO: Change to mutateAll (not only name!)
+    mutateAll,
     crossoverAll,
     mutationProbability = DEFAULT_MUTATION_PROBABILITY,
   } = options;
@@ -57,11 +57,29 @@ const reproduceHighLevel = (options) => {
     collectLog('crossover', timer.stop());
 
     timer.start();
-    const mutatedPopulation = newPopulation.map(individual => (
+    const populationPreparedForMutation = newPopulation.map(individual => (
       random() <= mutationProbability
-        ? mutate(individual, random)
-        : individual
+        ? { individual, shouldBeMutated: true }
+        : { individual, shouldBeMutated: false }
     ));
+
+    const {
+      true: individualsToBeMutated = [],
+      false: unchangedIndividuals = [],
+    } = R.groupBy(
+      ({ shouldBeMutated }) => shouldBeMutated,
+      populationPreparedForMutation,
+    );
+
+    const mutatedIndividuals = await mutateAll(
+      individualsToBeMutated.map(({ individual }) => individual),
+      random,
+    );
+    const mutatedPopulation = [
+      ...unchangedIndividuals.map(({ individual }) => individual),
+      ...mutatedIndividuals,
+    ];
+
     collectLog('mutation', timer.stop());
 
     return mutatedPopulation;

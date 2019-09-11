@@ -38,9 +38,10 @@ const crossoverInChunks = mapInAsyncChunks({
   mapFunction: crossoverChunk,
 });
 
+const map = transform => (array, ...args) => array.map(item => transform(item, ...args));
 const reproduce = Genemo.reproduceHighLevel({
   crossoverAll: crossoverInChunks,
-  mutate: Genemo.mutation.swapTwoGenes(),
+  mutateAll: map(Genemo.mutation.swapTwoGenes()), // TODO: better naming / better API
   mutationProbability: 0.02,
 });
 
@@ -72,6 +73,9 @@ Genemo.run(evolutionOptions).then(({ iteration, getLowestFitnessIndividual }) =>
     iteration,
     shortestPath: getLowestFitnessIndividual().fitness,
   });
-  terminateEvaluateWorkers();
-  terminateCrossoverWorkers();
-});
+})
+  .catch(console.error)
+  .finally(() => {
+    terminateEvaluateWorkers();
+    terminateCrossoverWorkers();
+  });
