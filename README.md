@@ -80,10 +80,10 @@ on your own. In the [`./examples/example3-parallelExecution`](./examples/example
 crossover operation in parallel processes, using NodeJS [`child_process`](https://nodejs.org/api/child_process.html) module.
 
 Usually, the most computationaly intensive elements of a genetic algorithm are fitness function, crossover and mutation.
-`evaluatePopulation` parameter of `Genemo.run` is a function, which maps an array of individuals to an array of their fitness values. You can divide this array into a few chunks and evaluate each of them in parallel. To do the same with crossover and mutation, you can use [`reproduceBatch`](./API.md#genemoreproducebatch-crossover-mutate-mutationprobability-)
+`evaluatePopulation` parameter of `Genemo.run` is a function, which maps an array of individuals to an array of their fitness values. You can divide this array into a few chunks and evaluate each of them in parallel. To do the same with crossover and mutation, you can use [`reproduceBatch`](./API.md#genemoreproducebatch-crossoverall-mutateall-mutationprobability-)
 instead of [`reproduce`](./API.md#genemoreproduce-crossover-mutate-mutationprobability-). Instead of calling the crossover function for each pair of parents,
 it calls it only once, passing an array of pairs as an argument. Same with mutation - it is called only once with an array of individuals which should be mutated.
-Thanks to that, you can divide these arrays into chunks an process them in parallel.
+Thanks to that, you can divide those arrays into chunks an process them in parallel.
 
 I plan to add to GeneMO more utilities that make implementing multithreading easier, but I don't want to include any code which is strictly dependend on the environment.
 Therefore, things like WebWorkers or NodeJS `child_process` are not likely to appear in the library.
@@ -97,7 +97,7 @@ Full description of each property can be found in [API.md](./API.md).
   - [`generateInitialPopulation`](./API.md#genemogenerateinitialpopulation-generateindividual-size-)
   - [`evaluatePopulation`](./API.md#genemoevaluatepopulation-fitnessfunction-)
   - [`reproduce`](./API.md#genemoreproduce-crossover-mutate-mutationprobability-)
-  - [`reproduceBatch`](./API.md#genemoreproducebatch-crossover-mutate-mutationprobability-)
+  - [`reproduceBatch`](./API.md#genemoreproducebatch-crossoverall-mutateall-mutationprobability-)
   - [`stopCondition`](./API.md#genemostopcondition-minfitness-maxfitness-maxiterations-)
   - [`logIterationData`](./API.md#genemologiterationdata-include-customlogger-)
   - [`randomSequenceOf`](./API.md#genemorandomsequenceofvaluesset-length)
