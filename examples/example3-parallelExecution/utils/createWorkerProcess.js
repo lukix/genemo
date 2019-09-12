@@ -1,5 +1,3 @@
-// TODO: Make message types customizable(?)
-
 const createWorkerProcess = ({
   onInit = () => null,
   onRun,
@@ -8,11 +6,9 @@ const createWorkerProcess = ({
     switch (msg.type) {
       case 'init':
         onInit();
-        // TODO: Add some kind of storage for worker instance(?)
-        // TODO: Send message
         break;
-      case 'run': { // TODO: Better name of run message type
-        const result = onRun(msg.data); // TODO: Better name of onRun property
+      case 'run': {
+        const result = onRun(msg.data);
         process.send({
           type: 'result',
           data: result,

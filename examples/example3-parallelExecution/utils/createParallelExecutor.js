@@ -18,7 +18,6 @@ const createParallelExecutor = ({ workersNumber, workerFileName, createWorker })
     const availableJob = scheduledJobs.shift();
 
     availableWorker.worker.once('message', (message) => {
-      // TODO: Check message.type
       availableWorker.isBusy = false;
       availableJob.onFinish(message.data);
       triggerWorkersManagement();

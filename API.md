@@ -110,6 +110,20 @@ Takes an object with the following properties:
   **Type**: `number`<br />
   **Default value**: `0.01`<br />
 
+### **`Genemo.reproduceBatch({ crossoverAll, mutateAll, mutationProbability })`**
+Returned function is applicable to: `Genemo.run`'s `reproduce` parameter.<br />
+Takes an object with the following properties:
+
+- **`crossoverAll`** - Function which takes an array of pairs of parents and a random number generator and returns an array of pairs of children.<br />
+  **Type**: `(Array<[Individual, Individual]>, Rng) => Array<[Individual, Individual]>`<br />
+
+- **`mutateAll`** - Function which maps an array of individuals to a new array of individuals modified by mutation. Only individuals selected for mutation will be passed to this function.<br />
+  **Type**: `(Individual, Rng) => Individual`<br />
+
+- **`mutationProbability`** - Mutation probability for a single individual.<br />
+  **Type**: `number`<br />
+  **Default value**: `0.01`<br />
+
 ### **`Genemo.stopCondition({ minFitness, maxFitness, maxIterations })`**
 Returned function is applicable to: `Genemo.run`'s `stopCondition` parameter.<br />
 Takes an object with the following properties:

@@ -35,7 +35,7 @@ Genemo.run({
   stopCondition: Genemo.stopCondition({ maxIterations: 100 }),
 }).then(({ evaluatedPopulation }) => {
   // ...
-});
+}).catch(console.error);
 ```
 
 Example of using GeneMO in the browser environment without blocking browser's main thread can be found in [genemo-web-demo](https://github.com/lukix/genemo-web-demo) repository.
@@ -74,6 +74,20 @@ From time to time [`Genemo.run`](./API.md#genemorunoptions) runs next iteration 
 However, if a single iteration takes too long to complete, it will still block the main thread.
 To control the frequency of asynchronous iteration executions, use `maxBlockingTime` option.
 
+### Multithreading
+Currently, GeneMO does not have a lot of functionalities for multithreading built-in, but thanks to its highly flexible architecture, you can easily implement multithreading
+on your own. In the [`./examples/example3-parallelExecution`](./examples/example3-parallelExecution) directory there is a full example of a genetic algorithm, which performs fitness function and
+crossover operation in parallel processes, using NodeJS [`child_process`](https://nodejs.org/api/child_process.html) module.
+
+Usually, the most computationaly intensive elements of a genetic algorithm are fitness function, crossover and mutation.
+`evaluatePopulation` parameter of `Genemo.run` is a function, which maps an array of individuals to an array of their fitness values. You can divide this array into a few chunks and evaluate each of them in parallel. To do the same with crossover and mutation, you can use [`reproduceBatch`](./API.md#genemoreproducebatch-crossover-mutate-mutationprobability-)
+instead of [`reproduce`](./API.md#genemoreproduce-crossover-mutate-mutationprobability-). Instead of calling the crossover function for each pair of parents,
+it calls it only once, passing an array of pairs as an argument. Same with mutation - it is called only once with an array of individuals which should be mutated.
+Thanks to that, you can divide these arrays into chunks an process them in parallel.
+
+I plan to add to GeneMO more utilities that make implementing multithreading easier, but I don't want to include any code which is strictly dependend on the environment.
+Therefore, things like WebWorkers or NodeJS `child_process` are not likely to appear in the library.
+
 ## API Reference
 GeneMO exports a `Genemo` object with properties listed in the hierarchy below.<br />
 Full description of each property can be found in [API.md](./API.md).
@@ -83,6 +97,7 @@ Full description of each property can be found in [API.md](./API.md).
   - [`generateInitialPopulation`](./API.md#genemogenerateinitialpopulation-generateindividual-size-)
   - [`evaluatePopulation`](./API.md#genemoevaluatepopulation-fitnessfunction-)
   - [`reproduce`](./API.md#genemoreproduce-crossover-mutate-mutationprobability-)
+  - [`reproduceBatch`](./API.md#genemoreproducebatch-crossover-mutate-mutationprobability-)
   - [`stopCondition`](./API.md#genemostopcondition-minfitness-maxfitness-maxiterations-)
   - [`logIterationData`](./API.md#genemologiterationdata-include-customlogger-)
   - [`randomSequenceOf`](./API.md#genemorandomsequenceofvaluesset-length)
