@@ -6,7 +6,8 @@ const crossover = require('./crossover');
 
 const { generateInitialPopulation } = require('./generateInitialPopulation');
 const evaluatePopulation = require('./evaluatePopulation');
-const { reproduce, reproduceBatch } = require('./reproduce');
+const reproduce = require('./reproduce');
+const reproduceBatch = require('./reproduceBatch');
 const { stopCondition } = require('./stopConditions');
 const randomSequenceOf = require('./randomSequenceOf');
 const randomPermutationOf = require('./randomPermutationOf');
