@@ -1,30 +1,28 @@
 const R = require('ramda');
-const randomFromRange = require('./utils/randomFromRange');
+
 const { checkProps, types } = require('./utils/typeChecking');
 const Timer = require('./utils/timer');
+const getRandomIndividual = require('./utils/getRandomIndividual');
 
-const propTypes = {
+const DEFAULT_MUTATION_PROBABILITY = 0.01;
+
+const reproducePropTypes = {
   mutate: { type: types.FUNCTION, isRequired: true },
   crossover: { type: types.FUNCTION, isRequired: true },
   mutationProbability: { type: types.NUMBER, isRequired: false },
-};
-
-const getRandomIndividual = (population, random) => {
-  const index = randomFromRange(random)(0, population.length - 1);
-  return population[index];
 };
 
 const reproduce = (options) => {
   checkProps({
     functionName: 'Genemo.reproduce',
     props: options,
-    propTypes,
+    propTypes: reproducePropTypes,
   });
 
   const {
     mutate,
     crossover,
-    mutationProbability = 0.01,
+    mutationProbability = DEFAULT_MUTATION_PROBABILITY,
   } = options;
 
   const timer = Timer();
@@ -39,12 +37,7 @@ const reproduce = (options) => {
         const father = getRandomIndividual(evaluatedPopulation, random).individual;
         return crossover([mother, father], random);
       });
-    const newPopulation = childrenPairs
-      .reduce((childrenList, siblings) => {
-        childrenList.push(...siblings);
-        return childrenList;
-      }, [])
-      .slice(0, targetPopulationSize);
+    const newPopulation = R.unnest(childrenPairs).slice(0, targetPopulationSize);
     collectLog('crossover', timer.stop());
 
     timer.start();
@@ -59,6 +52,4 @@ const reproduce = (options) => {
   };
 };
 
-module.exports = {
-  reproduce,
-};
+module.exports = reproduce;
