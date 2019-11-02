@@ -34,7 +34,7 @@ const rankSelection = (options) => {
 
     const normalizedCumulativeFitness = normalizeCumulativeFitness(cumulativeFitness);
 
-    return new Array(evaluatedPopulation.length).fill().map(() => (
+    return new Array(evaluatedPopulation.length).fill(null).map(() => (
       selectRouletteElement(normalizedCumulativeFitness, random())
     ));
   };

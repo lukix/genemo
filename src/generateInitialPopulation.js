@@ -14,7 +14,7 @@ const generateInitialPopulation = (options) => {
 
   const { generateIndividual, size } = options;
 
-  return random => Array(size).fill().map(() => generateIndividual(random));
+  return random => Array(size).fill(null).map(() => generateIndividual(random));
 };
 
 module.exports = {

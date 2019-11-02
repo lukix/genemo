@@ -17,17 +17,19 @@ const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
 /**
  * Runs genetic algorithm until stopCondition returns true
  *
- * @param {Object} options
+ * @param {object} options
  * @param {(random: () => number) => Array<any>} options.generateInitialPopulation
  * @param {(evaluatedPopulation: Array<any>, random: () => number) => Array<any>} options.selection
- * @param {(evaluatedPopulation: Array<any>, random: () => number) => Array<any>} options.reproduce
- * @param {({ prevPopulation: Array<Object>, childrenPopulation: Array<Object> }, random: () => number) => Array<Object>} options.succession
- * @param {(individual: any) => number} options.evaluatePopulation
- * @param {({ evaluatedPopulation: Array<Object>, iteration: number }) => boolean} options.stopCondition
+ * @param {(evaluatedPopulation: Array<any>, random: () => number, collectReproduceLog: Function) => Array<any>} options.reproduce
+ * @param {(prevAndChildrenPopulations: { prevPopulation: Array<Object>, childrenPopulation: Array<Object>}, random: () => number) => Array<Object>} options.succession
+ * @param {(individual: any, random: () => number) => number} options.evaluatePopulation
+ * @param {(iterationInfo: { evaluatedPopulation: Array<Object>, iteration: number }) => boolean} options.stopCondition
  * @param {number} options.maxBlockingTime
  * @param {boolean} options.collectLogs
+ * @param {() => number} options.random
+ * @param {(iterationData: object) => void} options.iterationCallback
  *
- * @returns {{ evaluatedPopulation: Array<Object>, iteration: number }} Last iteration information
+ * @returns {Promise<{ evaluatedPopulation: Array<Object>, iteration: number }>} Last iteration information
  */
 const run = async (options) => {
   checkProps({

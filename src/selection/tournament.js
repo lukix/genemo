@@ -20,8 +20,8 @@ const tournament = (options) => {
   } = options;
 
   return (evaluatedPopulation, random) => (
-    new Array(evaluatedPopulation.length).fill().map(() => {
-      const individuals = new Array(size).fill().map(() => {
+    new Array(evaluatedPopulation.length).fill(null).map(() => {
+      const individuals = new Array(size).fill(null).map(() => {
         const index = randomFromRange(random)(0, evaluatedPopulation.length - 1);
         return evaluatedPopulation[index];
       });

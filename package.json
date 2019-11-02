@@ -12,12 +12,12 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "dev": "babel --watch src -d lib",
+    "dev": "tsc --watch",
     "example1": "node ./examples/example1-findSequence.js",
     "example2": "node ./examples/example2-travelingSalesman.js",
     "example3": "node ./examples/example3-parallelExecution/example3.js",
     "test": "jest --coverage",
-    "build": "babel src -d lib",
+    "build": "tsc",
     "lint": "eslint ./**/*.js",
     "prepush": "npm run lint && npm run test",
     "prepublishOnly": "npm run build && npm run prepush"
@@ -38,11 +38,10 @@
     "ramda": "0.26.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.6.0",
-    "@babel/core": "7.6.0",
-    "@babel/plugin-proposal-object-rest-spread": "7.5.5",
-    "@babel/plugin-transform-modules-commonjs": "7.6.0",
-    "babel-jest": "24.9.0",
+    "@types/jest": "24.0.21",
+    "@types/node": "12.12.5",
+    "@typescript-eslint/eslint-plugin": "2.6.0",
+    "@typescript-eslint/parser": "2.6.0",
     "coveralls": "3.0.6",
     "eslint": "6.3.0",
     "eslint-config-airbnb-base": "14.0.0",
@@ -50,6 +49,8 @@
     "eslint-plugin-jest": "22.17.0",
     "husky": "3.0.5",
     "jest": "24.9.0",
-    "random-seed": "0.3.0"
+    "random-seed": "0.3.0",
+    "ts-jest": "24.1.0",
+    "typescript": "3.6.4"
   }
 }

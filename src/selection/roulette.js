@@ -53,7 +53,7 @@ const rouletteSelection = (options) => {
     const cumulativeFitness = calculateCumulativeFitness(populationWithNormalizedFitness);
     const normalizedCumulativeFitness = normalizeCumulativeFitness(cumulativeFitness);
 
-    return new Array(evaluatedPopulation.length).fill().map(() => (
+    return new Array(evaluatedPopulation.length).fill(null).map(() => (
       selectRouletteElement(normalizedCumulativeFitness, random())
     ));
   };

@@ -3,7 +3,7 @@ const randomFromRange = require('../utils/randomFromRange');
 
 const createChildUsingPMXCrossover = ([parent1, parent2], minIndex, maxIndex) => {
   const individualLength = parent1.length;
-  const child = new Array(individualLength).fill();
+  const child = new Array(individualLength).fill(null);
 
   // Copy random swath from parent1
   R.range(minIndex, maxIndex + 1).forEach((index) => {

@@ -1,9 +1,10 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
   extends: ['airbnb-base', 'plugin:jest/recommended'],
   env: {
     'jest/globals': true,
   },
-  plugins: ['jest'],
+  plugins: ['jest', '@typescript-eslint'],
   rules: {
     'max-len': ['error', { code: 100, ignoreComments: true, ignoreTemplateLiterals: true }],
     'func-names': ['off'],
