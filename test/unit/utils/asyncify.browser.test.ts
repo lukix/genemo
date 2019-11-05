@@ -5,14 +5,13 @@ global.setImmediate = undefined;
 import asyncify from '../../../src/utils/asyncify';
 
 describe('asyncify on browser env', () => {
-  test('Behaves correctly when there is no setImmediate function', (done) => {
+  test('Behaves correctly when there is no setImmediate function', async () => {
     const mockFn = jest.fn(x => x);
     const mockFnAsync = asyncify(mockFn);
     const arg = 5;
-    mockFnAsync(arg).then((result) => {
-      expect(result).toStrictEqual(arg);
-      done();
-    });
-    expect(mockFn).toHaveBeenCalledTimes(0);
+
+    const result = await mockFnAsync(arg);
+    expect(result).toStrictEqual(arg);
+    expect(mockFn).toHaveBeenCalledTimes(1);
   });
 });

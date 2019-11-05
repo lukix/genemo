@@ -2,7 +2,7 @@ import rand from 'random-seed';
 import Genemo from '../../src';
 
 describe('Find Sequence', () => {
-  test('Last iteration population matches snapshot', async (done) => {
+  test('Last iteration population matches snapshot', async () => {
     const { random } = rand.create('seed');
 
     const generateIndividual = Genemo.randomSequenceOf([true, false], 50);
@@ -37,6 +37,5 @@ describe('Find Sequence', () => {
       lowestFitnessIndividual: result.getLowestFitnessIndividual(),
       highestFitnessIndividual: result.getHighestFitnessIndividual(),
     }).toMatchSnapshot('findSequence1');
-    done();
   });
 });

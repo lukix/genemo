@@ -1,7 +1,7 @@
 import Genemo from '../../../src';
 
 describe('run', () => {
-  test('Calls genetic operator functions correct number of times', async (done) => {
+  test('Calls genetic operator functions correct number of times', async () => {
     const generateInitialPopulation = jest.fn(() => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const selection = jest.fn(population => population);
     const reproduce = jest.fn(population => population.map(({ individual }) => individual));
@@ -25,10 +25,9 @@ describe('run', () => {
     expect(evaluatePopulation).toHaveBeenCalledTimes(3);
     expect(stopCondition).toHaveBeenCalledTimes(2);
     expect(iterationCallback).toHaveBeenCalledTimes(2);
-    done();
   });
 
-  test('Runs correct number of iterations when not using macrotasks', async (done) => {
+  test('Runs correct number of iterations when not using macrotasks', async () => {
     const generateInitialPopulation = () => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const selection = population => population;
     const reproduce = population => population.map(({ individual }) => individual);
@@ -46,10 +45,9 @@ describe('run', () => {
 
     const { iteration } = await Genemo.run(evolutionOptions);
     expect(iteration).toEqual(2);
-    done();
   });
 
-  test('Calls succession with correct parameters', async (done) => {
+  test('Calls succession with correct parameters', async () => {
     const generateInitialPopulation = jest.fn(() => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
     const selection = population => population;
     const reproduce = population => population.map(({ individual }) => individual);
@@ -96,6 +94,5 @@ describe('run', () => {
         { individual: 9, fitness: 1 },
       ],
     }, random);
-    done();
   });
 });
