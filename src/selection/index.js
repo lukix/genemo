@@ -1,9 +1,3 @@
-const roulette = require('./roulette');
-const tournament = require('./tournament');
-const rank = require('./rank');
-
-module.exports = {
-  roulette,
-  tournament,
-  rank,
-};
+export { default as roulette } from './roulette';
+export { default as tournament } from './tournament';
+export { default as rank } from './rank';

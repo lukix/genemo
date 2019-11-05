@@ -1,18 +1,7 @@
-const singlePoint = require('./singlePoint');
-const twoPoint = require('./twoPoint');
-const kPoint = require('./kPoint');
-const orderOne = require('./orderOne');
-const PMX = require('./pmx');
-const uniform = require('./uniform');
-const edgeRecombination = require('./edgeRecombination');
-
-
-module.exports = {
-  singlePoint,
-  twoPoint,
-  kPoint,
-  orderOne,
-  PMX,
-  uniform,
-  edgeRecombination,
-};
+export { default as singlePoint } from './singlePoint';
+export { default as twoPoint } from './twoPoint';
+export { default as kPoint } from './kPoint';
+export { default as orderOne } from './orderOne';
+export { default as PMX } from './pmx';
+export { default as uniform } from './uniform';
+export { default as edgeRecombination } from './edgeRecombination';

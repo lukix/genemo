@@ -1,4 +1,4 @@
-const checkProps = ({ functionName, propTypes, props }) => {
+export const checkProps = ({ functionName, propTypes, props }) => {
   if (typeof props !== 'object') {
     throw Error(`Missing argument for ${functionName}`);
   }
@@ -21,15 +21,10 @@ const checkProps = ({ functionName, propTypes, props }) => {
   });
 };
 
-const types = {
+export const types = {
   FUNCTION: 'function',
   NUMBER: 'number',
   STRING: 'string',
   BOOLEAN: 'boolean',
   OBJECT: 'object',
-};
-
-module.exports = {
-  checkProps,
-  types,
 };

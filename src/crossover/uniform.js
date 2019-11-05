@@ -1,4 +1,4 @@
-const R = require('ramda');
+import R from 'ramda';
 
 const createOffspring = ([parentA, parentB], random) => (
   R.zip(parentA, parentB).map(([geneA, geneB]) => (random() >= 0.5 ? geneA : geneB))
@@ -10,4 +10,4 @@ const uniformCrossover = () => ([mother, father], random) => {
   return [son, daughter];
 };
 
-module.exports = uniformCrossover;
+export default uniformCrossover;

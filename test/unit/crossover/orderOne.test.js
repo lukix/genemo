@@ -1,6 +1,7 @@
-const Genemo = require('../../../src');
-const { createChildUsingOrderOneCrossover } = require('../../../src/crossover/orderOne');
-const cyclicProvider = require('../../test-utils/cyclicProvider');
+
+import Genemo from '../../../src';
+import { createChildUsingOrderOneCrossover } from '../../../src/crossover/orderOne';
+import cyclicProvider from '../../test-utils/cyclicProvider';
 
 // Common inputs
 const mother = [8, 4, 7, 3, 6, 2, 5, 1, 9, 0];

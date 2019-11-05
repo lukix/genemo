@@ -1,4 +1,4 @@
-const randomFromRange = require('../utils/randomFromRange');
+import randomFromRange from '../utils/randomFromRange';
 
 // Warning: the following function modifies its parameter (to increase performance)
 const swapTwoGenes = () => (individual, random) => {
@@ -13,4 +13,4 @@ const swapTwoGenes = () => (individual, random) => {
   return individual;
 };
 
-module.exports = swapTwoGenes;
+export default swapTwoGenes;

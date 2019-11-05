@@ -9,5 +9,6 @@ module.exports = {
     'max-len': ['error', { code: 100, ignoreComments: true, ignoreTemplateLiterals: true }],
     'func-names': ['off'],
     'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
+    'import/prefer-default-export': 0,
   },
 };

@@ -1,8 +1,8 @@
-const { checkProps, types } = require('../utils/typeChecking');
-const {
+import { checkProps, types } from '../utils/typeChecking';
+import {
   normalizeCumulativeFitness,
   selectRouletteElement,
-} = require('./utils/rouletteUtils');
+} from './utils/rouletteUtils';
 
 const calculateArithmeticSeries = (first, last, count) => (count * (first + last)) / 2;
 
@@ -40,4 +40,4 @@ const rankSelection = (options) => {
   };
 };
 
-module.exports = rankSelection;
+export default rankSelection;

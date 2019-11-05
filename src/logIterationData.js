@@ -1,5 +1,5 @@
-const { checkProps, types } = require('./utils/typeChecking');
-const { mean } = require('./utils/numbersListHelpers');
+import { checkProps, types } from './utils/typeChecking';
+import { mean } from './utils/numbersListHelpers';
 
 const iterationFormatter = (key, value) => `#${value}`;
 const fitnessFormatter = (key, value) => `${key} = ${value}`;
@@ -56,4 +56,4 @@ const logIterationData = (options) => {
   };
 };
 
-module.exports = logIterationData;
+export default logIterationData;

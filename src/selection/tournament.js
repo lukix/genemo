@@ -1,6 +1,6 @@
-const randomFromRange = require('../utils/randomFromRange');
-const { checkProps, types } = require('../utils/typeChecking');
-const findBestIndividual = require('../utils/findBestIndividual');
+import randomFromRange from '../utils/randomFromRange';
+import { checkProps, types } from '../utils/typeChecking';
+import findBestIndividual from '../utils/findBestIndividual';
 
 const propTypes = {
   size: { type: types.NUMBER, isRequired: true },
@@ -30,4 +30,4 @@ const tournament = (options) => {
   );
 };
 
-module.exports = tournament;
+export default tournament;

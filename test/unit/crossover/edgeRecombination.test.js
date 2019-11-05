@@ -1,10 +1,10 @@
-const Genemo = require('../../../src');
-const {
+import Genemo from '../../../src';
+import {
   getNeighbors,
   createNeighborsMap,
   createSingleChild,
-} = require('../../../src/crossover/edgeRecombination');
-const cyclicProvider = require('../../test-utils/cyclicProvider');
+} from '../../../src/crossover/edgeRecombination';
+import cyclicProvider from '../../test-utils/cyclicProvider';
 
 describe('Edge recombination crossover', () => {
   test('getNeighbors function works for the first element', () => {
@@ -114,6 +114,23 @@ describe('Edge recombination crossover', () => {
     ];
 
     const result = Genemo.crossover.edgeRecombination()([mother, father], random);
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  test('Returns correct offsprings when using custom hashGene function', () => {
+    // Input
+    const mother = ['A', 'B', 'C'];
+    const father = ['C', 'A', 'B'];
+    const random = cyclicProvider([0.99, 0.0, 0.2]);
+    const options = { hashGene: gene => gene };
+
+    // Expected result
+    const expectedResult = [
+      ['C', 'B', 'A'],
+      ['A', 'C', 'B'],
+    ];
+
+    const result = Genemo.crossover.edgeRecombination(options)([mother, father], random);
     expect(result).toStrictEqual(expectedResult);
   });
 });

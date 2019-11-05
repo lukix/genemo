@@ -1,7 +1,7 @@
-const R = require('ramda');
-const randomFromRange = require('../utils/randomFromRange');
+import R from 'ramda';
+import randomFromRange from '../utils/randomFromRange';
 
-const createChildUsingPMXCrossover = ([parent1, parent2], minIndex, maxIndex) => {
+export const createChildUsingPMXCrossover = ([parent1, parent2], minIndex, maxIndex) => {
   const individualLength = parent1.length;
   const child = new Array(individualLength).fill(null);
 
@@ -58,5 +58,4 @@ const PMX = () => ([mother, father], random) => {
   return [son, daughter];
 };
 
-module.exports = PMX;
-module.exports.createChildUsingPMXCrossover = createChildUsingPMXCrossover;
+export default PMX;

@@ -1,8 +1,8 @@
-const R = require('ramda');
+import R from 'ramda';
 
-const { checkProps, types } = require('./utils/typeChecking');
-const Timer = require('./utils/timer');
-const getRandomIndividual = require('./utils/getRandomIndividual');
+import { checkProps, types } from './utils/typeChecking';
+import Timer from './utils/timer';
+import getRandomIndividual from './utils/getRandomIndividual';
 
 const DEFAULT_MUTATION_PROBABILITY = 0.01;
 
@@ -52,4 +52,4 @@ const reproduce = (options) => {
   };
 };
 
-module.exports = reproduce;
+export default reproduce;

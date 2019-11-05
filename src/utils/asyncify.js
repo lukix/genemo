@@ -13,4 +13,4 @@ const asyncify = func => (...args) => new Promise((res, rej) => {
   });
 });
 
-module.exports = asyncify;
+export default asyncify;

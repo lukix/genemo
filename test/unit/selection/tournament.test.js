@@ -1,5 +1,5 @@
-const Genemo = require('../../../src');
-const cyclicProvider = require('../../test-utils/cyclicProvider');
+import Genemo from '../../../src';
+import cyclicProvider from '../../test-utils/cyclicProvider';
 
 // Common inputs
 const evaluatedPopulation = [

@@ -1,6 +1,7 @@
 /* Test how asyncify behaves in environments with no setImmediate function */
 global.setImmediate = undefined;
-const asyncify = require('../../../src/utils/asyncify');
+// eslint-disable-next-line import/first
+import asyncify from '../../../src/utils/asyncify';
 
 describe('asyncify on browser env', () => {
   test('Behaves correctly when there is no setImmediate function', (done) => {

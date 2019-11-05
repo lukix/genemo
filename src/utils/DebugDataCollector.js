@@ -1,4 +1,4 @@
-const getCurrentTime = require('./getCurrentTime');
+import getCurrentTime from './getCurrentTime';
 
 class DebugDataCollector {
   constructor({ collectLogs }) {
@@ -38,4 +38,4 @@ class DebugDataCollector {
   }
 }
 
-module.exports = DebugDataCollector;
+export default DebugDataCollector;

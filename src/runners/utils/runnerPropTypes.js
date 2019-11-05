@@ -1,4 +1,4 @@
-const { types } = require('../../utils/typeChecking');
+import { types } from '../../utils/typeChecking';
 
 const runnerPropTypes = {
   generateInitialPopulation: { type: types.FUNCTION, isRequired: true },
@@ -13,4 +13,4 @@ const runnerPropTypes = {
   collectLogs: { type: types.BOOLEAN, isRequired: false },
 };
 
-module.exports = runnerPropTypes;
+export default runnerPropTypes;

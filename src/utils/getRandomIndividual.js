@@ -1,8 +1,8 @@
-const randomFromRange = require('./randomFromRange');
+import randomFromRange from './randomFromRange';
 
 const getRandomIndividual = (population, random) => {
   const index = randomFromRange(random)(0, population.length - 1);
   return population[index];
 };
 
-module.exports = getRandomIndividual;
+export default getRandomIndividual;

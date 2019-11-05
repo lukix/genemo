@@ -17,4 +17,4 @@ const findBestIndividual = (evaluatedPopulation, minimizeFitness) => {
   return evaluatedPopulation.reduce(reducer);
 };
 
-module.exports = findBestIndividual;
+export default findBestIndividual;

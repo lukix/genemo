@@ -1,5 +1,1 @@
-const run = require('./run');
-
-module.exports = {
-  run,
-};
+export { default as run } from './run';

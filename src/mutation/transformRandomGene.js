@@ -8,4 +8,4 @@ const transformRandomGene = transformFunc => (individual, random) => {
   return individual;
 };
 
-module.exports = transformRandomGene;
+export default transformRandomGene;

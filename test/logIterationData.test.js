@@ -1,4 +1,4 @@
-const Genemo = require('../src');
+import Genemo from '../src';
 
 describe('logIterationData', () => {
   test('customLogger should be called with a correct string', () => {
@@ -40,6 +40,9 @@ describe('logIterationData', () => {
       iteration: 1,
       evaluatedPopulation: [],
       logs: {},
+      // Insignificant properties:
+      getLowestFitnessIndividual: () => ({ fitness: 5 }),
+      getHighestFitnessIndividual: () => ({ fitness: 10 }),
     });
 
     const expectedLogStr = '#1';
@@ -57,6 +60,9 @@ describe('logIterationData', () => {
       iteration: 10,
       evaluatedPopulation: [],
       logs: {},
+      // Insignificant properties:
+      getLowestFitnessIndividual: () => ({ fitness: 5 }),
+      getHighestFitnessIndividual: () => ({ fitness: 10 }),
     });
 
     const expectedLogStr = '#10';
@@ -76,6 +82,9 @@ describe('logIterationData', () => {
       iteration: 10,
       evaluatedPopulation: [],
       logs: { customKey: { lastValue: 5 } },
+      // Insignificant properties:
+      getLowestFitnessIndividual: () => ({ fitness: 5 }),
+      getHighestFitnessIndividual: () => ({ fitness: 10 }),
     });
 
     const expectedLogStr = 'customKey-5-suffix';
@@ -94,6 +103,10 @@ describe('logIterationData', () => {
     iterationCallback({
       iteration: 10,
       evaluatedPopulation: [{ fitness: 2 }],
+      // Insignificant properties:
+      logs: { customKey: { lastValue: 5 } },
+      getLowestFitnessIndividual: () => ({ fitness: 5 }),
+      getHighestFitnessIndividual: () => ({ fitness: 10 }),
     });
 
     const expectedLogStr = 'avgFitness-2-suffix';

@@ -1,4 +1,4 @@
-const { checkProps, types } = require('../../../src/utils/typeChecking');
+import { checkProps, types } from '../../../src/utils/typeChecking';
 
 describe('checkProps', () => {
   test('Should not throw an error when called with correct parameters', () => {

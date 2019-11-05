@@ -1,4 +1,4 @@
-const randomFromRange = require('./utils/randomFromRange');
+import randomFromRange from './utils/randomFromRange';
 
 const randomPermutationOf = valuesSet => (random) => {
   const permutation = [...valuesSet];
@@ -24,4 +24,4 @@ const randomPermutationOf = valuesSet => (random) => {
   return permutation;
 };
 
-module.exports = randomPermutationOf;
+export default randomPermutationOf;

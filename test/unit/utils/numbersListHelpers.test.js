@@ -1,4 +1,4 @@
-const { min, max, mean } = require('../../../src/utils/numbersListHelpers');
+import { min, max, mean } from '../../../src/utils/numbersListHelpers';
 
 describe('numbersListHelpers', () => {
   test('Finds smallest number in an array', () => {

@@ -1,5 +1,7 @@
-const R = require('ramda');
-const singlePoint = require('./singlePoint')();
+import R from 'ramda';
+import SinglePoint from './singlePoint';
+
+const singlePoint = SinglePoint();
 
 const kPoint = k => ([mother, father], random) => {
   const [son, daugher] = R.range(0, k).reduce(
@@ -9,4 +11,4 @@ const kPoint = k => ([mother, father], random) => {
   return [son, daugher];
 };
 
-module.exports = kPoint;
+export default kPoint;

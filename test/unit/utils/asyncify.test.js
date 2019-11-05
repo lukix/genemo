@@ -1,4 +1,4 @@
-const asyncify = require('../../../src/utils/asyncify');
+import asyncify from '../../../src/utils/asyncify';
 
 describe('asyncify', () => {
   test('Runs asynchronously and returns correct value with promise', (done) => {

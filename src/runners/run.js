@@ -1,11 +1,11 @@
 /* eslint-disable no-await-in-loop */
 
-const R = require('ramda');
-const { checkProps } = require('../utils/typeChecking');
-const DebugDataCollector = require('../utils/DebugDataCollector');
-const runnerPropTypes = require('./utils/runnerPropTypes');
-const batchIterationExecutor = require('./utils/batchIterationExecutor');
-const { min, max } = require('../utils/numbersListHelpers');
+import R from 'ramda';
+import { checkProps } from '../utils/typeChecking';
+import DebugDataCollector from '../utils/DebugDataCollector';
+import runnerPropTypes from './utils/runnerPropTypes';
+import batchIterationExecutor from './utils/batchIterationExecutor';
+import { min, max } from '../utils/numbersListHelpers';
 
 const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
   R.zip(population, fitnessValues).map(([individual, fitness]) => ({
@@ -21,13 +21,13 @@ const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
  * @param {(random: () => number) => Array<any>} options.generateInitialPopulation
  * @param {(evaluatedPopulation: Array<any>, random: () => number) => Array<any>} options.selection
  * @param {(evaluatedPopulation: Array<any>, random: () => number, collectReproduceLog: Function) => Array<any>} options.reproduce
- * @param {(prevAndChildrenPopulations: { prevPopulation: Array<Object>, childrenPopulation: Array<Object>}, random: () => number) => Array<Object>} options.succession
+ * @param {(prevAndChildrenPopulations: { prevPopulation: Array<Object>, childrenPopulation: Array<Object>}, random: () => number) => Array<Object>} [options.succession]
  * @param {(individual: any, random: () => number) => number} options.evaluatePopulation
  * @param {(iterationInfo: { evaluatedPopulation: Array<Object>, iteration: number }) => boolean} options.stopCondition
- * @param {number} options.maxBlockingTime
- * @param {boolean} options.collectLogs
- * @param {() => number} options.random
- * @param {(iterationData: object) => void} options.iterationCallback
+ * @param {number} [options.maxBlockingTime]
+ * @param {boolean} [options.collectLogs]
+ * @param {() => number} [options.random]
+ * @param {(iterationData: object) => void} [options.iterationCallback]
  *
  * @returns {Promise<{ evaluatedPopulation: Array<Object>, iteration: number }>} Last iteration information
  */
@@ -138,4 +138,4 @@ const run = async (options) => {
   }
 };
 
-module.exports = run;
+export default run;

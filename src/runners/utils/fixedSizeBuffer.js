@@ -1,4 +1,4 @@
-const { max } = require('../../utils/numbersListHelpers');
+import { max } from '../../utils/numbersListHelpers';
 
 const FixedSizeBuffer = (size) => {
   const buffer = [];
@@ -14,4 +14,4 @@ const FixedSizeBuffer = (size) => {
   };
 };
 
-module.exports = FixedSizeBuffer;
+export default FixedSizeBuffer;

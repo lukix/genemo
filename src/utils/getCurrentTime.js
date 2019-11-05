@@ -1,4 +1,4 @@
-const hrtime = require('browser-process-hrtime');
+import hrtime from 'browser-process-hrtime';
 
 /**
  * Returns current time in milliseconds
@@ -8,4 +8,4 @@ const getCurrentTime = () => {
   return seconds * 1e3 + nanoseconds * 1e-6;
 };
 
-module.exports = getCurrentTime;
+export default getCurrentTime;

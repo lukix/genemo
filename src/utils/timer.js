@@ -1,4 +1,4 @@
-const getCurrentTime = require('./getCurrentTime');
+import getCurrentTime from './getCurrentTime';
 
 const Timer = () => {
   const timers = [];
@@ -13,4 +13,4 @@ const Timer = () => {
   };
 };
 
-module.exports = Timer;
+export default Timer;

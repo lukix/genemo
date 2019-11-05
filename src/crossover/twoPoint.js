@@ -1,5 +1,5 @@
-const kPoint = require('./kPoint');
+import kPoint from './kPoint';
 
 const twoPoint = () => kPoint(2);
 
-module.exports = twoPoint;
+export default twoPoint;

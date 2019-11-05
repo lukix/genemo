@@ -7,4 +7,4 @@ const cyclicProvider = (values) => {
   };
 };
 
-module.exports = cyclicProvider;
+export default cyclicProvider;

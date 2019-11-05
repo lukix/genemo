@@ -1,4 +1,4 @@
-const { checkProps, types } = require('./utils/typeChecking');
+import { checkProps, types } from './utils/typeChecking';
 
 const compareAsc = (a, b) => a.fitness - b.fitness;
 const compareDesc = (a, b) => b.fitness - a.fitness;
@@ -27,4 +27,4 @@ const elitism = (options) => {
   };
 };
 
-module.exports = elitism;
+export default elitism;

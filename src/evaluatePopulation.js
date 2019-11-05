@@ -1,4 +1,4 @@
-const { checkProps, types } = require('./utils/typeChecking');
+import { checkProps, types } from './utils/typeChecking';
 
 const propTypes = {
   fitnessFunction: { type: types.FUNCTION, isRequired: true },
@@ -20,4 +20,4 @@ const evaluatePopulation = (options) => {
   );
 };
 
-module.exports = evaluatePopulation;
+export default evaluatePopulation;

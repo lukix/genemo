@@ -4,13 +4,12 @@
     "module": "commonjs",
     "lib": ["es6"],
     "allowJs": true,
-    "checkJs": true,
+    "checkJs": false,
     "outDir": "lib",
     "rootDir": "src",
     "strict": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "downlevelIteration": true
   },
   "exclude": [

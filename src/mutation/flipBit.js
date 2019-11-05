@@ -1,3 +1,3 @@
 const flipBit = () => geneBooleanValue => !geneBooleanValue;
 
-module.exports = flipBit;
+export default flipBit;

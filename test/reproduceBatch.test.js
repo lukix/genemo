@@ -1,6 +1,6 @@
-const Genemo = require('../src');
-const { selectParentsPairs } = require('../src/reproduceBatch');
-const cyclicProvider = require('./test-utils/cyclicProvider');
+import Genemo from '../src';
+import { selectParentsPairs } from '../src/reproduceBatch';
+import cyclicProvider from './test-utils/cyclicProvider';
 
 describe('reproduceBatch', () => {
   test('Returns correct population with odd number of individuals', async () => {
@@ -57,5 +57,27 @@ describe('reproduceBatch', () => {
       random,
     });
     expect(result).toStrictEqual(expectedResult);
+  });
+
+  test('Calls mutateAll with an empty array when mutationProbability = 0', async () => {
+    const random = cyclicProvider([0.5]);
+    const evaluatedPopulation = [
+      { individual: '0', fitness: 1 },
+      { individual: '1', fitness: 3 },
+      { individual: '2', fitness: -2 },
+      { individual: '3', fitness: 5 },
+      { individual: '4', fitness: 1 },
+    ];
+    const mutateAll = jest.fn(individuals => individuals);
+
+    const reproduceBatch = Genemo.reproduceBatch({
+      mutateAll,
+      crossoverAll: pairs => pairs.map(([a, b]) => [a, b]),
+      mutationProbability: 0,
+    });
+    await reproduceBatch(evaluatedPopulation, random, () => null);
+
+    expect(mutateAll).toHaveBeenCalledTimes(1);
+    expect(mutateAll).toHaveBeenCalledWith([], random);
   });
 });

@@ -1,6 +1,6 @@
-const Genemo = require('../../../src');
-const { createChildUsingPMXCrossover } = require('../../../src/crossover/pmx');
-const cyclicProvider = require('../../test-utils/cyclicProvider');
+import Genemo from '../../../src';
+import { createChildUsingPMXCrossover } from '../../../src/crossover/pmx';
+import cyclicProvider from '../../test-utils/cyclicProvider';
 
 // Common inputs
 const mother = [8, 4, 7, 3, 6, 2, 5, 1, 9, 0];

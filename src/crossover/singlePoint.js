@@ -1,4 +1,4 @@
-const randomFromRange = require('../utils/randomFromRange');
+import randomFromRange from '../utils/randomFromRange';
 
 // Warning: the following function modifies its parameter
 const pushAndReturnArray = (array, elements) => {
@@ -13,4 +13,4 @@ const singlePoint = () => ([mother, father], random) => {
   return [son, daughter];
 };
 
-module.exports = singlePoint;
+export default singlePoint;

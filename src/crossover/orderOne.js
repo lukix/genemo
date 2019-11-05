@@ -1,7 +1,7 @@
-const R = require('ramda');
-const randomFromRange = require('../utils/randomFromRange');
+import R from 'ramda';
+import randomFromRange from '../utils/randomFromRange';
 
-const createChildUsingOrderOneCrossover = ([parent1, parent2], minIndex, maxIndex) => {
+export const createChildUsingOrderOneCrossover = ([parent1, parent2], minIndex, maxIndex) => {
   const individualLength = parent1.length;
   const child = new Array(individualLength).fill(null);
   R.range(minIndex, maxIndex + 1).forEach((index) => {
@@ -31,5 +31,4 @@ const orderOne = () => ([mother, father], random) => {
   return [son, daughter];
 };
 
-module.exports = orderOne;
-module.exports.createChildUsingOrderOneCrossover = createChildUsingOrderOneCrossover;
+export default orderOne;

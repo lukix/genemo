@@ -1,5 +1,5 @@
-const rand = require('random-seed');
-const Genemo = require('../../src');
+import rand from 'random-seed';
+import Genemo from '../../src';
 
 describe('Find Sequence', () => {
   test('Last iteration population matches snapshot', async (done) => {

@@ -1,20 +1,20 @@
-const { run } = require('./runners');
+import * as selection from './selection';
+import * as mutation from './mutation';
+import * as crossover from './crossover';
 
-const selection = require('./selection');
-const mutation = require('./mutation');
-const crossover = require('./crossover');
+import { run } from './runners';
 
-const { generateInitialPopulation } = require('./generateInitialPopulation');
-const evaluatePopulation = require('./evaluatePopulation');
-const reproduce = require('./reproduce');
-const reproduceBatch = require('./reproduceBatch');
-const { stopCondition } = require('./stopConditions');
-const randomSequenceOf = require('./randomSequenceOf');
-const randomPermutationOf = require('./randomPermutationOf');
-const elitism = require('./elitism');
-const logIterationData = require('./logIterationData');
+import { generateInitialPopulation } from './generateInitialPopulation';
+import evaluatePopulation from './evaluatePopulation';
+import reproduce from './reproduce';
+import reproduceBatch from './reproduceBatch';
+import { stopCondition } from './stopConditions';
+import randomSequenceOf from './randomSequenceOf';
+import randomPermutationOf from './randomPermutationOf';
+import elitism from './elitism';
+import logIterationData from './logIterationData';
 
-module.exports = {
+const publicInterface = {
   run,
 
   selection,
@@ -31,3 +31,6 @@ module.exports = {
   randomPermutationOf,
   elitism,
 };
+
+export default publicInterface;
+module.exports = publicInterface;

@@ -1,4 +1,4 @@
-const findBestIndividual = require('../../../src/utils/findBestIndividual');
+import findBestIndividual from '../../../src/utils/findBestIndividual';
 
 describe('findBestIndividual', () => {
   test('Returns correct individual (maximization)', () => {

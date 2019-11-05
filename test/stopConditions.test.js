@@ -1,4 +1,4 @@
-const Genemo = require('../src');
+import Genemo from '../src';
 
 describe('stopCondition', () => {
   test('Returns correct value for each condition', () => {

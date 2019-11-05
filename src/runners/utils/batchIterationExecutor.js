@@ -1,6 +1,6 @@
-const asyncify = require('../../utils/asyncify');
-const getCurrentTime = require('../../utils/getCurrentTime');
-const FixedSizeBuffer = require('./fixedSizeBuffer');
+import asyncify from '../../utils/asyncify';
+import getCurrentTime from '../../utils/getCurrentTime';
+import FixedSizeBuffer from './fixedSizeBuffer';
 
 const waitForNextMacrotask = asyncify(() => null);
 
@@ -33,4 +33,4 @@ const batchIterationExecutor = ({
   };
 };
 
-module.exports = batchIterationExecutor;
+export default batchIterationExecutor;

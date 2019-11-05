@@ -1,4 +1,4 @@
-const { checkProps, types } = require('./utils/typeChecking');
+import { checkProps, types } from './utils/typeChecking';
 
 const propTypes = {
   minFitness: { type: types.NUMBER, isRequired: false },
@@ -6,7 +6,7 @@ const propTypes = {
   maxIterations: { type: types.NUMBER, isRequired: false },
 };
 
-const stopCondition = (options) => {
+export const stopCondition = (options) => {
   checkProps({
     functionName: 'Genemo.stopCondition',
     props: options,
@@ -24,8 +24,4 @@ const stopCondition = (options) => {
     || evaluatedPopulation.some(({ fitness }) => fitness <= maxFitness)
     || iteration >= maxIterations
   );
-};
-
-module.exports = {
-  stopCondition,
 };

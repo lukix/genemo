@@ -19,4 +19,4 @@ const binaryRangeSearch = (array, condition) => {
   return condition(result) ? result : undefined;
 };
 
-module.exports = binaryRangeSearch;
+export default binaryRangeSearch;

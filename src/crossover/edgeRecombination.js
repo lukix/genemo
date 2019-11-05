@@ -1,10 +1,10 @@
 /* eslint-disable no-loop-func */
 
-const { checkProps, types } = require('../utils/typeChecking');
-const { min } = require('../utils/numbersListHelpers');
-const RandomItem = require('../utils/randomItem');
+import { checkProps, types } from '../utils/typeChecking';
+import { min } from '../utils/numbersListHelpers';
+import RandomItem from '../utils/randomItem';
 
-const getNeighbors = (array, index) => {
+export const getNeighbors = (array, index) => {
   const neighborAIndex = index === 0
     ? array.length - 1
     : index - 1;
@@ -35,7 +35,7 @@ const insertNeighborsIntoMap = (map, individual, hashGene) => (
   )
 );
 
-const createNeighborsMap = (individualA, individualB, hashGene) => {
+export const createNeighborsMap = (individualA, individualB, hashGene) => {
   const neighborsAMap = insertNeighborsIntoMap(new Map(), individualA, hashGene);
   const mergedNeighborsMap = insertNeighborsIntoMap(neighborsAMap, individualB, hashGene);
 
@@ -100,7 +100,7 @@ const appendRemainingGenesToChild = (
   );
 };
 
-const createSingleChild = ([mother, father], hashGene, random) => {
+export const createSingleChild = ([mother, father], hashGene, random) => {
   const randomItem = RandomItem(random);
   const neighborsMap = createNeighborsMap(mother, father, hashGene);
   const child = [];
@@ -138,7 +138,4 @@ const edgeRecombination = (options = {}) => {
   };
 };
 
-module.exports = edgeRecombination;
-module.exports.getNeighbors = getNeighbors;
-module.exports.createNeighborsMap = createNeighborsMap;
-module.exports.createSingleChild = createSingleChild;
+export default edgeRecombination;

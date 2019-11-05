@@ -1,10 +1,10 @@
-const R = require('ramda');
-const { checkProps, types } = require('../utils/typeChecking');
-const {
+import R from 'ramda';
+import { checkProps, types } from '../utils/typeChecking';
+import {
   normalizeCumulativeFitness,
   selectRouletteElement,
-} = require('./utils/rouletteUtils');
-const { min, max } = require('../utils/numbersListHelpers');
+} from './utils/rouletteUtils';
+import { min, max } from '../utils/numbersListHelpers';
 
 const normalizePopulationFitness = (evaluatedPopulation, minimizeFitness) => {
   const minFitness = min(evaluatedPopulation.map(({ fitness }) => fitness));
@@ -59,4 +59,4 @@ const rouletteSelection = (options) => {
   };
 };
 
-module.exports = rouletteSelection;
+export default rouletteSelection;

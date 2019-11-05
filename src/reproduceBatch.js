@@ -1,10 +1,10 @@
-const R = require('ramda');
+import R from 'ramda';
 
-const { checkProps, types } = require('./utils/typeChecking');
-const Timer = require('./utils/timer');
-const getRandomIndividual = require('./utils/getRandomIndividual');
+import { checkProps, types } from './utils/typeChecking';
+import Timer from './utils/timer';
+import getRandomIndividual from './utils/getRandomIndividual';
 
-const selectParentsPairs = ({ evaluatedPopulation, targetPopulationSize, random }) => (
+export const selectParentsPairs = ({ evaluatedPopulation, targetPopulationSize, random }) => (
   R.range(0, Math.ceil(targetPopulationSize / 2))
     .map(() => {
       const mother = getRandomIndividual(evaluatedPopulation, random).individual;
@@ -82,5 +82,4 @@ const reproduceBatch = (options) => {
   };
 };
 
-module.exports = reproduceBatch;
-module.exports.selectParentsPairs = selectParentsPairs;
+export default reproduceBatch;

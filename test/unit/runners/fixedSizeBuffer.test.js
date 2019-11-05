@@ -1,4 +1,4 @@
-const FixedSizeBuffer = require('../../../src/runners/utils/fixedSizeBuffer');
+import FixedSizeBuffer from '../../../src/runners/utils/fixedSizeBuffer';
 
 describe('FixedSizeBuffer', () => {
   test('Contains correct elements when not fully filled', () => {

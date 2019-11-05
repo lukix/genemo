@@ -1,4 +1,4 @@
-const randomFromRange = require('./utils/randomFromRange');
+import randomFromRange from './utils/randomFromRange';
 
 const randomSequenceOf = (valuesSet, length) => random => (
   new Array(length).fill(null).map(() => {
@@ -7,4 +7,4 @@ const randomSequenceOf = (valuesSet, length) => random => (
   })
 );
 
-module.exports = randomSequenceOf;
+export default randomSequenceOf;
