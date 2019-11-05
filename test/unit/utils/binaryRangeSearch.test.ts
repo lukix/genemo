@@ -10,7 +10,7 @@ describe('binaryRangeSearch', () => {
     const expectedResult = -20;
 
     const result = binaryRangeSearch(inputArray, condition);
-    expect(result).toStrictEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   test('Finds element when it is last in the array', () => {
@@ -20,7 +20,7 @@ describe('binaryRangeSearch', () => {
     const expectedResult = 26;
 
     const result = binaryRangeSearch(inputArray, condition);
-    expect(result).toStrictEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   test('Return undefined if no elements has been found', () => {
@@ -30,7 +30,7 @@ describe('binaryRangeSearch', () => {
     const expectedResult = undefined;
 
     const result = binaryRangeSearch(inputArray, condition);
-    expect(result).toStrictEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   test('Return undefined given empty array', () => {
@@ -40,7 +40,7 @@ describe('binaryRangeSearch', () => {
     const expectedResult = undefined;
 
     const result = binaryRangeSearch([], condition);
-    expect(result).toStrictEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 
   test('Return correct result for an array with single item', () => {
@@ -50,6 +50,6 @@ describe('binaryRangeSearch', () => {
     const expectedResult = 27;
 
     const result = binaryRangeSearch([27], condition);
-    expect(result).toStrictEqual(expectedResult);
+    expect(result).toEqual(expectedResult);
   });
 });

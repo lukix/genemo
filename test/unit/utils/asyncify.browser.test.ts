@@ -1,4 +1,5 @@
 /* Test how asyncify behaves in environments with no setImmediate function */
+// @ts-ignore
 global.setImmediate = undefined;
 // eslint-disable-next-line import/first
 import asyncify from '../../../src/utils/asyncify';

@@ -120,7 +120,7 @@ const propTypes = {
   hashGene: { type: types.FUNCTION, isRequired: false },
 };
 
-const edgeRecombination = (options = {}) => {
+const edgeRecombination = (options: { hashGene?: Function } = {}) => {
   checkProps({
     functionName: 'Genemo.selection.rank',
     props: options,

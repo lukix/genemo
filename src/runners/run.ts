@@ -7,6 +7,42 @@ import runnerPropTypes from './utils/runnerPropTypes';
 import batchIterationExecutor from './utils/batchIterationExecutor';
 import { min, max } from '../utils/numbersListHelpers';
 
+type Rng = () => number;
+type EvaluatedIndividual<Individual> = { individual: Individual, fitness: number };
+type EvaluatedPopulation<Individual> = Array<EvaluatedIndividual<Individual>>;
+type Population<Individual> = Array<Individual>;
+
+export interface RunOptions<Individual> {
+  generateInitialPopulation: (random: Rng) => Population<Individual>;
+  selection: (evaluatedPopulation: EvaluatedPopulation<Individual>, random: Rng) => (
+    EvaluatedPopulation<Individual>
+  );
+  reproduce: (
+    evaluatedPopulation: EvaluatedPopulation<Individual>,
+    random: Rng, collectReproduceLog: Function
+  ) => Population<Individual>;
+  succession?: (
+    prevAndChildrenPopulations: {
+      prevPopulation: EvaluatedPopulation<Individual>,
+      childrenPopulation: EvaluatedPopulation<Individual>
+    }, random: Rng) => EvaluatedPopulation<Individual>;
+  evaluatePopulation: (population: Population<Individual>, random: Rng) => number;
+  stopCondition: (
+    iterationInfo: { evaluatedPopulation: EvaluatedPopulation<Individual>, iteration: number }
+  ) => boolean;
+  random?: Rng;
+  iterationCallback?: (iterationData: object) => void;
+  maxBlockingTime?: number;
+  collectLogs?: boolean;
+}
+type RunReturnType<Individual> = {
+  evaluatedPopulation: EvaluatedPopulation<Individual>,
+  iteration: number,
+  logs: object,
+  getLowestFitnessIndividual: () => EvaluatedIndividual<Individual>,
+  getHighestFitnessIndividual: () => EvaluatedIndividual<Individual>,
+};
+
 const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
   R.zip(population, fitnessValues).map(([individual, fitness]) => ({
     individual,
@@ -16,22 +52,10 @@ const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
 
 /**
  * Runs genetic algorithm until stopCondition returns true
- *
- * @param {object} options
- * @param {(random: () => number) => Array<any>} options.generateInitialPopulation
- * @param {(evaluatedPopulation: Array<any>, random: () => number) => Array<any>} options.selection
- * @param {(evaluatedPopulation: Array<any>, random: () => number, collectReproduceLog: Function) => Array<any>} options.reproduce
- * @param {(prevAndChildrenPopulations: { prevPopulation: Array<Object>, childrenPopulation: Array<Object>}, random: () => number) => Array<Object>} [options.succession]
- * @param {(individual: any, random: () => number) => number} options.evaluatePopulation
- * @param {(iterationInfo: { evaluatedPopulation: Array<Object>, iteration: number }) => boolean} options.stopCondition
- * @param {number} [options.maxBlockingTime]
- * @param {boolean} [options.collectLogs]
- * @param {() => number} [options.random]
- * @param {(iterationData: object) => void} [options.iterationCallback]
- *
- * @returns {Promise<{ evaluatedPopulation: Array<Object>, iteration: number }>} Last iteration information
  */
-const run = async (options) => {
+const run = async <Individual>(
+  options: RunOptions<Individual>,
+): Promise<RunReturnType<Individual>> => {
   checkProps({
     functionName: 'Genemo.run',
     props: options,

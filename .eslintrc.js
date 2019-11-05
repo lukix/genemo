@@ -8,7 +8,14 @@ module.exports = {
   rules: {
     'max-len': ['error', { code: 100, ignoreComments: true, ignoreTemplateLiterals: true }],
     'func-names': ['off'],
-    'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
+    'arrow-parens': ['off'],
     'import/prefer-default-export': 0,
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.ts'],
+      },
+    },
   },
 };

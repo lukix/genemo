@@ -1,6 +1,12 @@
 import getCurrentTime from './getCurrentTime';
 
 class DebugDataCollector {
+  data = {};
+
+  clocks = {};
+
+  collectLogs;
+
   constructor({ collectLogs }) {
     this.data = {};
     this.clocks = {};

@@ -1,7 +1,7 @@
 import getCurrentTime from './getCurrentTime';
 
 const Timer = () => {
-  const timers = [];
+  const timers: Array<any> = [];
 
   return {
     start: () => {
