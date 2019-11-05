@@ -1,5 +1,5 @@
 export const checkProps = (
-  { functionName, propTypes, props }: { functionName: string, propTypes: object, props: object },
+  { functionName, propTypes, props }: { functionName: string, propTypes: object, props: any },
 ) => {
   if (typeof props !== 'object') {
     throw Error(`Missing argument for ${functionName}`);
