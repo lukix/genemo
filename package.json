@@ -17,7 +17,7 @@
     "example2": "node ./examples/example2-travelingSalesman.js",
     "example3": "node ./examples/example3-parallelExecution/example3.js",
     "test": "jest --coverage",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "lint": "eslint . --ext .js,.ts",
     "prepush": "npm run lint && npm run test",
     "prepublishOnly": "npm run build && npm run prepush"
