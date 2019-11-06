@@ -1,15 +1,19 @@
 import getCurrentTime from './getCurrentTime';
 
 const Timer = () => {
-  const timers: Array<any> = [];
+  const timers: Array<number> = [];
 
   return {
     start: () => {
       timers.push(getCurrentTime());
     },
-    stop: () => (
-      getCurrentTime() - timers.pop()
-    ),
+    stop: () => {
+      const lastTimer = timers.pop();
+      if (typeof lastTimer === 'undefined') {
+        throw new Error('timer.stop has been called without corresponding timer.start call');
+      }
+      return getCurrentTime() - lastTimer;
+    },
   };
 };
 

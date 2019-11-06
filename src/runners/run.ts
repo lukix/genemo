@@ -7,10 +7,12 @@ import runnerPropTypes from './utils/runnerPropTypes';
 import batchIterationExecutor from './utils/batchIterationExecutor';
 import { min, max } from '../utils/numbersListHelpers';
 
-type Rng = () => number;
-type EvaluatedIndividual<Individual> = { individual: Individual, fitness: number };
-type EvaluatedPopulation<Individual> = Array<EvaluatedIndividual<Individual>>;
-type Population<Individual> = Array<Individual>;
+import {
+  Rng,
+  EvaluatedIndividual,
+  EvaluatedPopulation,
+  Population,
+} from '../sharedTypes';
 
 export interface RunOptions<Individual> {
   generateInitialPopulation: (random: Rng) => Population<Individual>;
@@ -23,12 +25,12 @@ export interface RunOptions<Individual> {
   ) => Population<Individual>;
   succession?: (
     prevAndChildrenPopulations: {
-      prevPopulation: EvaluatedPopulation<Individual>,
-      childrenPopulation: EvaluatedPopulation<Individual>
+      prevPopulation: EvaluatedPopulation<Individual>;
+      childrenPopulation: EvaluatedPopulation<Individual>;
     }, random: Rng) => EvaluatedPopulation<Individual>;
   evaluatePopulation: (population: Population<Individual>, random: Rng) => number;
   stopCondition: (
-    iterationInfo: { evaluatedPopulation: EvaluatedPopulation<Individual>, iteration: number }
+    iterationInfo: { evaluatedPopulation: EvaluatedPopulation<Individual>; iteration: number }
   ) => boolean;
   random?: Rng;
   iterationCallback?: (iterationData: object) => void;
@@ -36,11 +38,11 @@ export interface RunOptions<Individual> {
   collectLogs?: boolean;
 }
 type RunReturnType<Individual> = {
-  evaluatedPopulation: EvaluatedPopulation<Individual>,
-  iteration: number,
-  logs: object,
-  getLowestFitnessIndividual: () => EvaluatedIndividual<Individual>,
-  getHighestFitnessIndividual: () => EvaluatedIndividual<Individual>,
+  evaluatedPopulation: EvaluatedPopulation<Individual>;
+  iteration: number;
+  logs: object;
+  getLowestFitnessIndividual: () => EvaluatedIndividual<Individual>;
+  getHighestFitnessIndividual: () => EvaluatedIndividual<Individual>;
 };
 
 const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
@@ -124,6 +126,7 @@ const run = async <Individual>(
   while (true) {
     logsCollector.startClock('lastIteration');
     iteration += 1;
+    // eslint-disable-next-line require-atomic-updates
     evaluatedPopulation = await executeMainLoopBody({ evaluatedPopulation });
 
     logsCollector.startClock('stopCondition');

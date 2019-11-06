@@ -1,5 +1,9 @@
 export const checkProps = (
-  { functionName, propTypes, props }: { functionName: string, propTypes: object, props: any },
+  { functionName, propTypes, props }: {
+    functionName: string;
+    propTypes: { [propName: string]: { type: string; isRequired: boolean } };
+    props: { [propName: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
+  },
 ) => {
   if (typeof props !== 'object') {
     throw Error(`Missing argument for ${functionName}`);

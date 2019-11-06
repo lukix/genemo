@@ -11,7 +11,7 @@ export const createChildUsingPMXCrossover = ([parent1, parent2], minIndex, maxIn
   });
 
   // Insert not colliding elements from parent2
-  const emptyIndices: Array<any> = [];
+  const emptyIndices: Array<number> = [];
   [...R.range(0, minIndex), ...R.range(maxIndex + 1, individualLength)].forEach((index) => {
     if (!child.includes(parent2[index])) {
       child[index] = parent2[index];
