@@ -1,3 +1,4 @@
+const supportedExtensions = ['.js','.ts'];
 module.exports = {
   extends: [
     'airbnb-base',
@@ -19,13 +20,13 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': 0,
   },
   settings: {
-    'import/extensions': ['.js','.ts'],
+    'import/extensions': supportedExtensions,
     'import/parsers': {
-      '@typescript-eslint/parser': ['.js','.ts'],
+      '@typescript-eslint/parser': supportedExtensions,
     },
     'import/resolver': {
       node: {
-        extensions: ['.js', '.ts'],
+        extensions: supportedExtensions,
       },
     },
   },
