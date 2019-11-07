@@ -3,9 +3,10 @@
 import R from 'ramda';
 import { checkProps } from '../utils/typeChecking';
 import DebugDataCollector from '../utils/DebugDataCollector';
-import runnerPropTypes from './utils/runnerPropTypes';
 import batchIterationExecutor from './utils/batchIterationExecutor';
 import { min, max } from '../utils/numbersListHelpers';
+import runnerPropTypes from './utils/runnerPropTypes';
+import doWhile from './utils/doWhile';
 
 import {
   Rng,
@@ -115,54 +116,61 @@ const run = async <Individual>(
     maxBlockingTime,
   });
 
-  let iteration = 0;
   const initialPopulation = await generateInitialPopulation(random);
-  let evaluatedPopulation = mergeFitnessValuesWithPopulation(
-    initialPopulation,
-    await evaluatePopulation(initialPopulation, random),
+  const initialLoopState = {
+    iterationData: {
+      iteration: 0,
+      evaluatedPopulation: mergeFitnessValuesWithPopulation(
+        initialPopulation,
+        await evaluatePopulation(initialPopulation, random),
+      ),
+    },
+    shouldStop: false,
+  };
+
+  const result = await doWhile(
+    async ({ iterationData: { iteration, evaluatedPopulation } }) => {
+      logsCollector.startClock('lastIteration');
+      const newEvaluatedPopulation = await executeMainLoopBody({ evaluatedPopulation });
+
+      const iterationData = {
+        evaluatedPopulation: newEvaluatedPopulation,
+        iteration: iteration + 1,
+        logs: logsCollector.data,
+        getLowestFitnessIndividual: () => {
+          const lowestFitness = min(newEvaluatedPopulation.map(({ fitness }) => fitness));
+          const evaluatedIndividualWithLowestFitness = newEvaluatedPopulation
+            .find(({ fitness }) => fitness === lowestFitness);
+          return evaluatedIndividualWithLowestFitness;
+        },
+        getHighestFitnessIndividual: () => {
+          const highestFitness = max(newEvaluatedPopulation.map(({ fitness }) => fitness));
+          const evaluatedIndividualWithHighestFitness = newEvaluatedPopulation
+            .find(({ fitness }) => fitness === highestFitness);
+          return evaluatedIndividualWithHighestFitness;
+        },
+      };
+
+      logsCollector.startClock('iterationCallback');
+      await iterationCallback(iterationData);
+      logsCollector.collectClockValue('iterationCallback');
+
+      logsCollector.startClock('stopCondition');
+      const shouldStop = await stopCondition({
+        evaluatedPopulation: iterationData.evaluatedPopulation,
+        iteration: iterationData.iteration,
+      });
+      logsCollector.collectClockValue('stopCondition');
+
+      logsCollector.collectClockValue('lastIteration');
+
+      return { iterationData, shouldStop };
+    },
+    ({ shouldStop }) => shouldStop,
+    initialLoopState,
   );
 
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    logsCollector.startClock('lastIteration');
-    iteration += 1;
-    // eslint-disable-next-line require-atomic-updates
-    evaluatedPopulation = await executeMainLoopBody({ evaluatedPopulation });
-
-    logsCollector.startClock('stopCondition');
-    const shouldStop = await stopCondition({ evaluatedPopulation, iteration });
-    logsCollector.collectClockValue('stopCondition');
-
-    const iterationData = {
-      evaluatedPopulation,
-      iteration,
-      logs: logsCollector.data,
-      // eslint-disable-next-line no-loop-func
-      getLowestFitnessIndividual: () => {
-        const lowestFitness = min(evaluatedPopulation.map(({ fitness }) => fitness));
-        const evaluatedIndividualWithLowestFitness = evaluatedPopulation
-          .find(({ fitness }) => fitness === lowestFitness);
-        return evaluatedIndividualWithLowestFitness;
-      },
-      // eslint-disable-next-line no-loop-func
-      getHighestFitnessIndividual: () => {
-        const highestFitness = max(evaluatedPopulation.map(({ fitness }) => fitness));
-        const evaluatedIndividualWithHighestFitness = evaluatedPopulation
-          .find(({ fitness }) => fitness === highestFitness);
-        return evaluatedIndividualWithHighestFitness;
-      },
-    };
-
-    logsCollector.startClock('iterationCallback');
-    await iterationCallback(iterationData);
-    logsCollector.collectClockValue('iterationCallback');
-
-    if (shouldStop) {
-      logsCollector.collectClockValue('lastIteration');
-      return iterationData;
-    }
-    logsCollector.collectClockValue('lastIteration');
-  }
+  return result.iterationData;
 };
 
 export default run;
