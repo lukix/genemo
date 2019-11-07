@@ -1,6 +1,6 @@
 {
   "name": "genemo",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Simple to use genetic algorithms library. Supports both NodeJS and web browsers.",
   "keywords": [
     "genetic algorithm",
@@ -11,6 +11,7 @@
     "traveling salesperson"
   ],
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "dev": "tsc --watch",
     "example1": "node ./examples/example1-findSequence.js",
