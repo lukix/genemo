@@ -10,9 +10,9 @@ import doWhile from './utils/doWhile';
 
 import {
   Rng,
-  EvaluatedIndividual,
   EvaluatedPopulation,
   Population,
+  RunReturnType,
 } from '../sharedTypes';
 
 export interface RunOptions<Individual> {
@@ -29,7 +29,7 @@ export interface RunOptions<Individual> {
       prevPopulation: EvaluatedPopulation<Individual>;
       childrenPopulation: EvaluatedPopulation<Individual>;
     }, random: Rng) => EvaluatedPopulation<Individual>;
-  evaluatePopulation: (population: Population<Individual>, random: Rng) => number;
+  evaluatePopulation: (population: Population<Individual>, random: Rng) => Array<number>;
   stopCondition: (
     iterationInfo: { evaluatedPopulation: EvaluatedPopulation<Individual>; iteration: number }
   ) => boolean;
@@ -38,20 +38,16 @@ export interface RunOptions<Individual> {
   maxBlockingTime?: number;
   collectLogs?: boolean;
 }
-type RunReturnType<Individual> = {
-  evaluatedPopulation: EvaluatedPopulation<Individual>;
-  iteration: number;
-  logs: object;
-  getLowestFitnessIndividual: () => EvaluatedIndividual<Individual>;
-  getHighestFitnessIndividual: () => EvaluatedIndividual<Individual>;
-};
 
-const mergeFitnessValuesWithPopulation = (population, fitnessValues) => (
-  R.zip(population, fitnessValues).map(([individual, fitness]) => ({
-    individual,
-    fitness,
-  }))
-);
+const mergeFitnessValuesWithPopulation = <Individual>(
+  population: Population<Individual>,
+  fitnessValues: Array<number>,
+): EvaluatedPopulation<Individual> => (
+    R.zip(population, fitnessValues).map(([individual, fitness]) => ({
+      individual,
+      fitness,
+    }))
+  );
 
 /**
  * Runs genetic algorithm until stopCondition returns true
@@ -81,7 +77,9 @@ const run = async <Individual>(
   const logsCollector = new DebugDataCollector({ collectLogs });
   const collectReproduceLog = (key, value) => logsCollector.collect(`reproduce.${key}`, value);
 
-  const mainLoopBody = async ({ evaluatedPopulation }) => {
+  const mainLoopBody = async (
+    { evaluatedPopulation }: { evaluatedPopulation: EvaluatedPopulation<Individual> },
+  ) => {
     logsCollector.startClock('selection');
     const parentsPopulation = await selection(evaluatedPopulation, random);
     logsCollector.collectClockValue('selection');

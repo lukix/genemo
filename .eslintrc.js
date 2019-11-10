@@ -18,6 +18,7 @@ module.exports = {
     'import/prefer-default-export': 0,
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/ban-ts-ignore': 0,
+    '@typescript-eslint/no-explicit-any': 0,
   },
   settings: {
     'import/extensions': supportedExtensions,

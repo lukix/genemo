@@ -248,7 +248,7 @@ Takes an optional object with a single property:
 
 - **`hashGene`** - Function which returns an identificator of a given gene for comparison purposes.
   It is used to distinguish genes when using `===` comparison and structures like `Map` and `Set`.
-  If you represent a gene by a value of a simple type (for example string or number), then the default value
+  If you represent a gene by a value of a primitive type (for example string or number), then the default value
   of `hashGene` will work just fine.<br />
   **Type**: `gene => geneHash`<br />
   **Optional**<br />

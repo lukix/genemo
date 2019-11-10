@@ -1,6 +1,7 @@
 import randomFromRange from './utils/randomFromRange';
+import { Rng } from './sharedTypes';
 
-const randomPermutationOf = valuesSet => (random) => {
+const randomPermutationOf = <T>(valuesSet: Array<T>) => (random: Rng) => {
   const permutation = [...valuesSet];
   let remainingItems = valuesSet.length;
 

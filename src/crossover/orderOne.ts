@@ -1,5 +1,6 @@
 import R from 'ramda';
 import randomFromRange from '../utils/randomFromRange';
+import { Rng } from '../sharedTypes';
 
 export const createChildUsingOrderOneCrossover = ([parent1, parent2], minIndex, maxIndex) => {
   const individualLength = parent1.length;
@@ -18,7 +19,7 @@ export const createChildUsingOrderOneCrossover = ([parent1, parent2], minIndex, 
   return child;
 };
 
-const orderOne = () => ([mother, father], random) => {
+const orderOne = () => <Gene>([mother, father]: [Array<Gene>, Array<Gene>], random: Rng) => {
   const individualLength = mother.length;
   const index1 = randomFromRange(random)(0, individualLength - 1);
   const index2 = randomFromRange(random)(0, individualLength - 1);

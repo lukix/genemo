@@ -1,4 +1,5 @@
 import { checkProps, types } from '../utils/typeChecking';
+import { EvaluatedPopulation, Rng } from '../sharedTypes';
 import {
   normalizeCumulativeFitness,
   selectRouletteElement,
@@ -10,7 +11,7 @@ const propTypes = {
   minimizeFitness: { type: types.BOOLEAN, isRequired: true },
 };
 
-const rankSelection = (options) => {
+const rankSelection = (options: { minimizeFitness: boolean }) => {
   checkProps({
     functionName: 'Genemo.selection.rank',
     props: options,
@@ -21,7 +22,7 @@ const rankSelection = (options) => {
     minimizeFitness,
   } = options;
 
-  return (evaluatedPopulation, random) => {
+  return <Individual>(evaluatedPopulation: EvaluatedPopulation<Individual>, random: Rng) => {
     const compareFitness = minimizeFitness
       ? (a, b) => b.fitness - a.fitness
       : (a, b) => a.fitness - b.fitness;

@@ -44,7 +44,7 @@ describe('reproduce', () => {
     const expectedResult = [2, 101, 0, 104, 1];
 
     const reproduce = Genemo.reproduce({
-      mutate: individual => individual + 100,
+      mutate: (individual: number) => individual + 100,
       crossover: ([a, b]) => [a, b],
       mutationProbability: 0.1,
     });

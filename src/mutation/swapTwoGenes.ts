@@ -1,7 +1,8 @@
 import randomFromRange from '../utils/randomFromRange';
+import { Rng } from '../sharedTypes';
 
 // Warning: the following function modifies its parameter (to increase performance)
-const swapTwoGenes = () => (individual, random) => {
+const swapTwoGenes = () => <Gene>(individual: Array<Gene>, random: Rng) => {
   const index1 = randomFromRange(random)(0, individual.length - 1);
   const index2 = randomFromRange(random)(0, individual.length - 1);
   const value1 = individual[index1];

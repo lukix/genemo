@@ -1,15 +1,12 @@
 import { checkProps, types } from './utils/typeChecking';
-import {
-  Rng,
-  Population,
-} from './sharedTypes';
+import { Rng, Population } from './sharedTypes';
 
 const propTypes = {
   generateIndividual: { type: types.FUNCTION, isRequired: true },
   size: { type: types.NUMBER, isRequired: true },
 };
 
-interface GenerateInitialPopulationOptions<Individual> {
+export interface GenerateInitialPopulationOptions<Individual> {
   generateIndividual: (random: Rng) => Individual;
   size: number;
 }

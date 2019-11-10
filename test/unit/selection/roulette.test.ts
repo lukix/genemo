@@ -3,11 +3,11 @@ import cyclicProvider from '../../test-utils/cyclicProvider';
 
 // Common inputs
 const evaluatedPopulation = [
-  { fitness: 1.2 },
-  { fitness: 3.6 },
-  { fitness: 1.6 },
-  { fitness: 4 },
-  { fitness: 0.1 },
+  { individual: 'A', fitness: 1.2 },
+  { individual: 'B', fitness: 3.6 },
+  { individual: 'C', fitness: 1.6 },
+  { individual: 'D', fitness: 4 },
+  { individual: 'E', fitness: 0.1 },
 ];
 
 
@@ -24,11 +24,11 @@ describe('roulette', () => {
 
     // Expected result
     const offspring = [
-      { fitness: 1.2 },
-      { fitness: 4 },
-      { fitness: 1.6 },
-      { fitness: 4 },
-      { fitness: 4 },
+      { individual: 'A', fitness: 1.2 },
+      { individual: 'D', fitness: 4 },
+      { individual: 'C', fitness: 1.6 },
+      { individual: 'D', fitness: 4 },
+      { individual: 'D', fitness: 4 },
     ];
 
     const roulette = Genemo.selection.roulette({ minimizeFitness: false });
@@ -48,11 +48,11 @@ describe('roulette', () => {
 
     // Expected result
     const offspring = [
-      { fitness: 1.2 },
-      { fitness: 0.1 },
-      { fitness: 1.6 },
-      { fitness: 0.1 },
-      { fitness: 0.1 },
+      { individual: 'A', fitness: 1.2 },
+      { individual: 'E', fitness: 0.1 },
+      { individual: 'C', fitness: 1.6 },
+      { individual: 'E', fitness: 0.1 },
+      { individual: 'E', fitness: 0.1 },
     ];
 
     const roulette = Genemo.selection.roulette({ minimizeFitness: true });
@@ -79,11 +79,11 @@ describe('roulette', () => {
 
     // Expected result
     const offspring = [
-      { fitness: 2, individual: 'A' },
-      { fitness: 2, individual: 'E' },
-      { fitness: 2, individual: 'C' },
-      { fitness: 2, individual: 'D' },
-      { fitness: 2, individual: 'E' },
+      { individual: 'A', fitness: 2 },
+      { individual: 'E', fitness: 2 },
+      { individual: 'C', fitness: 2 },
+      { individual: 'D', fitness: 2 },
+      { individual: 'E', fitness: 2 },
     ];
 
     const roulette = Genemo.selection.roulette({ minimizeFitness: false });
@@ -94,12 +94,12 @@ describe('roulette', () => {
   test('Returns correct parents population for negative fitnesses', () => {
     // Input
     const evaluatedPopulationWithUniformFitnesses = [
-      { fitness: -3, individual: 'A' },
-      { fitness: 2, individual: 'B' },
-      { fitness: 2, individual: 'C' },
-      { fitness: 2, individual: 'D' },
-      { fitness: 2, individual: 'E' },
-      { fitness: 2, individual: 'F' },
+      { individual: 'A', fitness: -3 },
+      { individual: 'B', fitness: 2 },
+      { individual: 'C', fitness: 2 },
+      { individual: 'D', fitness: 2 },
+      { individual: 'E', fitness: 2 },
+      { individual: 'F', fitness: 2 },
     ];
     const random = cyclicProvider([
       0.0,
@@ -112,12 +112,12 @@ describe('roulette', () => {
 
     // Expected result
     const offspring = [
-      { fitness: 2, individual: 'B' },
-      { fitness: 2, individual: 'F' },
-      { fitness: 2, individual: 'D' },
-      { fitness: 2, individual: 'E' },
-      { fitness: 2, individual: 'F' },
-      { fitness: 2, individual: 'D' },
+      { individual: 'B', fitness: 2 },
+      { individual: 'F', fitness: 2 },
+      { individual: 'D', fitness: 2 },
+      { individual: 'E', fitness: 2 },
+      { individual: 'F', fitness: 2 },
+      { individual: 'D', fitness: 2 },
     ];
 
     const roulette = Genemo.selection.roulette({ minimizeFitness: false });

@@ -3,6 +3,7 @@ import R from 'ramda';
 import { checkProps, types } from './utils/typeChecking';
 import Timer from './utils/timer';
 import getRandomIndividual from './utils/getRandomIndividual';
+import { Rng, EvaluatedPopulation, Population } from './sharedTypes';
 
 const DEFAULT_MUTATION_PROBABILITY = 0.01;
 
@@ -12,7 +13,13 @@ const reproducePropTypes = {
   mutationProbability: { type: types.NUMBER, isRequired: false },
 };
 
-const reproduce = (options) => {
+export interface ReproduceOptions<Individual> {
+  mutate: (individual: Individual, random: Rng) => Individual;
+  crossover: (parents: [Individual, Individual], random: Rng) => [Individual, Individual];
+  mutationProbability?: number;
+}
+
+const reproduce = <Individual>(options: ReproduceOptions<Individual>) => {
   checkProps({
     functionName: 'Genemo.reproduce',
     props: options,
@@ -27,7 +34,11 @@ const reproduce = (options) => {
 
   const timer = Timer();
 
-  return (evaluatedPopulation, random, collectLog) => {
+  return (
+    evaluatedPopulation: EvaluatedPopulation<Individual>,
+    random: Rng,
+    collectLog: (key: string, value: any) => void,
+  ): Population<Individual> => {
     const targetPopulationSize = evaluatedPopulation.length;
 
     timer.start();

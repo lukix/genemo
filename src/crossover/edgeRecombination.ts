@@ -3,6 +3,7 @@
 import { checkProps, types } from '../utils/typeChecking';
 import { min } from '../utils/numbersListHelpers';
 import RandomItem from '../utils/randomItem';
+import { Rng } from '../sharedTypes';
 
 export const getNeighbors = (array, index) => {
   const neighborAIndex = index === 0
@@ -131,7 +132,7 @@ const edgeRecombination = (options: { hashGene?: Function } = {}) => {
     hashGene = gene => gene,
   } = options;
 
-  return ([mother, father], random) => {
+  return <Gene>([mother, father]: [Array<Gene>, Array<Gene>], random: Rng) => {
     const son = createSingleChild([mother, father], hashGene, random);
     const daughter = createSingleChild([mother, father], hashGene, random);
     return [son, daughter];

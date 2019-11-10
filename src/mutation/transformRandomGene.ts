@@ -1,5 +1,10 @@
+import { Rng } from '../sharedTypes';
+
 // Warning: the following function modifies its parameter (to increase performance)
-const transformRandomGene = transformFunc => (individual, random) => {
+const transformRandomGene = <Gene>(transformFunc: (gene: Gene, random: Rng) => Gene) => (
+  individual: Array<Gene>,
+  random: Rng,
+) => {
   const mutationPoint = Math.floor(random() * individual.length);
 
   // Modifying an array in order to increase performance

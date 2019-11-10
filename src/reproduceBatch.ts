@@ -3,6 +3,7 @@ import R from 'ramda';
 import { checkProps, types } from './utils/typeChecking';
 import Timer from './utils/timer';
 import getRandomIndividual from './utils/getRandomIndividual';
+import { Rng, EvaluatedPopulation, Population } from './sharedTypes';
 
 export const selectParentsPairs = ({ evaluatedPopulation, targetPopulationSize, random }) => (
   R.range(0, Math.ceil(targetPopulationSize / 2))
@@ -27,7 +28,16 @@ const reproduceBatchPropTypes = {
   mutationProbability: { type: types.NUMBER, isRequired: false },
 };
 
-const reproduceBatch = (options) => {
+export interface ReproduceBatchOptions<Individual> {
+  mutateAll: (individuals: Array<Individual>, random: Rng) => Array<Individual>;
+  crossoverAll: (
+    parentsPairs: Array<[Individual, Individual]>,
+    random: Rng,
+  ) => Array<[Individual, Individual]>;
+  mutationProbability?: number;
+}
+
+const reproduceBatch = <Individual>(options: ReproduceBatchOptions<Individual>) => {
   checkProps({
     functionName: 'Genemo.reproduceBatch',
     props: options,
@@ -42,7 +52,11 @@ const reproduceBatch = (options) => {
 
   const timer = Timer();
 
-  return async (evaluatedPopulation, random, collectLog) => {
+  return async (
+    evaluatedPopulation: EvaluatedPopulation<Individual>,
+    random: Rng,
+    collectLog: (key: string, value: any) => void,
+  ): Promise<Population<Individual>> => {
     const targetPopulationSize = evaluatedPopulation.length;
 
     timer.start();

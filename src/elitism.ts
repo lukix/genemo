@@ -1,4 +1,5 @@
 import { checkProps, types } from './utils/typeChecking';
+import { EvaluatedPopulation } from './sharedTypes';
 
 const compareAsc = (a, b) => a.fitness - b.fitness;
 const compareDesc = (a, b) => b.fitness - a.fitness;
@@ -8,7 +9,7 @@ const propTypes = {
   minimizeFitness: { type: types.BOOLEAN, isRequired: true },
 };
 
-const elitism = (options) => {
+const elitism = (options: { keepFactor: number; minimizeFitness: boolean }) => {
   checkProps({
     functionName: 'Genemo.elitism',
     props: options,
@@ -17,7 +18,13 @@ const elitism = (options) => {
 
   const { keepFactor, minimizeFitness } = options;
 
-  return ({ prevPopulation, childrenPopulation }) => {
+  return <Individual>({
+    prevPopulation,
+    childrenPopulation,
+  }: {
+    prevPopulation: EvaluatedPopulation<Individual>;
+    childrenPopulation: EvaluatedPopulation<Individual>;
+  }) => {
     prevPopulation.sort(minimizeFitness ? compareAsc : compareDesc);
     const numberOfIndividualsToKeep = Math.round(prevPopulation.length * keepFactor);
     return [

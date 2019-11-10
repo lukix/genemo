@@ -1,5 +1,6 @@
 import { checkProps, types } from './utils/typeChecking';
 import { mean } from './utils/numbersListHelpers';
+import { RunReturnType } from './sharedTypes';
 
 const iterationFormatter = (key, value) => `#${value}`;
 const fitnessFormatter = (key, value) => `${key} = ${value}`;
@@ -10,7 +11,20 @@ const logIterationDataPropTypes = {
   customLogger: { type: types.FUNCTION, isRequired: false },
 };
 
-const logIterationData = (options) => {
+type FormatterType = (key: string, value: any) => string;
+type IncludeItemType = { show: boolean; formatter?: FormatterType };
+export interface LogIterationDataOptions {
+  include: {
+    iteration?: IncludeItemType;
+    minFitness?: IncludeItemType;
+    maxFitness?: IncludeItemType;
+    avgFitness?: IncludeItemType;
+    logsKeys?: Array<{ key: string; formatter?: FormatterType }>;
+  };
+  customLogger?: (value: string) => void;
+}
+
+const logIterationData = (options: LogIterationDataOptions) => {
   checkProps({
     functionName: 'Genemo.logIterationData',
     props: options,
@@ -22,13 +36,13 @@ const logIterationData = (options) => {
     customLogger = console.log, // eslint-disable-line no-console
   } = options;
 
-  return ({
+  return <Individual>({
     evaluatedPopulation,
     iteration,
     logs,
     getLowestFitnessIndividual,
     getHighestFitnessIndividual,
-  }) => {
+  }: RunReturnType<Individual>) => {
     const iterationNumber = {
       show: false,
       formatter: iterationFormatter,
