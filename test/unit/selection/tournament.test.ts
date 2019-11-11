@@ -3,11 +3,11 @@ import cyclicProvider from '../../test-utils/cyclicProvider';
 
 // Common inputs
 const evaluatedPopulation = [
-  { fitness: 0 },
-  { fitness: -100 },
-  { fitness: 2 },
-  { fitness: 2 },
-  { fitness: -3.1 },
+  { individual: 'A', fitness: 0 },
+  { individual: 'B', fitness: -100 },
+  { individual: 'C', fitness: 2 },
+  { individual: 'D', fitness: 2 },
+  { individual: 'E', fitness: -3.1 },
 ];
 
 
@@ -27,16 +27,16 @@ describe('tournament', () => {
     ]);
 
     // Expected result
-    const offspring = [
-      { fitness: 2 },
-      { fitness: 2 },
-      { fitness: 0 },
-      { fitness: 0 },
-      { fitness: -3.1 },
+    const offsprings = [
+      { individual: 'C', fitness: 2 },
+      { individual: 'D', fitness: 2 },
+      { individual: 'A', fitness: 0 },
+      { individual: 'A', fitness: 0 },
+      { individual: 'E', fitness: -3.1 },
     ];
 
     const result = tournamentSelection(evaluatedPopulation, random);
-    expect(result).toStrictEqual(offspring);
+    expect(result).toStrictEqual(offsprings);
   });
 
   test('Returns correct parents population (minimization)', () => {
@@ -54,15 +54,15 @@ describe('tournament', () => {
     ]);
 
     // Expected result
-    const offspring = [
-      { fitness: -100 },
-      { fitness: -100 },
-      { fitness: -100 },
-      { fitness: 0 },
-      { fitness: -3.1 },
+    const offsprings = [
+      { individual: 'B', fitness: -100 },
+      { individual: 'B', fitness: -100 },
+      { individual: 'B', fitness: -100 },
+      { individual: 'A', fitness: 0 },
+      { individual: 'E', fitness: -3.1 },
     ];
 
     const result = tournamentSelection(evaluatedPopulation, random);
-    expect(result).toStrictEqual(offspring);
+    expect(result).toStrictEqual(offsprings);
   });
 });

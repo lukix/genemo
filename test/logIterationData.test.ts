@@ -16,13 +16,13 @@ describe('logIterationData', () => {
     iterationCallback({
       iteration: 1,
       evaluatedPopulation: [
-        { fitness: 9 },
-        { fitness: 10 },
-        { fitness: 5 },
+        { individual: 'A', fitness: 9 },
+        { individual: 'B', fitness: 10 },
+        { individual: 'C', fitness: 5 },
       ],
       logs: { customKey: { lastValue: 3.1990 } },
-      getLowestFitnessIndividual: () => ({ fitness: 5 }),
-      getHighestFitnessIndividual: () => ({ fitness: 10 }),
+      getLowestFitnessIndividual: () => ({ individual: 'C', fitness: 5 }),
+      getHighestFitnessIndividual: () => ({ individual: 'B', fitness: 10 }),
     });
 
     const expectedLogStr = 'minFitness = 5, maxFitness = 10, avgFitness = 8, customKey = 3.20ms';
@@ -41,8 +41,8 @@ describe('logIterationData', () => {
       evaluatedPopulation: [],
       logs: {},
       // Insignificant properties:
-      getLowestFitnessIndividual: () => ({ fitness: 5 }),
-      getHighestFitnessIndividual: () => ({ fitness: 10 }),
+      getLowestFitnessIndividual: () => ({ individual: 'C', fitness: 5 }),
+      getHighestFitnessIndividual: () => ({ individual: 'B', fitness: 10 }),
     });
 
     const expectedLogStr = '#1';
@@ -61,8 +61,8 @@ describe('logIterationData', () => {
       evaluatedPopulation: [],
       logs: {},
       // Insignificant properties:
-      getLowestFitnessIndividual: () => ({ fitness: 5 }),
-      getHighestFitnessIndividual: () => ({ fitness: 10 }),
+      getLowestFitnessIndividual: () => ({ individual: 'A', fitness: 5 }),
+      getHighestFitnessIndividual: () => ({ individual: 'B', fitness: 10 }),
     });
 
     const expectedLogStr = '#10';
@@ -83,8 +83,8 @@ describe('logIterationData', () => {
       evaluatedPopulation: [],
       logs: { customKey: { lastValue: 5 } },
       // Insignificant properties:
-      getLowestFitnessIndividual: () => ({ fitness: 5 }),
-      getHighestFitnessIndividual: () => ({ fitness: 10 }),
+      getLowestFitnessIndividual: () => ({ individual: 'A', fitness: 5 }),
+      getHighestFitnessIndividual: () => ({ individual: 'B', fitness: 10 }),
     });
 
     const expectedLogStr = 'customKey-5-suffix';
@@ -102,11 +102,11 @@ describe('logIterationData', () => {
 
     iterationCallback({
       iteration: 10,
-      evaluatedPopulation: [{ fitness: 2 }],
+      evaluatedPopulation: [{ individual: 'A', fitness: 2 }],
       // Insignificant properties:
       logs: { customKey: { lastValue: 5 } },
-      getLowestFitnessIndividual: () => ({ fitness: 5 }),
-      getHighestFitnessIndividual: () => ({ fitness: 10 }),
+      getLowestFitnessIndividual: () => ({ individual: 'A', fitness: 2 }),
+      getHighestFitnessIndividual: () => ({ individual: 'A', fitness: 2 }),
     });
 
     const expectedLogStr = 'avgFitness-2-suffix';
