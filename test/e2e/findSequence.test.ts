@@ -1,4 +1,4 @@
-import rand from 'random-seed';
+import rand from 'random-seed'; // eslint-disable-line import/no-extraneous-dependencies
 import Genemo from '../../src';
 
 describe('Find Sequence', () => {
