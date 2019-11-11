@@ -5,14 +5,20 @@ import Timer from './utils/timer';
 import getRandomIndividual from './utils/getRandomIndividual';
 import { Rng, EvaluatedPopulation, Population } from './sharedTypes';
 
-export const selectParentsPairs = ({ evaluatedPopulation, targetPopulationSize, random }) => (
-  R.range(0, Math.ceil(targetPopulationSize / 2))
-    .map(() => {
-      const mother = getRandomIndividual(evaluatedPopulation, random).individual;
-      const father = getRandomIndividual(evaluatedPopulation, random).individual;
-      return [mother, father];
-    })
-);
+export const selectParentsPairs = <Individual>(
+  { evaluatedPopulation, targetPopulationSize, random }: {
+    evaluatedPopulation: EvaluatedPopulation<Individual>;
+    targetPopulationSize: number;
+    random: Rng;
+  },
+): Array<[Individual, Individual]> => (
+    R.range(0, Math.ceil(targetPopulationSize / 2))
+      .map(() => {
+        const mother = getRandomIndividual(evaluatedPopulation, random).individual;
+        const father = getRandomIndividual(evaluatedPopulation, random).individual;
+        return [mother, father];
+      })
+  );
 
 const getIndividualsByMutationInfo = ({ individuals, shouldBeMutated }) => (
   individuals

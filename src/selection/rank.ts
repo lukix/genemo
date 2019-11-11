@@ -28,8 +28,9 @@ const rankSelection = (options: { minimizeFitness: boolean }) => {
       : (a, b) => a.fitness - b.fitness;
     const sortedPopulation = [...evaluatedPopulation].sort(compareFitness);
 
-    const cumulativeFitness = sortedPopulation.map((individual, index) => ({
-      evaluatedIndividual: individual,
+    const cumulativeFitness = sortedPopulation.map((evaluatedIndividual, index) => ({
+      individual: evaluatedIndividual.individual,
+      fitness: evaluatedIndividual.fitness,
       cumulativeFitness: calculateArithmeticSeries(0, index, index + 1),
     }));
 

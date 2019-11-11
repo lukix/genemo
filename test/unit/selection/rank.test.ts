@@ -3,11 +3,11 @@ import cyclicProvider from '../../test-utils/cyclicProvider';
 
 // Common inputs
 const evaluatedPopulation = [
-  { fitness: 1.2 }, // 1 | 3
-  { fitness: 3.6 }, // 3 | 1
-  { fitness: 1.6 }, // 2 | 2
-  { fitness: 4 }, // 4 | 0
-  { fitness: 0.1 }, // 0 | 4
+  { individual: 'A', fitness: 1.2 },
+  { individual: 'B', fitness: 3.6 },
+  { individual: 'C', fitness: 1.6 },
+  { individual: 'D', fitness: 4 },
+  { individual: 'E', fitness: 0.1 },
 ];
 
 
@@ -24,11 +24,11 @@ describe('rank', () => {
 
     // Expected result
     const offspring = [
-      { fitness: 1.2 },
-      { fitness: 4 },
-      { fitness: 3.6 },
-      { fitness: 4 },
-      { fitness: 4 },
+      { individual: 'A', fitness: 1.2 },
+      { individual: 'D', fitness: 4 },
+      { individual: 'B', fitness: 3.6 },
+      { individual: 'D', fitness: 4 },
+      { individual: 'D', fitness: 4 },
     ];
 
     const rank = Genemo.selection.rank({ minimizeFitness: false });
@@ -48,11 +48,11 @@ describe('rank', () => {
 
     // Expected result
     const offspring = [
-      { fitness: 3.6 },
-      { fitness: 0.1 },
-      { fitness: 1.2 },
-      { fitness: 0.1 },
-      { fitness: 0.1 },
+      { individual: 'B', fitness: 3.6 },
+      { individual: 'E', fitness: 0.1 },
+      { individual: 'A', fitness: 1.2 },
+      { individual: 'E', fitness: 0.1 },
+      { individual: 'E', fitness: 0.1 },
     ];
 
     const rank = Genemo.selection.rank({ minimizeFitness: true });

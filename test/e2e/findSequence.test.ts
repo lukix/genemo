@@ -20,7 +20,7 @@ describe('Find Sequence', () => {
         size: 50,
       }),
       selection: Genemo.selection.roulette({ minimizeFitness: false }),
-      reproduce: Genemo.reproduce({
+      reproduce: Genemo.reproduce<boolean[]>({
         crossover: Genemo.crossover.singlePoint(),
         mutate: Genemo.mutation.transformRandomGene(Genemo.mutation.flipBit()),
         mutationProbability: 0.03,

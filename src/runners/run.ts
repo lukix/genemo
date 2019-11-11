@@ -22,7 +22,8 @@ export interface RunOptions<Individual> {
   );
   reproduce: (
     evaluatedPopulation: EvaluatedPopulation<Individual>,
-    random: Rng, collectReproduceLog: Function
+    random: Rng,
+    collectReproduceLog: (key: string, value: any) => void,
   ) => Population<Individual>;
   succession?: (
     prevAndChildrenPopulations: {

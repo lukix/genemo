@@ -22,18 +22,32 @@ const normalizePopulationFitness = <Individual>(
   }));
 };
 
-const calculateCumulativeFitness = (
-  populationWithNormalizedFitness: Array<{ normalizedFitness: number }>,
-) => (
-  R.scan(
-    (prev, currIndividual) => ({
-      evaluatedIndividual: currIndividual,
+const calculateCumulativeFitness = <Individual>(
+  populationWithNormalizedFitness: Array<{
+    individual: Individual;
+    fitness: number;
+    normalizedFitness: number;
+  }>,
+): Array<{ individual: Individual; fitness: number; cumulativeFitness: number }> => {
+  const initialState = {
+    cumulativeFitness: populationWithNormalizedFitness[0].normalizedFitness,
+    fitness: populationWithNormalizedFitness[0].fitness,
+    individual: populationWithNormalizedFitness[0].individual,
+  };
+  return R.scan(
+    (prev, currIndividual): {
+      individual: Individual;
+      fitness: number;
+      cumulativeFitness: number;
+    } => ({
+      individual: currIndividual.individual,
+      fitness: currIndividual.fitness,
       cumulativeFitness: prev.cumulativeFitness + currIndividual.normalizedFitness,
     }),
-    { cumulativeFitness: 0, evaluatedPopulation: null },
-    populationWithNormalizedFitness,
-  ).slice(1)
-);
+    initialState,
+    populationWithNormalizedFitness.slice(1),
+  );
+};
 
 const propTypes = {
   minimizeFitness: { type: types.BOOLEAN, isRequired: true },
@@ -54,6 +68,9 @@ const rouletteSelection = (options: { minimizeFitness: boolean }) => {
     evaluatedPopulation: EvaluatedPopulation<Individual>,
     random: Rng,
   ): EvaluatedPopulation<Individual> => {
+    if (evaluatedPopulation.length === 0) {
+      return [];
+    }
     const populationWithNormalizedFitness = normalizePopulationFitness(
       evaluatedPopulation,
       minimizeFitness,
