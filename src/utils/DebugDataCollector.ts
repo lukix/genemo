@@ -1,19 +1,19 @@
 import getCurrentTime from './getCurrentTime';
 
 class DebugDataCollector {
-  data = {};
+  data: { [key: string]: any } = {};
 
-  clocks = {};
+  clocks: { [key: string]: number } = {};
 
-  collectLogs;
+  collectLogs: boolean;
 
-  constructor({ collectLogs }) {
+  constructor({ collectLogs }: { collectLogs: boolean }) {
     this.data = {};
     this.clocks = {};
     this.collectLogs = collectLogs;
   }
 
-  collect(key, value) {
+  collect(key: string, value: any) {
     if (!this.collectLogs) {
       return;
     }
@@ -34,11 +34,11 @@ class DebugDataCollector {
       };
   }
 
-  startClock(key) {
+  startClock(key: string) {
     this.clocks[key] = getCurrentTime();
   }
 
-  collectClockValue(key) {
+  collectClockValue(key: string) {
     const elapsedTime = getCurrentTime() - this.clocks[key];
     this.collect(key, elapsedTime);
   }
