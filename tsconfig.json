@@ -4,6 +4,8 @@
     "module": "commonjs",
     "lib": ["es6"],
     "checkJs": false,
+    "outDir": "lib",
+    "rootDir": "src",
     "strict": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
@@ -15,6 +17,7 @@
     "coverage",
     "lib",
     "examples",
-    "jest.config.js"
+    "jest.config.js",
+    "**/*.test.ts"
   ]
 }
