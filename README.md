@@ -64,7 +64,13 @@ Genemo.run(options).then(result => {
 
 [`Genemo.run`](./API.md#genemorunoptions) returns a promise, which resolves to an object:
 ```
-{ evaluatedPopulation: EvaluatedPopulation, iteration: number, logs: object }
+{
+  evaluatedPopulation: EvaluatedPopulation,
+  iteration: number,
+  logs: object,
+  getLowestFitnessIndividual: () => Individual,
+  getHighestFitnessIndividual: () => Individual
+}
 ```
 It contains information about the population (along with fitness values) from the final iteration, number of iterations and an object with logs (mostly with performance data).
 
