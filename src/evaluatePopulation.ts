@@ -5,7 +5,9 @@ const propTypes = {
   fitnessFunction: { type: types.FUNCTION, isRequired: true },
 };
 
-const evaluatePopulation = <individual>(options: { fitnessFunction: (Individual) => number }) => {
+const evaluatePopulation = <Individual>(
+  options: { fitnessFunction: (Individual: Individual) => number },
+) => {
   checkProps({
     functionName: 'Genemo.evaluatePopulation',
     props: options,
@@ -14,7 +16,7 @@ const evaluatePopulation = <individual>(options: { fitnessFunction: (Individual)
 
   const { fitnessFunction } = options;
 
-  return (population: Population<individual>) => (
+  return (population: Population<Individual>) => (
     population.map(individual => (
       fitnessFunction(individual)
     ))

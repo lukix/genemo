@@ -20,7 +20,13 @@ export const selectParentsPairs = <Individual>(
       })
   );
 
-const getIndividualsByMutationInfo = ({ individuals, shouldBeMutated }) => (
+const getIndividualsByMutationInfo = (
+  { individuals, shouldBeMutated }:
+  {
+    individuals: Array<{ individual: any; shouldBeMutated: boolean }>;
+    shouldBeMutated: boolean;
+  },
+) => (
   individuals
     .filter(item => item.shouldBeMutated === shouldBeMutated)
     .map(({ individual }) => individual)

@@ -2,9 +2,9 @@ import { checkProps, types } from './utils/typeChecking';
 import { mean } from './utils/numbersListHelpers';
 import { RunReturnType } from './sharedTypes';
 
-const iterationFormatter = (key, value) => `#${value}`;
-const fitnessFormatter = (key, value) => `${key} = ${value}`;
-const timeFormatter = (key, value) => `${key} = ${value.toFixed(2)}ms`;
+const iterationFormatter = (key: string, value: any) => `#${value}`;
+const fitnessFormatter = (key: string, value: any) => `${key} = ${value}`;
+const timeFormatter = (key: string, value: any) => `${key} = ${value.toFixed(2)}ms`;
 
 const logIterationDataPropTypes = {
   include: { type: types.OBJECT, isRequired: true },

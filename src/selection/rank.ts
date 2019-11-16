@@ -1,11 +1,15 @@
 import { checkProps, types } from '../utils/typeChecking';
-import { EvaluatedPopulation, Rng } from '../sharedTypes';
+import { EvaluatedPopulation, Rng, EvaluatedIndividual } from '../sharedTypes';
 import {
   normalizeCumulativeFitness,
   selectRouletteElement,
 } from './utils/rouletteUtils';
 
-const calculateArithmeticSeries = (first, last, count) => (count * (first + last)) / 2;
+const calculateArithmeticSeries = (
+  first: number,
+  last: number,
+  count: number,
+) => (count * (first + last)) / 2;
 
 const propTypes = {
   minimizeFitness: { type: types.BOOLEAN, isRequired: true },
@@ -24,8 +28,12 @@ const rankSelection = (options: { minimizeFitness: boolean }) => {
 
   return <Individual>(evaluatedPopulation: EvaluatedPopulation<Individual>, random: Rng) => {
     const compareFitness = minimizeFitness
-      ? (a, b) => b.fitness - a.fitness
-      : (a, b) => a.fitness - b.fitness;
+      ? (a: EvaluatedIndividual<Individual>, b: EvaluatedIndividual<Individual>) => (
+        b.fitness - a.fitness
+      )
+      : (a: EvaluatedIndividual<Individual>, b: EvaluatedIndividual<Individual>) => (
+        a.fitness - b.fitness
+      );
     const sortedPopulation = [...evaluatedPopulation].sort(compareFitness);
 
     const cumulativeFitness = sortedPopulation.map((evaluatedIndividual, index) => ({

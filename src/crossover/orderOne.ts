@@ -2,7 +2,11 @@ import R from 'ramda';
 import randomFromRange from '../utils/randomFromRange';
 import { Rng } from '../sharedTypes';
 
-export const createChildUsingOrderOneCrossover = ([parent1, parent2], minIndex, maxIndex) => {
+export const createChildUsingOrderOneCrossover = <Gene>(
+  [parent1, parent2]: [Array<Gene>, Array<Gene>],
+  minIndex: number,
+  maxIndex: number,
+) => {
   const individualLength = parent1.length;
   const child = new Array(individualLength).fill(null);
   R.range(minIndex, maxIndex + 1).forEach((index) => {

@@ -1,6 +1,6 @@
 import { max } from '../../utils/numbersListHelpers';
 
-const FixedSizeBuffer = (size) => {
+const FixedSizeBuffer = (size: number) => {
   const buffer: Array<number> = [];
   return {
     push: (item: number) => {

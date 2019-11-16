@@ -1,6 +1,6 @@
 const binaryRangeSearchInner = <T>(
   array: Array<T>,
-  condition: (T) => boolean,
+  condition: (value: T) => boolean,
   begIndex: number,
   endIndex: number,
 ): T => {
@@ -19,7 +19,7 @@ const binaryRangeSearchInner = <T>(
  * @param array Array to be searched
  * @param condition Informs if the algorithm should move to the left or to the right from the current element
  */
-const binaryRangeSearch = <T>(array: Array<T>, condition: (T) => boolean) => {
+const binaryRangeSearch = <T>(array: Array<T>, condition: (value: T) => boolean) => {
   const result = binaryRangeSearchInner(array, condition, 0, array.length - 1);
   return condition(result) ? result : undefined;
 };

@@ -1,7 +1,8 @@
 import getCurrentTime from './getCurrentTime';
+import { Logs } from '../sharedTypes';
 
 class DebugDataCollector {
-  data: { [key: string]: any } = {};
+  data: Logs = {};
 
   clocks: { [key: string]: number } = {};
 

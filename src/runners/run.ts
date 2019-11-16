@@ -15,6 +15,7 @@ import {
   RunReturnType,
 } from '../sharedTypes';
 
+type WithFitness = { fitness: number };
 export interface RunOptions<Individual> {
   generateInitialPopulation: (random: Rng) => Population<Individual>;
   selection: (evaluatedPopulation: EvaluatedPopulation<Individual>, random: Rng) => (
@@ -66,7 +67,11 @@ const run = async <Individual>(
     generateInitialPopulation,
     selection,
     reproduce,
-    succession = ({ childrenPopulation }) => childrenPopulation,
+    succession = (
+      ({ childrenPopulation }: { childrenPopulation: EvaluatedPopulation<Individual> }) => (
+        childrenPopulation
+      )
+    ),
     evaluatePopulation,
     stopCondition,
     random = Math.random,
@@ -76,7 +81,7 @@ const run = async <Individual>(
   } = options;
 
   const logsCollector = new DebugDataCollector({ collectLogs });
-  const collectReproduceLog = (key, value) => logsCollector.collect(`reproduce.${key}`, value);
+  const collectReproduceLog = (key: string, value: any) => logsCollector.collect(`reproduce.${key}`, value);
 
   const mainLoopBody = async (
     { evaluatedPopulation }: { evaluatedPopulation: EvaluatedPopulation<Individual> },
@@ -115,8 +120,15 @@ const run = async <Individual>(
     maxBlockingTime,
   });
 
+  type InitialLoopState = {
+    iterationData: {
+      iteration: number;
+      evaluatedPopulation: EvaluatedPopulation<Individual>;
+    };
+  };
+
   const initialPopulation = await generateInitialPopulation(random);
-  const initialLoopState = {
+  const initialLoopState: InitialLoopState = {
     iterationData: {
       iteration: 0,
       evaluatedPopulation: mergeFitnessValuesWithPopulation(
@@ -124,11 +136,13 @@ const run = async <Individual>(
         await evaluatePopulation(initialPopulation, random),
       ),
     },
-    shouldStop: false,
   };
 
-  const result = await doWhile(
-    async ({ iterationData: { iteration, evaluatedPopulation } }) => {
+  type U = { iterationData: RunReturnType<Individual>; shouldStop: boolean}
+  const result = await doWhile<InitialLoopState, U>(
+    async ({
+      iterationData: { iteration, evaluatedPopulation },
+    }) => {
       logsCollector.startClock('lastIteration');
       const newEvaluatedPopulation = await executeMainLoopBody({ evaluatedPopulation });
 
@@ -137,15 +151,19 @@ const run = async <Individual>(
         iteration: iteration + 1,
         logs: logsCollector.data,
         getLowestFitnessIndividual: () => {
-          const lowestFitness = min(newEvaluatedPopulation.map(({ fitness }) => fitness));
+          const lowestFitness = min(
+            newEvaluatedPopulation.map(({ fitness }: WithFitness) => fitness),
+          );
           const evaluatedIndividualWithLowestFitness = newEvaluatedPopulation
-            .find(({ fitness }) => fitness === lowestFitness);
+            .find(({ fitness }: WithFitness) => fitness === lowestFitness);
           return evaluatedIndividualWithLowestFitness;
         },
         getHighestFitnessIndividual: () => {
-          const highestFitness = max(newEvaluatedPopulation.map(({ fitness }) => fitness));
+          const highestFitness = max(
+            newEvaluatedPopulation.map(({ fitness }: WithFitness) => fitness),
+          );
           const evaluatedIndividualWithHighestFitness = newEvaluatedPopulation
-            .find(({ fitness }) => fitness === highestFitness);
+            .find(({ fitness }: WithFitness) => fitness === highestFitness);
           return evaluatedIndividualWithHighestFitness;
         },
       };
@@ -163,7 +181,11 @@ const run = async <Individual>(
 
       logsCollector.collectClockValue('lastIteration');
 
-      return { iterationData, shouldStop };
+      const iterationResult: {
+        iterationData: RunReturnType<Individual>;
+        shouldStop: boolean;
+      } = { iterationData, shouldStop };
+      return iterationResult;
     },
     ({ shouldStop }) => shouldStop,
     initialLoopState,

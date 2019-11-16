@@ -1,8 +1,10 @@
 import { checkProps, types } from './utils/typeChecking';
 import { EvaluatedPopulation } from './sharedTypes';
 
-const compareAsc = (a, b) => a.fitness - b.fitness;
-const compareDesc = (a, b) => b.fitness - a.fitness;
+type WithFitness = { fitness: number };
+
+const compareAsc = (a: WithFitness, b: WithFitness) => a.fitness - b.fitness;
+const compareDesc = (a: WithFitness, b: WithFitness) => b.fitness - a.fitness;
 
 const propTypes = {
   keepFactor: { type: types.NUMBER, isRequired: true },

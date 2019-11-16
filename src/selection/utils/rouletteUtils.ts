@@ -15,15 +15,19 @@ export const normalizeCumulativeFitness = <T extends { cumulativeFitness: number
     ));
 };
 
+type CumulativeFitnessItem<Individual> = {
+  individual: Individual;
+  fitness: number;
+  cumulativeFitness: number;
+}
+
 export const selectRouletteElement = <Individual>(
-  normalizedCumulativeFitness: Array<{
-    individual: Individual;
-    fitness: number;
-    cumulativeFitness: number;
-  }>,
+  normalizedCumulativeFitness: Array<CumulativeFitnessItem<Individual>>,
   randomValue: number,
 ) => {
-  const compare = element => randomValue < element.cumulativeFitness;
+  const compare = (element: CumulativeFitnessItem<Individual>) => (
+    randomValue < element.cumulativeFitness
+  );
   const foundElement = binaryRangeSearch(
     normalizedCumulativeFitness,
     compare,
