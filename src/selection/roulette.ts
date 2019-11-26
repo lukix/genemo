@@ -1,5 +1,4 @@
 import R from 'ramda';
-import { checkProps, types } from '../utils/typeChecking';
 import { Rng, EvaluatedPopulation } from '../sharedTypes';
 import {
   normalizeCumulativeFitness,
@@ -49,17 +48,7 @@ const calculateCumulativeFitness = <Individual>(
   );
 };
 
-const propTypes = {
-  minimizeFitness: { type: types.BOOLEAN, isRequired: true },
-};
-
 const rouletteSelection = (options: { minimizeFitness: boolean }) => {
-  checkProps({
-    functionName: 'Genemo.selection.roulette',
-    props: options,
-    propTypes,
-  });
-
   const {
     minimizeFitness,
   } = options;

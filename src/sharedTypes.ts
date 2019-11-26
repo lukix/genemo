@@ -3,7 +3,7 @@ export type EvaluatedIndividual<Individual> = { individual: Individual; fitness:
 export type EvaluatedPopulation<Individual> = Array<EvaluatedIndividual<Individual>>;
 export type Population<Individual> = Array<Individual>;
 export interface Logs {
-  [key: string]: { samples: number; lastValue: any; meanValue: any };
+  [key: string]: { samples: number; lastValue: number; meanValue: number };
 }
 export interface RunReturnType<Individual> {
   evaluatedPopulation: EvaluatedPopulation<Individual>;

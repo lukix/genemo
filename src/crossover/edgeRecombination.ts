@@ -1,6 +1,4 @@
 /* eslint-disable no-loop-func */
-
-import { checkProps, types } from '../utils/typeChecking';
 import { min } from '../utils/numbersListHelpers';
 import RandomItem from '../utils/randomItem';
 import { Rng } from '../sharedTypes';
@@ -138,17 +136,7 @@ export const createSingleChild = <Gene>(
   );
 };
 
-const propTypes = {
-  hashGene: { type: types.FUNCTION, isRequired: false },
-};
-
 const edgeRecombination = <Gene>(options: { hashGene?: HashGene<Gene> } = {}) => {
-  checkProps({
-    functionName: 'Genemo.selection.rank',
-    props: options,
-    propTypes,
-  });
-
   const {
     hashGene = (gene: Gene) => gene,
   } = options;

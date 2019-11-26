@@ -1,6 +1,4 @@
 import R from 'ramda';
-
-import { checkProps, types } from './utils/typeChecking';
 import Timer from './utils/timer';
 import getRandomIndividual from './utils/getRandomIndividual';
 import { Rng, EvaluatedPopulation, Population } from './sharedTypes';
@@ -34,12 +32,6 @@ const getIndividualsByMutationInfo = (
 
 const DEFAULT_MUTATION_PROBABILITY = 0.01;
 
-const reproduceBatchPropTypes = {
-  mutateAll: { type: types.FUNCTION, isRequired: true },
-  crossoverAll: { type: types.FUNCTION, isRequired: true },
-  mutationProbability: { type: types.NUMBER, isRequired: false },
-};
-
 export interface ReproduceBatchOptions<Individual> {
   mutateAll: (individuals: Array<Individual>, random: Rng) => Array<Individual>;
   crossoverAll: (
@@ -50,12 +42,6 @@ export interface ReproduceBatchOptions<Individual> {
 }
 
 const reproduceBatch = <Individual>(options: ReproduceBatchOptions<Individual>) => {
-  checkProps({
-    functionName: 'Genemo.reproduceBatch',
-    props: options,
-    propTypes: reproduceBatchPropTypes,
-  });
-
   const {
     mutateAll,
     crossoverAll,

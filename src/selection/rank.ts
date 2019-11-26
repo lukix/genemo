@@ -1,4 +1,3 @@
-import { checkProps, types } from '../utils/typeChecking';
 import { EvaluatedPopulation, Rng, EvaluatedIndividual } from '../sharedTypes';
 import {
   normalizeCumulativeFitness,
@@ -11,17 +10,7 @@ const calculateArithmeticSeries = (
   count: number,
 ) => (count * (first + last)) / 2;
 
-const propTypes = {
-  minimizeFitness: { type: types.BOOLEAN, isRequired: true },
-};
-
 const rankSelection = (options: { minimizeFitness: boolean }) => {
-  checkProps({
-    functionName: 'Genemo.selection.rank',
-    props: options,
-    propTypes,
-  });
-
   const {
     minimizeFitness,
   } = options;

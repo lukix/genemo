@@ -1,11 +1,9 @@
 /* eslint-disable no-await-in-loop */
 
 import R from 'ramda';
-import { checkProps } from '../utils/typeChecking';
 import DebugDataCollector from '../utils/DebugDataCollector';
 import batchIterationExecutor from './utils/batchIterationExecutor';
 import { min, max } from '../utils/numbersListHelpers';
-import runnerPropTypes from './utils/runnerPropTypes';
 import doWhile from './utils/doWhile';
 
 import {
@@ -57,12 +55,6 @@ const mergeFitnessValuesWithPopulation = <Individual>(
 const run = async <Individual>(
   options: RunOptions<Individual>,
 ): Promise<RunReturnType<Individual>> => {
-  checkProps({
-    functionName: 'Genemo.run',
-    props: options,
-    propTypes: runnerPropTypes,
-  });
-
   const {
     generateInitialPopulation,
     selection,

@@ -20,7 +20,7 @@ describe('logIterationData', () => {
         { individual: 'B', fitness: 10 },
         { individual: 'C', fitness: 5 },
       ],
-      logs: { customKey: { lastValue: 3.1990 } },
+      logs: { customKey: { samples: 1, lastValue: 3.1990, meanValue: 3.1990 } },
       getLowestFitnessIndividual: () => ({ individual: 'C', fitness: 5 }),
       getHighestFitnessIndividual: () => ({ individual: 'B', fitness: 10 }),
     });
@@ -81,7 +81,7 @@ describe('logIterationData', () => {
     iterationCallback({
       iteration: 10,
       evaluatedPopulation: [],
-      logs: { customKey: { lastValue: 5 } },
+      logs: { customKey: { samples: 1, lastValue: 5, meanValue: 5 } },
       // Insignificant properties:
       getLowestFitnessIndividual: () => ({ individual: 'A', fitness: 5 }),
       getHighestFitnessIndividual: () => ({ individual: 'B', fitness: 10 }),
@@ -104,7 +104,7 @@ describe('logIterationData', () => {
       iteration: 10,
       evaluatedPopulation: [{ individual: 'A', fitness: 2 }],
       // Insignificant properties:
-      logs: { customKey: { lastValue: 5 } },
+      logs: { customKey: { samples: 1, lastValue: 5, meanValue: 5 } },
       getLowestFitnessIndividual: () => ({ individual: 'A', fitness: 2 }),
       getHighestFitnessIndividual: () => ({ individual: 'A', fitness: 2 }),
     });
