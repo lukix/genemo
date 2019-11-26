@@ -1,11 +1,11 @@
 import { mean } from './utils/numbersListHelpers';
 import { RunReturnType } from './sharedTypes';
 
-const iterationFormatter = (key: string, value: any) => `#${value}`;
-const fitnessFormatter = (key: string, value: any) => `${key} = ${value}`;
-const timeFormatter = (key: string, value: any) => `${key} = ${value.toFixed(2)}ms`;
+const iterationFormatter = (key: string, value: number) => `#${value}`;
+const fitnessFormatter = (key: string, value: number) => `${key} = ${value}`;
+const timeFormatter = (key: string, value: number) => `${key} = ${value.toFixed(2)}ms`;
 
-type FormatterType = (key: string, value: any) => string;
+type FormatterType = (key: string, value: number) => string;
 type IncludeItemType = { show: boolean; formatter?: FormatterType };
 export interface LogIterationDataOptions {
   include: {
