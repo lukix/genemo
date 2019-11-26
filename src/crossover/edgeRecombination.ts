@@ -3,7 +3,7 @@ import { min } from '../utils/numbersListHelpers';
 import RandomItem from '../utils/randomItem';
 import { Rng } from '../sharedTypes';
 
-type HashGene<Gene> = (gene: Gene) => any;
+type HashGene<Gene, Hash> = (gene: Gene) => Hash;
 
 export const getNeighbors = <T>(array: Array<T>, index: number) => {
   const neighborAIndex = index === 0
@@ -17,20 +17,20 @@ export const getNeighbors = <T>(array: Array<T>, index: number) => {
     .map(neighborIndex => array[neighborIndex]);
 };
 
-const mergeGenesLists = <Gene>(
+const mergeGenesLists = <Gene, Hash>(
   genesA: Array<Gene>,
   genesB: Array<Gene>,
-  hashGene: HashGene<Gene>,
+  hashGene: HashGene<Gene, Hash>,
 ) => {
   const comparisonFunc = (geneA: Gene, geneB: Gene) => hashGene(geneA) === hashGene(geneB);
   const genesBNotInA = genesB.filter(geneB => genesA.every(geneA => !comparisonFunc(geneA, geneB)));
   return [...genesA, ...genesBNotInA];
 };
 
-const insertNeighborsIntoMap = <Gene>(
-  map: Map<any, Array<Gene>>,
+const insertNeighborsIntoMap = <Gene, Hash>(
+  map: Map<Hash, Array<Gene>>,
   individual: Array<Gene>,
-  hashGene: HashGene<Gene>,
+  hashGene: HashGene<Gene, Hash>,
 ) => (
     new Map(
       individual.map((gene: Gene, index: number) => {
@@ -47,7 +47,7 @@ const insertNeighborsIntoMap = <Gene>(
 export const createNeighborsMap = <Gene>(
   individualA: Array<Gene>,
   individualB: Array<Gene>,
-  hashGene: HashGene<Gene>,
+  hashGene: HashGene<Gene, any>,
 ) => {
   const neighborsAMap = insertNeighborsIntoMap(new Map(), individualA, hashGene);
   const mergedNeighborsMap = insertNeighborsIntoMap(neighborsAMap, individualB, hashGene);
@@ -55,12 +55,12 @@ export const createNeighborsMap = <Gene>(
   return mergedNeighborsMap;
 };
 
-const appendRemainingGenesToChild = <Gene>(
+const appendRemainingGenesToChild = <Gene, Hash>(
   child: Array<Gene>,
   currentGene: Gene,
-  neighborsMap: Map<any, Array<Gene>>,
+  neighborsMap: Map<Hash, Array<Gene>>,
   parent: Array<Gene>,
-  hashGene: HashGene<Gene>,
+  hashGene: HashGene<Gene, Hash>,
   randomItem: <T>(array: Array<T>) => T,
 ): Array<Gene> => {
   if (child.length >= parent.length) {
@@ -118,7 +118,7 @@ const appendRemainingGenesToChild = <Gene>(
 
 export const createSingleChild = <Gene>(
   [mother, father]: [Array<Gene>, Array<Gene>],
-  hashGene: HashGene<Gene>,
+  hashGene: HashGene<Gene, any>,
   random: Rng,
 ) => {
   const randomItem = RandomItem(random);
@@ -136,7 +136,9 @@ export const createSingleChild = <Gene>(
   );
 };
 
-const edgeRecombination = <Gene>(options: { hashGene?: HashGene<Gene> } = {}) => {
+const edgeRecombination = <Gene>(
+  options: { hashGene?: HashGene<Gene, any> } = {},
+) => {
   const {
     hashGene = (gene: Gene) => gene,
   } = options;
