@@ -91,7 +91,8 @@ Takes an object with the following properties:
 
 ### **`Genemo.evaluatePopulation({ fitnessFunction })`**
 Returned function is applicable to: `Genemo.run`'s `evaluatePopulation` parameter.<br />
-Takes an object with the following properties:
+**Due to performance reasons, this function doesn't support promises. fitnessFunction must be a synchronous.**<br />
+`evaluatePopulation` takes an object with the following properties:
 
 - **`fitnessFunction`** - Function which takes an individual as a parameter and returns its fitness.<br />
   **Type**: `(Individual) => number`<br />
