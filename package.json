@@ -1,6 +1,6 @@
 {
   "name": "genemo",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Simple to use genetic algorithms library. Supports both NodeJS and web browsers.",
   "keywords": [
     "genetic algorithm",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "browser-process-hrtime": "1.0.0",
-    "ramda": "0.27.0"
+    "ramda": "0.27.1"
   },
   "devDependencies": {
     "@babel/cli": "7.10.5",

@@ -30,39 +30,39 @@ Returns a promise, which resolves to an object:
 - **`generateInitialPopulation`** - Generates initial population of individuals (chromosomes).<br />
 **Type**: `(Rng) => Population`<br />
 **Required**: Yes<br />
-**Available values**: [`Genemo.generateInitialPopulation()`]()
+**Available values**: [`Genemo.generateInitialPopulation()`](#genemogenerateinitialpopulation-generateindividual-size-)
 
 - **`selection`** - Selects individuals for breeding.<br />
 **Type**: `(EvaluatedPopulation, Rng) => EvaluatedPopulation`<br />
 **Required**: Yes<br />
-**Available values**: [`Genemo.selection.tournament()`](), [`Genemo.selection.rank()`](), [`Genemo.selection.roulette()`]()
+**Available values**: [`Genemo.selection.tournament()`](#genemoselectiontournament-size-minimizefitness-), [`Genemo.selection.rank()`](#genemoselectionrank-minimizefitness-), [`Genemo.selection.roulette()`](#genemoselectionroulette-minimizefitness-)
 
 - **`reproduce`** - Creates new population from the selected individuals.<br />
 **Type**: `(EvaluatedPopulation, Rng, collectLog) => Population`<br />
 **Required**: Yes<br />
-**Available values**: [`Genemo.reproduce()`]()
+**Available values**: [`Genemo.reproduce()`](#genemoreproduce-crossover-mutate-mutationprobability-)
 
 - **`evaluatePopulation`** - Maps an array of individuals to an array of fitness values.<br />
 **Type**: `(Population, Rng) => Array<number>`<br />
 **Required**: Yes<br />
-**Available values**: [`Genemo.evaluatePopulation()`]()
+**Available values**: [`Genemo.evaluatePopulation()`](#genemoevaluatepopulation-fitnessfunction-)
 
 - **`stopCondition`** - Returning `true` terminates the algorithm.<br />
 **Type**: `({ evaluatedPopulation, iteration }, Rng) => boolean`<br />
 **Required**: Yes<br />
-**Available values**: [`Genemo.stopCondition()`]()
+**Available values**: [`Genemo.stopCondition()`](#genemostopcondition-minfitness-maxfitness-maxiterations-)
 
 - **`succession`** -  Creates a new population based on previous (evaluated) population and current (also evaluated) children population (result of `reproduce` function).<br />
 **Type**: `({ prevPopulation, childrenPopulation }, Rng) => EvaluatedPopulation`<br />
 **Required**: No<br />
 **Default:** `({ childrenPopulation }) => childrenPopulation`<br />
-**Available values**: [`Genemo.elitism()`]()
+**Available values**: [`Genemo.elitism()`](#genemoelitism-keepfactor-minimizefitness-)
 
 - **`iterationCallback`** - Callback, which is called in every iteration.<br />
 **Type**: `({ evaluatedPopulation, iteration, logs, getLowestFitnessIndividual, getHighestFitnessIndividual }) => undefined`<br />
 **Required**: No<br />
 **Default:** `() => {}`<br />
-**Available values**: [`Genemo.logIterationData()`]()
+**Available values**: [`Genemo.logIterationData()`](#genemologiterationdata-include-customlogger-)
 
 - **`random`** - Custom random number generator. Should return values between 0 and 1 (inclusive of 0, but not 1).<br />
 **Type**: `() => number`<br />
@@ -91,7 +91,8 @@ Takes an object with the following properties:
 
 ### **`Genemo.evaluatePopulation({ fitnessFunction })`**
 Returned function is applicable to: `Genemo.run`'s `evaluatePopulation` parameter.<br />
-Takes an object with the following properties:
+**Due to performance reasons, this function doesn't support promises. fitnessFunction must be a synchronous.**<br />
+`evaluatePopulation` takes an object with the following properties:
 
 - **`fitnessFunction`** - Function which takes an individual as a parameter and returns its fitness.<br />
   **Type**: `(Individual) => number`<br />
@@ -147,7 +148,7 @@ Returns a function which logs iteration data (mostly performance data).
 Returned function is applicable to: `Genemo.run`'s `iterationCallback` parameter.<br />
 Takes an object with the following properties:
 
-- **`include`** - stop when one of the individuals has fitness higher or equal `minFitness`<br />
+- **`include`** - object indicating what should be logged<br />
   **Type**: `object`<br />
   **Properties** (all optional):
     - `iteration`
@@ -160,7 +161,7 @@ Takes an object with the following properties:
       - Signature: `{ show: boolean, formatter: (key, value) => string }`
     - `logsKeys`
       - Signature: `Array<{ key: string, formatter: (key, value) => string }>`
-      - Available keys for `Genemo.run`: `lastIteration`, `selection`, `reproduce`, `fitness`, `succession`, `stopCondition`, `iterationCallback`
+      - Available keys for `Genemo.run`: `lastIteration`, `selection`, `reproduce`, `evaluatePopulation`, `succession`, `stopCondition`, `iterationCallback`
       - Available keys for `Genemo.reproduce`: `reproduce.crossover`, `reproduce.mutation`
 
     Formatters are optional.
