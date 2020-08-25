@@ -147,7 +147,7 @@ Returns a function which logs iteration data (mostly performance data).
 Returned function is applicable to: `Genemo.run`'s `iterationCallback` parameter.<br />
 Takes an object with the following properties:
 
-- **`include`** - stop when one of the individuals has fitness higher or equal `minFitness`<br />
+- **`include`** - object indicating what should be logged<br />
   **Type**: `object`<br />
   **Properties** (all optional):
     - `iteration`
@@ -160,7 +160,7 @@ Takes an object with the following properties:
       - Signature: `{ show: boolean, formatter: (key, value) => string }`
     - `logsKeys`
       - Signature: `Array<{ key: string, formatter: (key, value) => string }>`
-      - Available keys for `Genemo.run`: `lastIteration`, `selection`, `reproduce`, `fitness`, `succession`, `stopCondition`, `iterationCallback`
+      - Available keys for `Genemo.run`: `lastIteration`, `selection`, `reproduce`, `evaluatePopulation`, `succession`, `stopCondition`, `iterationCallback`
       - Available keys for `Genemo.reproduce`: `reproduce.crossover`, `reproduce.mutation`
 
     Formatters are optional.
