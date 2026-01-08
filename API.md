@@ -189,7 +189,7 @@ Takes an object with the following properties:
 Returned function is applicable to: `Genemo.run`'s `selection` parameter.<br />
 Takes an object with the following properties:
 
-- **`size`** - tournament size<br />
+- **`size`** - tournament size.<br />
   **Type**: `number`<br />
 
 - **`minimizeFitness`** - if true, selection's purpose will be to minimize fitness.<br />
@@ -208,7 +208,7 @@ Succession strategy, which keeps best individuals regerdless of reproduce's outc
 Returned function is applicable to: `Genemo.run`'s `succession` parameter.<br />
 Takes an object with the following properties:
 
-- **`keepFactor`** - tournament size<br />
+- **`keepFactor`** - what part of the population should be kept.<br />
   **Type**: `number`<br />
 
 - **`minimizeFitness`** - if true, succession's purpose will be to minimize fitness.<br />
